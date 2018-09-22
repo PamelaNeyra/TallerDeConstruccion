@@ -6,6 +6,13 @@ import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Contenido;
 
 @Repository("contenidoRepository")
-public interface ContenidoRepository extends JpaRepository<Contenido, Serializable> {
-
+public interface IContenidoRepository extends JpaRepository<Contenido, Serializable> {
+	
+	/**
+	 * Registra un contenido
+	 * en la base de datos.
+	 * @param contenido
+	 */
+	public abstract void registrarContenido(Contenido contenido);
+	
 }

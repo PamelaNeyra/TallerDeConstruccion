@@ -7,6 +7,13 @@ import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Lote;
 
 @Repository("loteRepository")
-public interface LoteRepository extends JpaRepository<Lote, Serializable>{
+public interface ILoteRepository extends JpaRepository<Lote, Serializable>{
+	
+	/**
+	 * Registra un lote
+	 * en la base de datos.
+	 * @param lote
+	 */
+	public abstract void registrarLote(Lote lote);
 	
 }

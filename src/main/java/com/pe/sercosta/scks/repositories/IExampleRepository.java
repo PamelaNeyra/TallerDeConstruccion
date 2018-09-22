@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Lote;
 
 @Repository("exampleRepository")
-public interface ExampleRepository extends JpaRepository<Lote, Serializable> {
+public interface IExampleRepository extends JpaRepository<Lote, Serializable> {
 
 }
