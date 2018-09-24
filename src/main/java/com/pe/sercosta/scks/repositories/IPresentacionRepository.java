@@ -1,13 +1,11 @@
 package com.pe.sercosta.scks.repositories;
 
-import java.io.Serializable;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Presentacion;
 
 @Repository("presentacionRepository")
-public interface IPresentacionRepository extends JpaRepository<Presentacion, Serializable>{
+public interface IPresentacionRepository{
 
 	/**
 	 * Lista todas las presentaciones
