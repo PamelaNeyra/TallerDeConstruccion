@@ -1,6 +1,6 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-//TODO Adecuar a las interfaces
+//TODO Adecuar a las interfaces necesarias
 
 
 import java.io.Serializable;

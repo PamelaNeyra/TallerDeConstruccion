@@ -1,6 +1,6 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-//TODO Adecuar a las interfaces
+//TODO Adecuar a las interfaces necesarias
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ import com.pe.sercosta.scks.util.HibernateUtil;
 	resultClass = ProductoTerminado.class
 	)
 })
+
 
 
 //falta el implements IPresentacionRepository 
