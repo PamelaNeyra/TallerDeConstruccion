@@ -5,35 +5,21 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 //import org.hibernate.query.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import com.pe.sercosta.scks.entities.Asignacion;
-import com.pe.sercosta.scks.util.HibernateUtil;
 
-
+//TODO: falta revisar que parametros se le manda
 @NamedNativeQueries({
-	@NamedNativeQuery(
-	name = "registrarAsignacionProcedimientoAlmacenado",
-	query = "CALL registrarAsignacion()",//falta revisar que parametros se le manda
-	resultClass = Asignacion.class
-		)
-})
-public class AsignacionRepository { /*Falta el implements*/
-	Session session;
-	
-	public void registrarAsignacion(Asignacion asignacion) {
-		Session session = HibernateUtil.getSession();
-		Transaction tx = session.beginTransaction();
-		//Asignacion asignacioTemporal = null; /*Falta revisar lo de la validación*/
-		 try {
-			 session.save(asignacion);
-			 tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}finally {
-			HibernateUtil.closeSession();
+		@NamedNativeQuery(name = "registrarAsignacionProcedimientoAlmacenado", query = "CALL registrarAsignacion()", resultClass = Asignacion.class) })
+// TODO: Falta el implements
+public class AsignacionRepository {
+
+	public void registrarAsignacion(Session sesion, Asignacion asignacion) {
+		try {
+			// TODO: CALL PA_RegistrarAsignacion()
+			sesion.save(asignacion);
+		} catch (Exception ex) {
+			throw ex;
 		}
 	}
-	
+
 }
