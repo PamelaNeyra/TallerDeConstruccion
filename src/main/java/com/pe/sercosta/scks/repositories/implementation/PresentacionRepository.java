@@ -2,6 +2,8 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
@@ -13,6 +15,9 @@ import com.pe.sercosta.scks.repositories.IPresentacionRepository;
 		@NamedNativeQuery(name = "listarPresentacionProcedimientoAlmacenado", query = "CALL listarPresentacion()", resultClass = Presentacion.class),
 		@NamedNativeQuery(name = "buscarPresentacionProcedimientoAlmacenado", query = "CALL buscarPresentacion(:id_presentacion)", resultClass = Presentacion.class) })
 public class PresentacionRepository implements IPresentacionRepository {
+
+	private static final Log LOG = LogFactory.getLog(PresentacionRepository.class);
+	private static final String CAPA = "[Repository : Presentacion] -> ";
 
 	@Override
 	public List<Presentacion> listarPresentacion(Session sesion) {
@@ -35,6 +40,7 @@ public class PresentacionRepository implements IPresentacionRepository {
 				listaPresentacion.add(presentacionTmp);
 			}
 		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
 			throw ex;
 		}
 		return listaPresentacion;
@@ -62,6 +68,7 @@ public class PresentacionRepository implements IPresentacionRepository {
 				listaPresentacion.add(presentacionTmp);
 			}
 		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
 			throw ex;
 		}
 		return listaPresentacion;

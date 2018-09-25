@@ -2,6 +2,8 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
@@ -14,6 +16,9 @@ import com.pe.sercosta.scks.repositories.IContenidoRepository;
 		@NamedNativeQuery(name = "listarContenidoProcedimientoAlmacenado", query = "CALL listarContenido()", resultClass = Contenido.class) })
 public class ContenidoRepository implements IContenidoRepository {
 
+	private static final Log LOG = LogFactory.getLog(ContenidoRepository.class);
+	private static final String CAPA = "[Repository : Contenido] -> ";
+	
 	/* Falta un metodo en la interfaz para sobreescribir el listado de contenidos */
 
 	public List<Contenido> listarContenidos(Session sesion) {
@@ -35,6 +40,7 @@ public class ContenidoRepository implements IContenidoRepository {
 				listaContenidos.add(contenidoTemporal);
 			}
 		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
 			throw ex;
 		}
 		return listaContenidos;

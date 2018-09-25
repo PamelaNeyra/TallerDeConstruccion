@@ -3,6 +3,8 @@ package com.pe.sercosta.scks.repositories.implementation;
 //import java.io.Serializable; /*Descomentar*/
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
@@ -14,6 +16,9 @@ import com.pe.sercosta.scks.entities.Cliente;
 // TODO: Falta el implements
 public class ClienteRepository {
 
+	private static final Log LOG = LogFactory.getLog(ClienteRepository.class);
+	private static final String CAPA = "[Repository : Cliente] -> ";
+	
 	public List<Cliente> listarClientes(Session sesion) {
 		List<Cliente> listaBD = new ArrayList<Cliente>();
 		List<Cliente> listaClientes = new ArrayList<Cliente>();
@@ -30,6 +35,7 @@ public class ClienteRepository {
 				listaClientes.add(clienteTemporal);
 			}
 		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
 			throw ex;
 		}
 		return listaClientes;
