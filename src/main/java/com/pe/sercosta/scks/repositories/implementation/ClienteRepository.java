@@ -10,6 +10,7 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.query.Query;
 import com.pe.sercosta.scks.entities.Cliente;
+import com.pe.sercosta.scks.exceptions.SercostaException;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "listarClientesProcedimientoAlmacenado", query = "CALL listarClientes()", resultClass = Cliente.class) })
@@ -36,7 +37,7 @@ public class ClienteRepository {
 			}
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al listar los clientes", ex.getMessage());
 		}
 		return listaClientes;
 	}

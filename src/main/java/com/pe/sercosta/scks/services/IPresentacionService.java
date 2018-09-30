@@ -1,10 +1,8 @@
 package com.pe.sercosta.scks.services;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.Presentacion;
 
-@Service("presentacionService")
 public interface IPresentacionService {
 
 	/**

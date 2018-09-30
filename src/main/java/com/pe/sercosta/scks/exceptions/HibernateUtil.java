@@ -1,4 +1,4 @@
-package com.pe.sercosta.scks.util;
+package com.pe.sercosta.scks.exceptions;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

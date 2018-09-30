@@ -2,18 +2,25 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "registrarContenidoProcedimientoAlmacenado", query = "CALL registrarContenido()", resultClass = Contenido.class),
+		@NamedNativeQuery(name = "registrarContenidoProcedimientoAlmacenado", query = "CALL sp_registrar_contenido()", resultClass = Contenido.class),
 		@NamedNativeQuery(name = "listarContenidoProcedimientoAlmacenado", query = "CALL listarContenido()", resultClass = Contenido.class) })
+@Repository("contenidoRepository")
 public class ContenidoRepository implements IContenidoRepository {
 
 	private static final Log LOG = LogFactory.getLog(ContenidoRepository.class);
@@ -41,18 +48,25 @@ public class ContenidoRepository implements IContenidoRepository {
 			}
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());
 		}
 		return listaContenidos;
 	}
 
 	@Override
-	public void registrarContenido(Session sesion, Contenido contenido) {
+	public void registrarContenido(EntityManager sesion, Contenido contenido) {
 		try {
-			// TODO: CALL PA_RegistrarContenido()
-			sesion.save(contenido);
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_contenido");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, Double.class, ParameterMode.IN);
+			myquery.setParameter(1, contenido.getLote().getIdLote())
+					.setParameter(2, contenido.getPresentacion().getIdPresentacion())
+					.setParameter(3, contenido.getCantidad());
+			myquery.execute();
 		} catch (Exception ex) {
-			throw ex;
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar el contenido", ex.getMessage());
 		}
 	}
 

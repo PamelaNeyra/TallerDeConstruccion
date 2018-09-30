@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 //import org.hibernate.query.Query;
 import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.OrdenVenta;
+import com.pe.sercosta.scks.exceptions.SercostaException;
 
 //TODO: falta revisar que parametros se le manda
 @NamedNativeQueries({
@@ -24,7 +25,7 @@ public class OrdenVentaRepository {
 			sesion.save(ordenVenta);
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al registrar la orden de venta", ex.getMessage());
 		}
 	}
 

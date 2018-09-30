@@ -1,10 +1,8 @@
 package com.pe.sercosta.scks.repositories;
 
-import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
 import com.pe.sercosta.scks.entities.Contenido;
 
-@Repository("contenidoRepository")
 public interface IContenidoRepository {
 	
 	/**
@@ -13,6 +11,6 @@ public interface IContenidoRepository {
 	 * @param sesion
 	 * @param contenido
 	 */
-	public abstract void registrarContenido(Session sesion, Contenido contenido);
+	public abstract void registrarContenido(EntityManager sesion, Contenido contenido);
 	
 }

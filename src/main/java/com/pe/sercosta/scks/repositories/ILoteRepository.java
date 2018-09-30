@@ -1,10 +1,8 @@
 package com.pe.sercosta.scks.repositories;
 
-import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
 import com.pe.sercosta.scks.entities.Lote;
 
-@Repository("loteRepository")
 public interface ILoteRepository {
 	
 	/**
@@ -13,6 +11,6 @@ public interface ILoteRepository {
 	 * @param sesion
 	 * @param lote
 	 */
-	public abstract void registrarLote(Session sesion, Lote lote);
+	public abstract void registrarLote(EntityManager sesion, Lote lote);
 	
 }

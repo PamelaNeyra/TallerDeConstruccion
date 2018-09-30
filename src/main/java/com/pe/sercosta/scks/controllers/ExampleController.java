@@ -19,6 +19,7 @@ public class ExampleController {
 		try {
 			
 		} catch (Exception e) {
+			LOG.error(e.getMessage());
 		}
 		return "Ejemplo";
 	}

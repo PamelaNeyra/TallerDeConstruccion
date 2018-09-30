@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.query.Query;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
-//import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
+import com.pe.sercosta.scks.exceptions.SercostaException;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "listarProductoTerminadoProcedimientoAlmacenado", query = "CALL listarProductoTerminado()", resultClass = ProductoTerminado.class),
@@ -40,7 +40,7 @@ public class ProductoTerminadoRepository {
 			}
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al listar los productos terminados", ex.getMessage());
 		}
 		return listaProductoTerminado;
 	}
@@ -56,16 +56,16 @@ public class ProductoTerminadoRepository {
 					.setParameter("id_producto_terminado", productoTerminado.getIdProductoTerminado());
 			listaBD = (List<ProductoTerminado>) myquery.list();
 			for (ProductoTerminado prstnIte : listaBD) {
-				productoTerminadoTmp.setIdProductoTerminado(productoTerminado.getIdProductoTerminado());
-				productoTerminadoTmp.setIdSubproducto(productoTerminado.getIdSubproducto());
-				productoTerminadoTmp.setDescripcion(productoTerminado.getDescripcion());
-				productoTerminadoTmp.setCantidadTotal(productoTerminado.getCantidadTotal());
-				productoTerminadoTmp.setComprometidoTotal(productoTerminado.getComprometidoTotal());
+				productoTerminadoTmp.setIdProductoTerminado(prstnIte.getIdProductoTerminado());
+				productoTerminadoTmp.setIdSubproducto(prstnIte.getIdSubproducto());
+				productoTerminadoTmp.setDescripcion(prstnIte.getDescripcion());
+				productoTerminadoTmp.setCantidadTotal(prstnIte.getCantidadTotal());
+				productoTerminadoTmp.setComprometidoTotal(prstnIte.getComprometidoTotal());
 				listaProductoTerminado.add(productoTerminadoTmp);
 			}
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al buscar el producto terminado", ex.getMessage());
 		}
 		return listaProductoTerminado;
 	}

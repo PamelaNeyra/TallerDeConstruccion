@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 //import org.hibernate.query.Query;
 import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.exceptions.SercostaException;
 
 //TODO: falta revisar que parametros se le manda
 @NamedNativeQueries({
@@ -24,7 +25,7 @@ public class AsignacionRepository {
 			sesion.save(asignacion);
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al registrar la asignación", ex.getMessage());
 		}
 	}
 

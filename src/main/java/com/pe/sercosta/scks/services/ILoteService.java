@@ -1,10 +1,7 @@
 package com.pe.sercosta.scks.services;
 
-import org.springframework.stereotype.Service;
-
 import com.pe.sercosta.scks.entities.Lote;
 
-@Service("loteService")
 public interface ILoteService {
 
 	/**

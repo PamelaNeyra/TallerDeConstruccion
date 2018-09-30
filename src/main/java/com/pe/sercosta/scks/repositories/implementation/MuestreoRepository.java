@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import com.pe.sercosta.scks.entities.Muestreo;
-//import com.pe.sercosta.scks.repositories.IMuestraRepository; 
+import com.pe.sercosta.scks.exceptions.SercostaException;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "registrarMuestreoProcedimientoAlmacenado", query = "CALL registrarMuestreo()", resultClass = Muestreo.class) })
@@ -24,7 +24,7 @@ public class MuestreoRepository {
 			sesion.save(muestreo);
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al registrar el muestreo", ex.getMessage());
 		}
 	}
 

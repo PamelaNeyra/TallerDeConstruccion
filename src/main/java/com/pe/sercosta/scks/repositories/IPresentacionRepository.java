@@ -1,12 +1,9 @@
 package com.pe.sercosta.scks.repositories;
 
 import java.util.List;
-
-import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
 import com.pe.sercosta.scks.entities.Presentacion;
 
-@Repository("presentacionRepository")
 public interface IPresentacionRepository {
 
 	/**
@@ -15,7 +12,7 @@ public interface IPresentacionRepository {
 	 * @param sesion
 	 * @return List<Presentacion>
 	 */
-	public abstract List<Presentacion> listarPresentacion(Session sesion);
+	public abstract List<Presentacion> listarPresentacion(EntityManager sesion);
 	
 	/**
 	 * Lista las presentaciones que
@@ -25,6 +22,6 @@ public interface IPresentacionRepository {
 	 * @param presentacion
 	 * @return List<Presentacion>
 	 */
-	public abstract List<Presentacion> buscarPresentacion(Session sesion, Presentacion presentacion);
+	public abstract List<Presentacion> buscarPresentacion(EntityManager sesion, Presentacion presentacion);
 	
 }

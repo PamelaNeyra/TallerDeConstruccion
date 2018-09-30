@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@Entity
 @Table(name = "contenido")
 public class Contenido implements Serializable {
 

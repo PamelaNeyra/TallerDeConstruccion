@@ -2,74 +2,53 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
-import org.hibernate.annotations.NamedNativeQueries;
-import org.hibernate.annotations.NamedNativeQuery;
-import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Presentacion;
+import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IPresentacionRepository;
 
-@NamedNativeQueries({
-		@NamedNativeQuery(name = "listarPresentacionProcedimientoAlmacenado", query = "CALL listarPresentacion()", resultClass = Presentacion.class),
-		@NamedNativeQuery(name = "buscarPresentacionProcedimientoAlmacenado", query = "CALL buscarPresentacion(:id_presentacion)", resultClass = Presentacion.class) })
+@Repository("presentacionRepository")
 public class PresentacionRepository implements IPresentacionRepository {
 
 	private static final Log LOG = LogFactory.getLog(PresentacionRepository.class);
 	private static final String CAPA = "[Repository : Presentacion] -> ";
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Presentacion> listarPresentacion(Session sesion) {
-		List<Presentacion> listaBD = new ArrayList<Presentacion>();
+	public List<Presentacion> listarPresentacion(EntityManager sesion) {
 		List<Presentacion> listaPresentacion = new ArrayList<Presentacion>();
-		Presentacion presentacionTmp = new Presentacion();
 		try {
-			@SuppressWarnings("unchecked")
-			Query<Presentacion> myquery = sesion.getNamedQuery("listarPresentacionProcedimientoAlmacenado");
-			listaBD = myquery.list();
-			for (Presentacion presentacion : listaBD) {
-				presentacionTmp.setIdPresentacion(presentacion.getIdPresentacion());
-				presentacionTmp.setIdProductoTerminado(presentacion.getIdProductoTerminado());
-				presentacionTmp.setDescripcion(presentacion.getDescripcion());
-				presentacionTmp.setCantidadTotal(presentacion.getCantidadTotal());
-				presentacionTmp.setComprometidoTotal(presentacion.getComprometidoTotal());
-				presentacionTmp.setBloque(presentacion.getBloque());
-				presentacionTmp.setIdTipoContenedor(presentacion.getIdTipoContenedor());
-				presentacionTmp.setContenedor(presentacion.getContenedor());
-				listaPresentacion.add(presentacionTmp);
-			}
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_presentaciones");
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Presentacion aux = new Presentacion();
+				aux.setIdPresentacion((String) o[0]);
+				aux.setDescripcion((String) o[1]);
+				listaPresentacion.add(aux);
+			});
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al listar las presentaciones", ex.getMessage());
 		}
 		return listaPresentacion;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Presentacion> buscarPresentacion(Session sesion, Presentacion presentacion) {
-		List<Presentacion> listaBD = new ArrayList<Presentacion>();
+	public List<Presentacion> buscarPresentacion(EntityManager sesion, Presentacion presentacion) {
 		List<Presentacion> listaPresentacion = new ArrayList<Presentacion>();
-		Presentacion presentacionTmp = new Presentacion();
 		try {
-			Query<?> myquery = sesion.getNamedQuery("buscarPresentacionProcedimientoAlmacenado")
-					.setParameter("id_presentacion", presentacion.getIdPresentacion());
-			listaBD = (List<Presentacion>) myquery.list();
-			for (Presentacion prstnIte : listaBD) {
-				presentacionTmp.setIdPresentacion(prstnIte.getIdPresentacion());
-				presentacionTmp.setIdProductoTerminado(prstnIte.getIdProductoTerminado());
-				presentacionTmp.setDescripcion(prstnIte.getDescripcion());
-				presentacionTmp.setCantidadTotal(prstnIte.getCantidadTotal());
-				presentacionTmp.setComprometidoTotal(prstnIte.getComprometidoTotal());
-				presentacionTmp.setBloque(prstnIte.getBloque());
-				presentacionTmp.setIdTipoContenedor(prstnIte.getIdTipoContenedor());
-				presentacionTmp.setContenedor(prstnIte.getContenedor());
-				listaPresentacion.add(presentacionTmp);
-			}
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_filtrar_presentaciones");
+			myquery.execute();
+			listaPresentacion = myquery.getResultList();
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al buscar la presentación", ex.getMessage());
 		}
 		return listaPresentacion;
 	}
