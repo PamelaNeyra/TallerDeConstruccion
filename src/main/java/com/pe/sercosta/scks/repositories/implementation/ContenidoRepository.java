@@ -70,4 +70,10 @@ public class ContenidoRepository implements IContenidoRepository {
 		}
 	}
 
+	@Override
+	public List<Contenido> listarContenidos(EntityManager sesion) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
