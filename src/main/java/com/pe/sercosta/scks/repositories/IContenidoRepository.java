@@ -12,7 +12,7 @@ public interface IContenidoRepository {
 	/**
 	 * Lista los contenidos
 	 * @param sesion
-	 * @return List<Presentacion>
+	 * @return List<Contenido>
 	 */
 	public abstract List<Contenido> listarContenidos(EntityManager sesion);
 	
