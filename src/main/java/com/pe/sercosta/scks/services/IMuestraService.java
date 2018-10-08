@@ -6,7 +6,7 @@ public interface IMuestraService {
 
 	/**
 	 * Lógica de negocios para
-	 * - O1 - Registrar Muestra
+	 * - O2 - Registrar Muestra
 	 * : Registra una muestra y su cantidad a muestrear
 	 * @param muestra
 	 */

@@ -31,15 +31,41 @@ public class LoteService implements ILoteService {
 	@Qualifier("contenidoRepository")
 	private IContenidoRepository contenidoRepository;
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void registrarLote(Lote lote) {
 		EntityTransaction tx = sesion.getTransaction();
+		boolean errorValidacion = false;
 		tx.begin();
 		try {
 			//TODO: Validaciones de O1 - Registrar Lote
-			loteRepository.registrarLote(sesion, lote);
-			lote.getContenidoList().forEach(c -> contenidoRepository.registrarContenido(sesion, c));
-			tx.commit();
+			if(lote.getIdPlanta() != null || lote.getIdPlanta().equals("")) {
+				if(lote.getIdLote() != null  || lote.getIdLote().equals("")) {
+					if(lote.getFechaProduccion() != null) {
+						if(lote.getFechaCaptura() != null) {
+							if(lote.getFechaVencimiento() != null) {
+								loteRepository.registrarLote(sesion, lote);
+								lote.getContenidoList().forEach(c -> contenidoRepository.registrarContenido(sesion, c));
+								tx.commit();
+							}else {
+								errorValidacion = true;
+							}
+						}else {
+							errorValidacion = true;							
+						}
+					}else {
+						errorValidacion = true;						
+					}
+				}else {
+					errorValidacion = true;					
+				}
+			}else {
+				errorValidacion = true;
+			}
+			if(errorValidacion == true) {
+				LOG.error("Error al validar los campos de Lote");
+				throw new Exception();
+			}
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
