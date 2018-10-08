@@ -43,7 +43,7 @@ public class PresentacionRepository implements IPresentacionRepository {
 	public List<Presentacion> buscarPresentacion(EntityManager sesion, Presentacion presentacion) {
 		List<Presentacion> listaPresentacion = new ArrayList<Presentacion>();
 		try {
-			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_filtrar_presentaciones");
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_informacion_presentacion");
 			myquery.execute();
 			listaPresentacion = myquery.getResultList();
 		} catch (Exception ex) {

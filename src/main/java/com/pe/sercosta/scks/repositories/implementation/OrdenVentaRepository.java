@@ -6,7 +6,9 @@ import org.hibernate.annotations.NamedNativeQuery;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
@@ -15,13 +17,15 @@ import org.apache.commons.logging.LogFactory;
 //import org.hibernate.query.Query;
 import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.OrdenVenta;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
 //TODO: falta revisar que parametros se le manda
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "registrarOrdenVentaProcedimientoAlmacenado", query = "CALL registrarOrdenVenta()", resultClass = OrdenVenta.class) })
 // TODO: Falta el implements
-public class OrdenVentaRepository {
+public class OrdenVentaRepository implements IOrdenVentaRepository{
 
 	private static final Log LOG = LogFactory.getLog(OrdenVentaRepository.class);
 	private static final String CAPA = "[Repository : OrdenVenta] -> ";
@@ -49,6 +53,30 @@ public class OrdenVentaRepository {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al registrar la orden de venta", ex.getMessage());
 		}
+	}
+
+	@Override
+	public List<OrdenVenta> listarOrdenVenta(EntityManager sesion, Planta planta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrdenVenta> buscarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void actualizarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
