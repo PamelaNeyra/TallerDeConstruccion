@@ -1,4 +1,4 @@
-var idPre = '';
+var idOrden = '';
 var desc = '';
 var cant = 0;
 var ClienteList = [];
@@ -33,7 +33,7 @@ $(document).ready( function () {
 	var listar = function() {
 		var tabla = $('#ordenesTabla').DataTable({
 			ajax: {
-				url: "EmbarcarOrden/listarOrdenVenta", /*VER */
+				url: "EmbarcarOrden/listarOrdenVenta",
 				type: "GET",
 			    error: function(xhr, ajaxOptions, thrownError) {
 			        alert(xhr.status);
@@ -58,16 +58,37 @@ $(document).ready( function () {
 	
 	listar();
 	
-	$('#botonAgregar').on("click", function() {
-		cant = $('#cantidad').val();
-		var contenido = [
-			idPre,
-			desc,
-			cant
-		]
-		contenidoList.push(contenido);
-		actualizarTablaContenido();
-		$('#modalAgregar').modal('hide');
+	$('#botonEmbarcar').on("click", function() {
+		idOrden ;/*Obtener la el idOrden del click EN LA TABLA*/
+		/*ENVIAR EL IDORDEN A LA SIGUIENTE PANATALLA*/		
 	});
+	
+	var listarA = function(idOrden) { /*DEBE DE PASAR COMO PARAMETRO EL IDORDEN CAPATADO*/
+		var tabla = $('#asignacionesTabla').DataTable({
+			ajax: {
+				url: "EmbarcarOrden/listarAsignacion", 
+				type: "GET",
+			    error: function(xhr, ajaxOptions, thrownError) {
+			        alert(xhr.status);
+			        alert(thrownError);
+			    }
+			},
+			sAjaxDataProp: "",
+			order: [[ 0, "asc" ]],
+			responsive: true,
+			columns: [
+				{data: "Codigo_De_Orden"},  
+				{data: "Cliente"},
+				{data: "Fecha_Asignacion"},
+				{data: "Cantidad_Total"},
+				{data: "Estado"}				
+			],
+			language: lenguaje
+		});
+		
+		//agregarCantidad('#ordenesTabla tbody',tabla)
+	}
+	
+	listarA();
 	
 });
