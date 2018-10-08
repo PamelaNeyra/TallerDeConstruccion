@@ -33,7 +33,7 @@ $(document).ready( function () {
 	var listar = function() {
 		var tabla = $('#ordenesTabla').DataTable({
 			ajax: {
-				url: "embarcarOrden/listarOrdenVenta", /*VER */
+				url: "EmbarcarOrden/listarOrdenVenta", /*VER */
 				type: "GET",
 			    error: function(xhr, ajaxOptions, thrownError) {
 			        alert(xhr.status);
@@ -57,5 +57,17 @@ $(document).ready( function () {
 	}
 	
 	listar();
+	
+	$('#botonAgregar').on("click", function() {
+		cant = $('#cantidad').val();
+		var contenido = [
+			idPre,
+			desc,
+			cant
+		]
+		contenidoList.push(contenido);
+		actualizarTablaContenido();
+		$('#modalAgregar').modal('hide');
+	});
 	
 });
