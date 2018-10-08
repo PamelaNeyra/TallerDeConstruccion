@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import com.pe.sercosta.scks.entities.Laboratorio;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
+import com.pe.sercosta.scks.repositories.ILaboratorioRepository;
 
 public class LaboratorioService implements ILaboratorioService{
 
