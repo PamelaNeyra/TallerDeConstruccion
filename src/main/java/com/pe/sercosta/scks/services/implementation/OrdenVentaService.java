@@ -62,7 +62,7 @@ public class OrdenVentaService implements IOrdenVentaService {
 
 	@Override
 	public void actualizarOrdenVenta(OrdenVenta ordenVenta) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
