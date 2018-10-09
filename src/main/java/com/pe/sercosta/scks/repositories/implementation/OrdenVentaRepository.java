@@ -36,17 +36,17 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(5, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN);
+				/*	.registerStoredProcedureParameter(5, LocalDate.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(6, LocalTime.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);
+					.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);*/
 			myquery.setParameter(1, ordenVenta.getIdOrdenVenta())
 					.setParameter(2, ordenVenta.getIdPlanta().getIdPlanta())
 					.setParameter(3, ordenVenta.getIdCliente().getIdCliente())
-					.setParameter(4, ordenVenta.getFechaAsignacion())
-					.setParameter(5, ordenVenta.getFechaEmbarque())
+					.setParameter(4, ordenVenta.getFechaAsignacion());
+			/*		.setParameter(5, ordenVenta.getFechaEmbarque())
 					.setParameter(6, ordenVenta.getHoraEmbarque())
-					.setParameter(7, ordenVenta.getPaisDestino());
+					.setParameter(7, ordenVenta.getPaisDestino()); */
 			myquery.execute();	
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());

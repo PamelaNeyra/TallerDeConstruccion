@@ -1,9 +1,11 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
+import java.time.LocalDate;
 //import java.io.Serializable; /*Descomentar*/
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -65,9 +67,26 @@ public class ClienteRepository implements IClienteRepository {
 			listaCliente = myquery.getResultList();
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw new SercostaException("Hubo un error al buscar la presentación", ex.getMessage());
+			throw new SercostaException("Hubo un error al buscar el cliente", ex.getMessage());
 		}
 		return listaCliente;
+	}
+
+
+	@Override
+	public void registrarCliente(EntityManager sesion, Cliente cliente) {
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_cliente");
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+			myquery.setParameter(1, cliente.getIdCliente())
+					.setParameter(2, cliente.getNombreCliente());
+			myquery.execute();			
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar el cliente", ex.getMessage());
+		}
+		
 	}
 
 }

@@ -27,4 +27,13 @@ public interface IClienteRepository {
 	 */
 	public abstract List<Cliente> buscarCliente(EntityManager sesion, Cliente cliente);
 	
+	/**
+	 * Registra los datos de 
+	 * un cliente
+	 * @param sesion
+	 * @param cliente
+	 * @return List<Presentacion>
+	 */
+	public abstract void registrarCliente(EntityManager sesion, Cliente cliente);
+	
 }
