@@ -44,13 +44,14 @@ public class RegistrarLoteRestController {
 	@RequestMapping(path = "/RegistrarLote/registrarLote", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) LoteModel lote) {
 		try {
-			// TODO: Poner planta del usuario al lote
 			loteService.registrarLote(loteConverter.convertToEntity(lote));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 	}
 
@@ -64,8 +65,10 @@ public class RegistrarLoteRestController {
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 		return listaPresentacion;
 	}

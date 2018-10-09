@@ -1,19 +1,14 @@
 package com.pe.sercosta.scks.services.implementation;
 
 import com.pe.sercosta.scks.services.ILaboratorioService;
-
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.pe.sercosta.scks.entities.Laboratorio;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.ILaboratorioRepository;
 
 public class LaboratorioService implements ILaboratorioService{

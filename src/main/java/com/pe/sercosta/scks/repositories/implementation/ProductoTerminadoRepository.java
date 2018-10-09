@@ -1,6 +1,5 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-//TODO: Adecuar a las interfaces necesarias
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
@@ -9,14 +8,16 @@ import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "listarProductoTerminadoProcedimientoAlmacenado", query = "CALL listarProductoTerminado()", resultClass = ProductoTerminado.class),
 		@NamedNativeQuery(name = "buscarProductoTerminadoProcedimientoAlmacenado", query = "CALL buscarProductoTerminado(:id_producto_terminado)", resultClass = ProductoTerminado.class) })
-// TODO: falta el implements IPresentacionRepository
-public class ProductoTerminadoRepository {
+@Repository("productoTerminadoRepository")
+public class ProductoTerminadoRepository implements IProductoTerminadoRepository{
 
 	private static final Log LOG = LogFactory.getLog(ProductoTerminadoRepository.class);
 	private static final String CAPA = "[Repository : ProductoTerminado] -> ";

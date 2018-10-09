@@ -2,11 +2,14 @@ package com.pe.sercosta.scks.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class LoteModel {
 
 	private String idLote;
 	private Integer idPlanta;
+	@DateTimeFormat(iso=ISO.DATE)
 	private LocalDate fechaProduccion;
 	private double cantidadRecepcion;
 	private List<ContenidoModel> contenidoList;

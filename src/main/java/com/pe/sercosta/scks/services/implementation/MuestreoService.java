@@ -18,7 +18,7 @@ public class MuestreoService implements IMuestreoService{
 	private static final Log LOG = LogFactory.getLog(LoteService.class);
 	private static final String CAPA = "[Service : Contenido] -> ";
 
-	private IMuestreoRepository muestreoRepository;
+	//private IMuestreoRepository muestreoRepository;
 	
 	@PersistenceContext
     private EntityManager sesion;
@@ -35,7 +35,7 @@ public class MuestreoService implements IMuestreoService{
 						muestreo.getMuestreoPK().getIdPresentacion().equals("")) {
 					if(muestreo.getMuestreoPK().getIdMuestra() != 0) {
 						//Falta implementar el IMuestreoRepository
-						muestreoRepository.registrarMuestreo(sesion, muestreo);
+						//muestreoRepository.registrarMuestreo(sesion, muestreo);
 						tx.commit();
 					}else {
 						errorValidacion = true;

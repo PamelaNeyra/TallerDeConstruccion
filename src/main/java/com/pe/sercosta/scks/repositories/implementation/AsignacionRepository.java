@@ -3,14 +3,11 @@ package com.pe.sercosta.scks.repositories.implementation;
 // import java.io.Serializable; /*Descomentar*/
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
-
-
+import org.springframework.stereotype.Repository;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 //import org.hibernate.query.Query;
@@ -24,6 +21,7 @@ import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "registrarAsignacionProcedimientoAlmacenado", query = "CALL registrarAsignacion()", resultClass = Asignacion.class) })
 // TODO: Falta el implements
+@Repository("asignacionRepository")
 public class AsignacionRepository implements IAsignacionRepository{
 
 	private static final Log LOG = LogFactory.getLog(AsignacionRepository.class);

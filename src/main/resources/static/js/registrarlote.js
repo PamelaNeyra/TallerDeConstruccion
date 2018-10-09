@@ -1,6 +1,6 @@
 var idPre = '';
-var desc = '';
 var cant = 0;
+var cantTotal = 0;
 var contenidoList = [];
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
@@ -31,10 +31,9 @@ $(document).ready( function () {
 	
 	var agregarCantidad = function(tbody, table) {
 		$(tbody).on("click", "span.btn", function(){
-			$('#cantidad').val("");
+			$('#cantidadAgregar').val("");
 			var data = table.row($(this).parents("tr")).data();
 			idPre = data.idPresentacion;
-			desc = data.descripcion;
 			$('#exampleModalCenterTitle').text(data.idPresentacion);			
 		});
 	}
@@ -46,25 +45,41 @@ $(document).ready( function () {
 			order: [[ 0, "asc" ]],
 			responsive: true,
 			columns: [
-				{title: "Código SAP"},
-				{title: "Descripcion"},
-				{title: "Cantidad"},
-				{defaultContent: "<button>H</button>"}
+				{data: "idPresentacion"},
+				{data: "cantidad"},
+				{defaultContent: "<span class='btn btn-danger'>" +
+					"<span class='fa fa-minus-circle'></span></span>"}
 			],
 			language: lenguaje
 		});
 	}
 	
 	$('#botonAgregar').on("click", function() {
-		cant = $('#cantidad').val();
-		var contenido = [
-			idPre,
-			desc,
-			cant
-		]
+		cant = $('#cantidadAgregar').val();
+		var contenido = {
+			idLote: "",
+			idPresentacion: idPre,
+			cantidad: cant
+		}
+		cantTotal = cantTotal + Number(cant);
 		contenidoList.push(contenido);
 		actualizarTablaContenido();
+		actualizarCantidadTotal();
 		$('#modalAgregar').modal('hide');
+	});
+	
+	$('#guardarLote').on("click", function() {
+		for(i = 0; i < contenidoList.length; i++) {
+			contenidoList[i].idLote = $('#codigo').val();
+		}
+		var lote = {
+			idLote : $('#codigo').val(),
+			idPlanta: 2,
+			fechaProduccion: $('#fecha').val(),
+			cantidadRecepcion: $('#cantidad').val(),
+			contenidoList: contenidoList	
+		}
+		registrarLote(lote);
 	});
 	
 	var listar = function() {
@@ -90,6 +105,36 @@ $(document).ready( function () {
 		});
 		
 		agregarCantidad('#presentacionesTabla tbody',tabla)
+	}
+	
+	function registrarLote(lote) {
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/RegistrarLote/registrarLote",
+	        data: JSON.stringify(lote),
+	        success: function (data) {	        	
+	            $('#modalExito').modal('show');
+	            limpiarControles();
+	    		actualizarTablaContenido();
+	    		actualizarCantidadTotal();
+	        },
+	        error: function (e) {
+	        	$('#modalError').modal('show');
+	        }
+	    });
+	}
+	
+	function limpiarControles() {
+		$('#codigo').val("");
+		$('#fecha').val("");
+		$('#cantidad').val("");
+		contenidoList = [];
+		cantTotal = 0;
+	}
+	
+	function actualizarCantidadTotal() {
+		$('#cantidadTotal').text('Cantidad Total: ' + cantTotal)
 	}
 	
 	listar();

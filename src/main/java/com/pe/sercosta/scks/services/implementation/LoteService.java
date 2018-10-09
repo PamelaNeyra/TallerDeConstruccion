@@ -1,7 +1,7 @@
 package com.pe.sercosta.scks.services.implementation;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+//import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,52 +31,38 @@ public class LoteService implements ILoteService {
 	@Qualifier("contenidoRepository")
 	private IContenidoRepository contenidoRepository;
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void registrarLote(Lote lote) {
-		EntityTransaction tx = sesion.getTransaction();
-		boolean errorValidacion = false;
-		tx.begin();
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
 		try {
-			//TODO: Validaciones de O1 - Registrar Lote
-			if(lote.getIdPlanta() != null || lote.getIdPlanta().equals("")) {
-				if(lote.getIdLote() != null  || lote.getIdLote().equals("")) {
-					if(lote.getFechaProduccion() != null) {
-						if(lote.getFechaCaptura() != null) {
-							if(lote.getFechaVencimiento() != null) {
-								loteRepository.registrarLote(sesion, lote);
-								lote.getContenidoList().forEach(c -> contenidoRepository.registrarContenido(sesion, c));
-								tx.commit();
-							}else {
-								errorValidacion = true;
-							}
-						}else {
-							errorValidacion = true;							
-						}
-					}else {
-						errorValidacion = true;						
-					}
-				}else {
-					errorValidacion = true;					
-				}
-			}else {
-				errorValidacion = true;
-			}
-			if(errorValidacion == true) {
-				LOG.error("Error al validar los campos de Lote");
-				throw new Exception();
-			}
+			validarRegistrarLote(lote);
+			loteRepository.registrarLote(sesion, lote);
+			lote.getContenidoList().forEach(c -> contenidoRepository.registrarContenido(sesion, c));			
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			tx.rollback();
+			//tx.rollback();
 			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
 		} finally {
 			sesion.close();
 		}
+	}
+	
+	private void validarRegistrarLote(Lote lote) throws Exception {
+		if(lote.getIdLote().isEmpty() || lote.getIdLote() == null)
+			throw new Exception("El idLote es requerido.");
+		if(lote.getIdPlanta().getIdPlanta() == null)
+			throw new Exception("El idPlanta es requerido.");
+		if(lote.getCantidadRecepcion() <= 0.0)
+			throw new Exception("La cantidadRecepcion debe ser mayor a 0");
+		if(lote.getFechaProduccion() == null)
+			throw new Exception("La fechaProduccion es requerida");
+		if(lote.getContenidoList() == null)
+			throw new Exception("La lista de contenidos es requerida.");
 	}
 
 }

@@ -6,34 +6,58 @@ import java.time.LocalTime;
 public class OrdenVentaModel {
 
 	private String idOrdenVenta;
-	private LocalDate fechaAsignacion ;
+	private LocalDate fechaAsignacion;
 	private boolean estaEmbarcado;
 	private String certificado;
 	private LocalTime horaEmbarque;
 	private LocalDate fechaEmbarque;
-	private String paisDestino;
+	private String paisDestino;	
+	private String nombreCliente;
+	private double cantidadTotal;
+	private String estado;
 	
-	private String cliente;
-	private double cantidad;
-	
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public double getCantidadTotal() {
+		return cantidadTotal;
+	}
+
+	public void setEstaEmbarcado(boolean estaEmbarcado) {
+		this.estaEmbarcado = estaEmbarcado;
+	}
+
 	public OrdenVentaModel() {
 		
 	}
 	
-	public String getCliente() {
-		return cliente;
+	public String getnombreCliente() {
+		return nombreCliente;
 	}
 
-	public void setCliente(String cliente) {
-		this.cliente = cliente;
+	public void setnombreCliente(String cliente) {
+		this.nombreCliente = cliente;
 	}
 	
-	public double getCantidad() {
-		return cantidad;
+	public double getcantidadTotal() {
+		return cantidadTotal;
 	}
 
-	public void setCantidad(double cantidad) {
-		this.cantidad = cantidad;
+	public void setCantidadTotal(double cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
 	}
 
 	public String getIdOrdenVenta() {

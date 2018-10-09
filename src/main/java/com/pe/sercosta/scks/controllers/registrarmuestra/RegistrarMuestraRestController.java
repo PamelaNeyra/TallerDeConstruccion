@@ -18,7 +18,6 @@ import com.pe.sercosta.scks.models.ProductoTerminadoModel;
 import com.pe.sercosta.scks.services.IMuestraService;
 import com.pe.sercosta.scks.services.IProductoTerminadoService;
 
-
 @RestController
 public class RegistrarMuestraRestController {
 
@@ -38,10 +37,8 @@ public class RegistrarMuestraRestController {
 	private ProductoTerminadoConverter productoTerminadoConverter;
 
 	@Autowired
-	@Qualifier("productoService")
-	private IProductoTerminadoService productoService;
-
-
+	@Qualifier("productoTerminadoService")
+	private IProductoTerminadoService productoTerminadoService;
 
 	@RequestMapping(path = "/RegistrarMuestra/registrarMuestra", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) MuestraModel muestra) {
@@ -60,7 +57,7 @@ public class RegistrarMuestraRestController {
 	public List<ProductoTerminadoModel> listarProducto() {
 		List<ProductoTerminadoModel> listaProducto = new ArrayList<>();
 		try {
-			listaProducto = productoService.listarProducto()
+			listaProducto = productoTerminadoService.listarProducto()
 					       .stream()
 				        	.map(entity -> productoTerminadoConverter.convertToModel(entity)).collect(Collectors.toList());
 		} catch (SercostaException sx) {

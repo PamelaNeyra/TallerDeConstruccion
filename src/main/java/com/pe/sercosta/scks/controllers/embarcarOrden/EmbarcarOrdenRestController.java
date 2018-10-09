@@ -15,8 +15,11 @@ import com.pe.sercosta.scks.converter.implementation.OrdenVentaConverter;
 import com.pe.sercosta.scks.converter.implementation.AsignacionConverter;
 import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
 import com.pe.sercosta.scks.entities.OrdenVenta;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
+import com.pe.sercosta.scks.models.PlantaModel;
+import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
 import com.pe.sercosta.scks.services.IAsignacionService;
@@ -48,18 +51,18 @@ public class EmbarcarOrdenRestController {
 	private IAsignacionService asignacionService;
 
 	
-	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
-	public List<OrdenVentaModel> listarOrdenVenta() {
-		List<OrdenVentaModel> listaOrdenVenta = new ArrayList<>();
+	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.POST)
+	public List<OrdenVentaView> listarOrdenVenta(PlantaModel planta) {
+		List<OrdenVentaView> listaOrdenVenta = new ArrayList<>();
 		try {
-			listaOrdenVenta = ordenVentaService.listarOrdenVenta()
-								.stream()
-								.map(entity -> ordenVentaConverter.convertToModel(entity)).collect(Collectors.toList());
+			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 		return listaOrdenVenta;
 	}

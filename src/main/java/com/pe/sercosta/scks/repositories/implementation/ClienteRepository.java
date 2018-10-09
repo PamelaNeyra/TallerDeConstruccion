@@ -3,16 +3,16 @@ package com.pe.sercosta.scks.repositories.implementation;
 //import java.io.Serializable; /*Descomentar*/
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.StoredProcedureQuery;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
+
 import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IClienteRepository;
@@ -20,6 +20,7 @@ import com.pe.sercosta.scks.repositories.IClienteRepository;
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "listarClientesProcedimientoAlmacenado", query = "CALL listarClientes()", resultClass = Cliente.class) })
 // TODO: Falta el implements
+@Repository("clienteRepository")
 public class ClienteRepository implements IClienteRepository {
 
 	private static final Log LOG = LogFactory.getLog(ClienteRepository.class);

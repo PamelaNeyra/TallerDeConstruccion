@@ -48,8 +48,8 @@ public class OrdenVenta implements Serializable {
     
     @Column(name = "esta_embarcado")
     private boolean estaEmbarcado;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenVenta")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenVenta")
     private List<Asignacion> asignacionList;
     
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
