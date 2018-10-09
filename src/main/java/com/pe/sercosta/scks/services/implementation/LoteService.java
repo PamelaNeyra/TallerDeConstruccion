@@ -61,7 +61,7 @@ public class LoteService implements ILoteService {
 			throw new Exception("La cantidadRecepcion debe ser mayor a 0");
 		if(lote.getFechaProduccion() == null)
 			throw new Exception("La fechaProduccion es requerida");
-		if(lote.getContenidoList() == null)
+		if(lote.getContenidoList() == null || lote.getContenidoList().isEmpty())
 			throw new Exception("La lista de contenidos es requerida.");
 	}
 

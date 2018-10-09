@@ -9,7 +9,6 @@ public class AsignacionModel {
 	private Double cantidad;
 	private Double saldo; /*VER*/
 	
-	
 	public AsignacionModel() {
 		
 	}

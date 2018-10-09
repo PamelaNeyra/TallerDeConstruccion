@@ -1,6 +1,5 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-import java.time.LocalDate;
 //import java.io.Serializable; /*Descomentar*/
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +13,12 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-
 import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IClienteRepository;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "listarClientesProcedimientoAlmacenado", query = "CALL listarClientes()", resultClass = Cliente.class) })
-// TODO: Falta el implements
 @Repository("clienteRepository")
 public class ClienteRepository implements IClienteRepository {
 

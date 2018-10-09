@@ -1,6 +1,7 @@
 var idPro = '';
 var desc = '';
 var cant = 0;
+var cantTotal = 0;
 var productoList = [];
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
@@ -42,9 +43,10 @@ $(document).ready( function () {
 		$(tbody).on("click", "span.btn", function(){
 			$('#cantidad').val("");
 			var data = table.row($(this).parents("tr")).data();
-			idPro = data.idProducto;
+			idPro = data.idProductoTerminado;
 			desc = data.descripcion;
-			$('#exampleModalCenterTitle1').text(data.idProducto);			
+			cant = data.cantidadTotal;
+			$('#exampleModalCenterTitle1').text(data.idProductoTerminado);			
 		});
 	}
 	
@@ -55,9 +57,9 @@ $(document).ready( function () {
 			order: [[ 0, "asc" ]],
 			responsive: true,
 			columns: [
-				{title: "Código de Producto Terminado Seleccionado"},
-				{title: "Descripción"},
-				{title: "Cantidad a Muestrear"},
+				{data: "idProductoTerminado"},
+				{data: "descripcion"},
+				{data: "cantidadTotal"},
 				{defaultContent:"<span class='btn btn-danger'>" + 
 					             "<span class='fa fa-tras'></span></span>" }
 			],
@@ -67,24 +69,30 @@ $(document).ready( function () {
 	}
 	
 	$('#botonAgregar').on("click", function() {
-		cant = $('#cantidad').val();
-		var producto = [
-			idPro,
-			desc,
-			cant
-		]
+		var producto = {
+			idProductoTerminado: idPro,
+			descripcion: desc,
+			cantidad: cant
+		}
+		cantTotal = cantTotal + Number(cant);
 		productoList.push(producto);
 		actualizarTablaProductoSeleccionado();
+		actualizarCantidadTotal();
 		$('#modalAgregar').modal('hide');
 	});
 	
-	$('#botonAceptar').on("click",function()){
-		var table = $('#productoSeleccionadoTabla').DataTable();
-		var rows = table
-		.rows()
-		.remove()
-		.draw();
-	}
+	$('#"botonGuardar"').on("click", function() {
+		var esValido = validarRegistrarMuestra();
+		if(esValido) {
+			var muestra = {
+				fechaCreacion: $('#fecha').val(),
+				idPlanta: 2,
+				nombreLaboratorio: $('#laboratorio').val,
+				productoTerminadoList: productoList
+			}
+			registrarMuestra(muestra);
+		}
+	});
 	
 	var listar = function() {
 		var tabla = $('#productoTerminado').DataTable({
@@ -92,17 +100,18 @@ $(document).ready( function () {
 				url: "/RegistrarMuestra/listarProductoTerminado",
 				type: "GET",
 			    error: function(xhr, ajaxOptions, thrownError) {
-			        alert(xhr.status);
-			        alert(thrownError);
+			    	var response = JSON.parse(xhr.responseText);	   
+		        	$('#mensajeError').text(response.message);
+		        	$('#modalError').modal('show');
 			    }
 			},
 			sAjaxDataProp: "",
 			order: [[ 0, "asc" ]],
 			responsive: true,
 			columns: [
-				{data: "idProducto"},
+				{data: "idProductoTerminado"},
 				{data: "descripcion"},
-				{data: "cantidad_total"},
+				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 						"<span class='fa fa-plus-circle'></span></span>"}
 			],
@@ -110,6 +119,55 @@ $(document).ready( function () {
 		});
 		
 		agregarCantidad('#productoTerminado tbody',tabla)
+	}
+	
+	function registrarMuestra(muestra) {
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/RegistrarMuestra/registrarMuestra",
+	        data: JSON.stringify(muestra),
+	        success: function (data) {	        	
+	            $('#modalTerminarRegistro').modal('show');
+	            limpiarControles();
+	            actualizarTablaProductoSeleccionado();
+	    		actualizarCantidadTotal();
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	        	var response = JSON.parse(xhr.responseText);	   
+	        	$('#mensajeError').text(response.message);
+	        	$('#modalError').modal('show');
+	        }
+	    });
+	}
+	
+	function limpiarControles() {
+		$('#laboratorio').val("");
+		$('#fecha').val("");
+		productoList = [];
+		cantTotal = 0;
+	}
+	
+	function actualizarCantidadTotal() {
+		$('#cantidadTotal').text('Cantidad Total: ' + cantTotal)
+	}
+	
+	function validarRegistrarMuestra() {
+		var mensaje = "";
+		if($('#fecha').val() === "")
+			mensaje = "La Fecha es requerida.";
+		if($('#laboratorio').val() <= 0)
+			mensaje = "El Laboratorio es requerido.";
+		if(productoList.length === 0)
+			mensaje = "La Lista de Productos Terminados no puede ser vacía.";
+		if(mensaje != "")
+		{
+        	$('#mensajeError').text(mensaje);
+        	$('#modalError').modal('show');
+        	return false;	
+		} else {
+			return true;
+		}
 	}
 	
 	listar();

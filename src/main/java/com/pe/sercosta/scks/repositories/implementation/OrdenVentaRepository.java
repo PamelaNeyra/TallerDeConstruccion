@@ -4,7 +4,6 @@ package com.pe.sercosta.scks.repositories.implementation;
 import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,7 +19,6 @@ import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
-// TODO: Falta el implements
 @Repository("ordenVentaRepository")
 public class OrdenVentaRepository implements IOrdenVentaRepository{
 
@@ -29,7 +27,7 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 	
 	public void registrarOrdenVenta(Session sesion, OrdenVenta ordenVenta) {
 		try {
-			//Nombre de PA por verificar
+			//TODO: Nombre de PA por verificar
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_orden_venta");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)

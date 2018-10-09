@@ -51,7 +51,7 @@ public class RegistrarLoteRestController {
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
 		}
 	}
 
@@ -68,7 +68,7 @@ public class RegistrarLoteRestController {
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw ex;
+			throw new SercostaException("Hubo un error al listar las presentaciones", ex.getMessage());
 		}
 		return listaPresentacion;
 	}

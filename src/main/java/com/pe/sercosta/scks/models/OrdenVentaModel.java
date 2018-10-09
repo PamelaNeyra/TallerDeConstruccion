@@ -16,6 +16,7 @@ public class OrdenVentaModel {
 	private double cantidadTotal;
 	private String estado;
 	
+	
 	public String getNombreCliente() {
 		return nombreCliente;
 	}
@@ -44,18 +45,6 @@ public class OrdenVentaModel {
 		
 	}
 	
-	public String getnombreCliente() {
-		return nombreCliente;
-	}
-
-	public void setnombreCliente(String cliente) {
-		this.nombreCliente = cliente;
-	}
-	
-	public double getcantidadTotal() {
-		return cantidadTotal;
-	}
-
 	public void setCantidadTotal(double cantidadTotal) {
 		this.cantidadTotal = cantidadTotal;
 	}
@@ -75,8 +64,7 @@ public class OrdenVentaModel {
 	public void setFechaAsignacion(LocalDate fechaAsignacion) {
 		this.fechaAsignacion = fechaAsignacion;
 	}
-		
-	
+			
 	public Boolean getEstaEmbarcado() {
 		return estaEmbarcado;
 	}

@@ -1,4 +1,3 @@
-var idOrden = '';
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
 	    "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -25,20 +24,18 @@ var lenguaje = {
 }
 
 $(document).ready( function () {
+		
+	var ordenVenta = {
+			idOrdenVenta: $('#codigo').val()
+	}
 	
-	var elegirOrden = function(tbody, table) {
-		$(tbody).on("click", "span.btn", function(){
-			var data = table.row($(this).parents("tr")).data();
-			idOrden = data.idOrdenVenta;
-			$('#exampleModalCenterTitle').text(data.idOrdenVenta);	
-		});
-	}		
-	
-	var listar = function() {
-		var tabla = $('#ordenesTabla').DataTable({
+	var listarAsignaciones = function(ordenVenta) {
+		var tabla = $('#asignacionesTabla').DataTable({
 			ajax: {
-				url: "/EmbarcarOrden/listarOrdenVenta",
-				type: "GET",
+				url: "/EmbarcarOrden/listarAsignacion",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(ordenVenta),
 			    error: function(xhr, ajaxOptions, thrownError) {
 			    	var response = JSON.parse(xhr.responseText);	   
 		        	$('#mensajeError').text(response.message);
@@ -49,24 +46,38 @@ $(document).ready( function () {
 			order: [[ 0, "asc" ]],
 			responsive: true,
 			columns: [
-				{data: "idOrdenVenta"},  
-				{data: "cliente"},
-				{data: "fechaAsignacion"},
-				{data: "cantidadTotal"},
-				{data: "estado"},
-				{defaultContent: "<span class='btn btn-info' data-toggle='modal' data-target='#modalElegir'>" +
-										"<span class='fa fa-ship'></span></span>"}
+				{data: "idLote"},
+				{data: "OT"},
+				{data: "idPresentacion"},
+				{data: "descripcion"},
+				{data: "cantidad"},
+				{data: "saldo"}
 			],
 			language: lenguaje
 		});
 		
-		elegirOrden('#ordenesTabla tbody',tabla);
 	}
 	
-	listar();
-
-	$('#botonAceptar').on("click", function() {
-		window.location.href = "/EmbarcarOrden/Orden/" + idOrden;
+	$('#botonEmbarcarAsignacion').on("click", function() {
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/EmbarcarOrden/actualizarOrden",
+	        data: JSON.stringify(ordenVenta),
+	        success: function (data) {	        	
+	            $('#modalExito').modal('show');
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	        	var response = JSON.parse(xhr.responseText);	   
+	        	$('#mensajeError').text(response.message);
+	        	$('#modalError').modal('show');
+	        }
+	    });
 	});
 
+	listarAsignaciones(ordenVenta);
+	
 });
+
+
+	

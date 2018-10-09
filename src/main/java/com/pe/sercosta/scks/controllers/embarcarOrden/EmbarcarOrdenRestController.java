@@ -18,7 +18,6 @@ import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
-import com.pe.sercosta.scks.models.PlantaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
@@ -51,8 +50,8 @@ public class EmbarcarOrdenRestController {
 	private IAsignacionService asignacionService;
 
 	
-	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.POST)
-	public List<OrdenVentaView> listarOrdenVenta(PlantaModel planta) {
+	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
+	public List<OrdenVentaView> listarOrdenVenta() {
 		List<OrdenVentaView> listaOrdenVenta = new ArrayList<>();
 		try {
 			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1));
@@ -80,7 +79,7 @@ public class EmbarcarOrdenRestController {
 		}
 	}
 	
-	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.GET)
+	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
 	public List<AsignacionModel> listarAsignacion(@RequestBody(required = true) OrdenVentaModel orden) {
 		List<AsignacionModel> listaAsignacion = new ArrayList<>();
 		try {

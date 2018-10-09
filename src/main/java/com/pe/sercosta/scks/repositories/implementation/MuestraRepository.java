@@ -2,7 +2,6 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//TODO: Adecuar a las interfaces necesarias
 import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
