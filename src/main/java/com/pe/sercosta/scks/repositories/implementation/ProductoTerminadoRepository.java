@@ -2,12 +2,14 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.StoredProcedureQuery;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
@@ -22,15 +24,15 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 	private static final Log LOG = LogFactory.getLog(ProductoTerminadoRepository.class);
 	private static final String CAPA = "[Repository : ProductoTerminado] -> ";
 	
-	// @Override
-	public List<ProductoTerminado> listarProductoTerminado(Session sesion) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductoTerminado> listarProductoTerminado(EntityManager sesion) {
 		List<ProductoTerminado> listaBD = new ArrayList<ProductoTerminado>();
 		List<ProductoTerminado> listaProductoTerminado = new ArrayList<ProductoTerminado>();
 		ProductoTerminado productoTerminadoTmp = new ProductoTerminado();
 		try {
-			@SuppressWarnings("unchecked")
-			Query<ProductoTerminado> myquery = sesion.getNamedQuery("listarProductoTerminadoProcedimientoAlmacenado");
-			listaBD = myquery.list();
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_productos_terminados");
+			listaBD = myquery.getResultList();
 			for (ProductoTerminado productoTerminado : listaBD) {
 				productoTerminadoTmp.setIdProductoTerminado(productoTerminado.getIdProductoTerminado());
 				productoTerminadoTmp.setIdSubproducto(productoTerminado.getIdSubproducto());
@@ -46,8 +48,8 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 		return listaProductoTerminado;
 	}
 
-	@SuppressWarnings("unchecked")
-	// @Override
+	/*@SuppressWarnings("unchecked")
+	@Override
 	public List<ProductoTerminado> buscarProductoTerminado(Session sesion, ProductoTerminado productoTerminado) {
 		List<ProductoTerminado> listaBD = new ArrayList<ProductoTerminado>();
 		List<ProductoTerminado> listaProductoTerminado = new ArrayList<ProductoTerminado>();
@@ -69,6 +71,6 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 			throw new SercostaException("Hubo un error al buscar el producto terminado", ex.getMessage());
 		}
 		return listaProductoTerminado;
-	}
+	}*/
 
 }

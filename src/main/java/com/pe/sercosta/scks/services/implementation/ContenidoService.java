@@ -29,33 +29,20 @@ public class ContenidoService implements IContenidoService{
 	
 	@Override
 	public void registrarContenido(Contenido contenido) {
-		EntityTransaction tx = sesion.getTransaction();
-		boolean errorValidacion = false;
-		tx.begin();
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
 		try {
 			//TODO: Validaciones de O1 - Registrar Contenido
-			if(contenido.getLote().getIdLote() != null || contenido.getLote().getIdLote().equals("")) {
-				if(contenido.getPresentacion().getIdPresentacion() != null || 
-						contenido.getPresentacion().getIdPresentacion().equals("")) {
-								contenidoRepository.registrarContenido(sesion, contenido);
-								tx.commit();
-				}else {
-					errorValidacion = true;
-				}
-			}else {
-				errorValidacion = true;				
-			}
-			if(errorValidacion == true) {
-				LOG.error("Error al validar los campos del Contenido");
-				throw new Exception();
-			}
+			validarRegistrarContenido(contenido);
+			contenidoRepository.registrarContenido(sesion, contenido);
+			//tx.commit();
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			tx.rollback();
+			//tx.rollback();
 			throw new SercostaException("Hubo un error al registrar el contenido", ex.getMessage());
 		} finally {
 			sesion.close();
@@ -79,6 +66,13 @@ public class ContenidoService implements IContenidoService{
 		} finally {
 			sesion.close();
 		}
+	}
+	
+	public void validarRegistrarContenido(Contenido contenido) throws Exception {
+		if(contenido.getLote().getIdLote() == null)
+			throw new Exception("El idLote es requerido.");
+		if(contenido.getPresentacion().getIdPresentacion() == null )
+			throw new Exception("El idPresentacion es requerido.");
 	}
 
 }

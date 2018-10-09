@@ -65,5 +65,18 @@ public class MuestraService implements IMuestraService{
 		}
 		
 	}
+	
+	public void validarRegistrarMuestra(Muestra muestra) throws Exception{
+			if(muestra.getIdMuestra() == null)
+				throw new Exception("El idMuestra es requerido.");
+			if(muestra.getIdPlanta() == null)
+				throw new Exception("El idPlanta es requerido.");
+			if(muestra.getIdLaboratorio() == null)
+				throw new Exception("El idLaboratorio es requerido.");
+			if(muestra.getFechaCreacion() == null)
+				throw new Exception("La fecha de creacion es requerido.");
+			if(muestra.getCantidadTotal() >= 0.0)
+				throw new Exception("La fecha de creacion es requerido.");
+	}
 
 }
