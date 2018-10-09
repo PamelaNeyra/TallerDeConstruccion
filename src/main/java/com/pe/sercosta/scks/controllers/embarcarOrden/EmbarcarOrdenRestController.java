@@ -2,7 +2,6 @@ package com.pe.sercosta.scks.controllers.embarcarOrden;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.OrdenVentaConverter;
 import com.pe.sercosta.scks.converter.implementation.AsignacionConverter;
 import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
-import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
-import com.pe.sercosta.scks.models.PlantaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
@@ -79,7 +76,6 @@ public class EmbarcarOrdenRestController {
 			LOG.error(CAPA + ex.getMessage());
 		}
 	}
-	
 	
 	@RequestMapping(path = "/EmbarcarOrden/obtenerOrdenVenta", method = RequestMethod.POST)
 	public OrdenVentaModel obtenerOrdenVenta(@RequestBody(required = true) OrdenVentaModel orden) {

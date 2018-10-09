@@ -15,12 +15,21 @@ public class OrdenVentaModel {
 	private String nombreCliente;
 	private double cantidadTotal;
 	private String estado;
+	private String nombrePlanta;
 	
+	public OrdenVentaModel() {
 	
-	public void OrdenVentaModel() {
-		
 	}
 	
+	
+	public String getNombrePlanta() {
+		return nombrePlanta;
+	}
+
+	public void setNombrePlanta(String nombrePlanta) {
+		this.nombrePlanta = nombrePlanta;
+	}
+
 	public String getNombreCliente() {
 		return nombreCliente;
 	}
@@ -44,11 +53,7 @@ public class OrdenVentaModel {
 	public void setEstaEmbarcado(boolean estaEmbarcado) {
 		this.estaEmbarcado = estaEmbarcado;
 	}
-
-	public OrdenVentaModel() {
-		
-	}
-
+	
 	public void setCantidadTotal(double cantidadTotal) {
 		this.cantidadTotal = cantidadTotal;
 	}
@@ -68,8 +73,7 @@ public class OrdenVentaModel {
 	public void setFechaAsignacion(LocalDate fechaAsignacion) {
 		this.fechaAsignacion = fechaAsignacion;
 	}
-		
-	
+			
 	public Boolean getEstaEmbarcado() {
 		return estaEmbarcado;
 	}

@@ -6,7 +6,6 @@ import javax.persistence.StoredProcedureQuery;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//TODO: Adecuar a las interfaces necesarias
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.stereotype.Repository;

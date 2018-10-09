@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="es"
     xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
-    <title>Registrar Lote</title>
+    <title>Embarcar Órden de Venta</title>
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet" type="text/css">
@@ -17,68 +16,73 @@
             <!-- Título de la Vista-->
             <div class="row">
 	            <div class="col-sm-10">
-	                <h1><strong>Escoger Orden</strong></h1>
+	                <h1><strong>Embarcar Orden de Venta</strong></h1>
 	            </div>
 	        </div>
-
+			<hr>
 	        <div class="card">
 	            <!-- Header de Card Ordenes-->
 	            <div class="card-header">
 	            	<div class="row">
-		            <div class="col-sm-10">
-		                <h2><strong>Órdenes</strong></h2>
-		            </div>
-		            <div class="col-sm-2" style="margin: auto;">
-		            	<button type="button" class="btn btn-primary">Actualizar Orden</button>
-		            </div>
-	        </div>
+			            <div class="col-sm-10">
+			                <h2><strong>Información de las Órdenes</strong></h2>
+			            </div>
+	        		</div>
 	            </div>
+	            <!-- Cuerpo de Card-->
+                <div class="card-body">	                    		            	
+                	<!-- Tablas -->	                    	
+                    <table id="ordenesTabla" class="table table-hover table-condensed table-bordered" style="width: 100%;">
+                    <!-- Cabecera de Tabla -->
+                    	<thead>
+                        	<tr>
+                            	<th>Código de Orden</th>
+                                <th>Cliente</th>
+                                <th>Fecha de Asignación</th>
+                                <th>Cantidad Total</th>
+                                <th>Estado</th>
+                                <th></th>
+							</tr>
+                    	</thead>                               
+                     </table>  
+              	</div>
 	        </div> 
-
-	        
-
-	        <hr>	        
-	       
-            <!-- Información de las Ordenes -->
-            <div class="row">
-	            <div class="col-sm-12">
-	                <!-- Card de Contenido -->
-	                <div class="card">
-	                    <!-- Cuerpo de Card-->
-	                    <div class="card-body">	                    		            	
-	                    	<!-- Tablas -->
-	                    	
-			                            <table id="ordenesTabla" class="table table-hover table-condensed table-bordered ">
-			                            <!-- Cabecera de Tabla -->
-			                                <thead>
-			                                    <tr>
-			                                        <th>Código de Orden</th>
-			                                        <th>Cliente</th>
-			                                        <th>Fecha de Asignación</th>
-			                                        <th>Cantidad Total</th>
-			                                        <th>Estado</th>
-			                                        <!--<th></th>-->
-			                                    </tr>
-			                                </thead>
-			                                
-			                            </table>  
-			                    	</div>
-		                    	
-	                </div>      
-	            </div>
-            </div> 
-
-            <div class="d-flex justify-content-end bd-highlight mb-3" >
-	            <div class="p-2"	>
-	            	<button type="button" class="btn btn-danger">Cancelar Orden</button>
-	            </div>
-	            <div class="p-2">
-	            	<button type="button" class="btn btn-primary">Actualizar Orden</button>
-	            </div>
-	            <div class="p-2">
-	            	<button id="botonEmbarcar" type="button" class="btn btn-success">Embarcar Orden</button>
-	            </div>
-	        </div>         
+	        <!-- Modal Elegir -->
+            <div class="modal fade" id="modalElegir" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalCenterTitle">Orden de Venta: </h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+	                         	<label>¿Desea elegir esta órden de venta?</label>
+						</div>
+						<div class="modal-footer">											
+							<button id="botonAceptar" type="button" class="btn btn-primary">Aceptar</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	        <!-- Modal Error -->
+            <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalCenterTitle">Error</h5>
+						</div>
+						<div class="modal-body">
+	                         	<span id="mensajeError"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>  
     </div>
     <!-- Scrips -->
     <script th:src="@{/jquery/jquery.min.js}"></script>

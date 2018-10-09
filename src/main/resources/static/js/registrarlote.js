@@ -69,17 +69,20 @@ $(document).ready( function () {
 	});
 	
 	$('#guardarLote').on("click", function() {
-		for(i = 0; i < contenidoList.length; i++) {
-			contenidoList[i].idLote = $('#codigo').val();
+		var esValido = validarRegistrarLote();
+		if(esValido) {
+			for(i = 0; i < contenidoList.length; i++) {
+				contenidoList[i].idLote = $('#codigo').val();
+			}
+			var lote = {
+				idLote: $('#codigo').val(),
+				idPlanta: 2,
+				fechaProduccion: $('#fecha').val(),
+				cantidadRecepcion: $('#cantidad').val(),
+				contenidoList: contenidoList	
+			}
+			registrarLote(lote);
 		}
-		var lote = {
-			idLote : $('#codigo').val(),
-			idPlanta: 2,
-			fechaProduccion: $('#fecha').val(),
-			cantidadRecepcion: $('#cantidad').val(),
-			contenidoList: contenidoList	
-		}
-		registrarLote(lote);
 	});
 	
 	var listar = function() {
@@ -88,8 +91,9 @@ $(document).ready( function () {
 				url: "/RegistrarLote/listarPresentacion",
 				type: "GET",
 			    error: function(xhr, ajaxOptions, thrownError) {
-			        alert(xhr.status);
-			        alert(thrownError);
+			    	var response = JSON.parse(xhr.responseText);	   
+		        	$('#mensajeError').text(response.message);
+		        	$('#modalError').modal('show');
 			    }
 			},
 			sAjaxDataProp: "",
@@ -104,7 +108,7 @@ $(document).ready( function () {
 			language: lenguaje
 		});
 		
-		agregarCantidad('#presentacionesTabla tbody',tabla)
+		agregarCantidad('#presentacionesTabla tbody',tabla);
 	}
 	
 	function registrarLote(lote) {
@@ -119,7 +123,9 @@ $(document).ready( function () {
 	    		actualizarTablaContenido();
 	    		actualizarCantidadTotal();
 	        },
-	        error: function (e) {
+	        error: function (xhr, ajaxOptions, thrownError) {
+	        	var response = JSON.parse(xhr.responseText);	   
+	        	$('#mensajeError').text(response.message);
 	        	$('#modalError').modal('show');
 	        }
 	    });
@@ -135,6 +141,26 @@ $(document).ready( function () {
 	
 	function actualizarCantidadTotal() {
 		$('#cantidadTotal').text('Cantidad Total: ' + cantTotal)
+	}
+	
+	function validarRegistrarLote() {
+		var mensaje = "";
+		if($('#codigo').val() === "")
+			mensaje = "El Código de Lote es requerido.";
+		if($('#fecha').val() === "")
+			mensaje = "La Fecha de Producción es requerida.";
+		if($('#cantidad').val() <= 0)
+			mensaje = "La Cantidad Recepcionada debe ser mayor a 0.";
+		if(contenidoList.length === 0)
+			mensaje = "La Lista de Contenidos no puede ser vacía.";
+		if(mensaje != "")
+		{
+        	$('#mensajeError').text(mensaje);
+        	$('#modalError').modal('show');
+        	return false;	
+		} else {
+			return true;
+		}
 	}
 	
 	listar();

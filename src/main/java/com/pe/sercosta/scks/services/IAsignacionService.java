@@ -1,8 +1,6 @@
 package com.pe.sercosta.scks.services;
 
 import java.util.List;
-
-import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.models.AsignacionModel;
 

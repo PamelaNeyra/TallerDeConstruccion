@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="es"
     xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
-    <title>Registrar Lote</title>
+    <title>Embarcar Órden de Venta</title>
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet" type="text/css">
@@ -13,10 +12,9 @@
 </head>
 
 <body>
-    <hr>
-
+    <hr/>
     <div class="container">       
-	        <!-- Información del Lote -->
+	        <!-- Información de la Orden -->
             <div class="row">
 	            <div class="col-sm-12">
 	                <!-- Card de Lote -->
@@ -31,7 +29,7 @@
 	                        <div class="col-sm-15 form-inline justify-content-center">
 							<!-- Código de Orden-->
 	                            <label for="codigo" class="col-sm-2">Código Orden</label>
-	                            <input type="text" class="form-control col-sm-2" 
+	                            <input type="text" class="form-control col-sm-2" th:value="${idOrden}" 
 	                                    id="codigo" disabled>
 	                        <!-- Tipo de Certificado-->
 	                            <label for="certificado" class="col-sm-2">Tipo de Certificado</label>
@@ -85,7 +83,7 @@
 		                    	<!-- Tabla de Presentacion -->
 		                    	<div id="tabla1" class="tab-pane active">
 			                    	<div class="table-responsive-sm">
-			                            <table id="asignacionesTabla" class="table table-hover table-condensed table-bordered">
+			                            <table id="asignacionesTabla" class="table table-hover table-condensed table-bordered" style="width: 100%;">
 			                            <!-- Cabecera de Tabla -->
 			                                <thead>
 			                                 	<tr>
@@ -97,7 +95,7 @@
 			                                        <th>Saldo</th>
 			                                    </tr>
 			                                </thead>
-			                                			                            </table>  
+			                        	</table>  
 			                    	</div>
 		                    	</div>
 		                    </div>
@@ -118,13 +116,45 @@
 	            <div class="p-2">
 	            	<button id="botonEmbarcarAsignacion" type="button" class="btn btn-primary">Embarcar Asignacion</button>
 	            </div>
-	        </div>              
+	        </div> 
+	        <!-- Modal Éxito -->
+            <div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalCenterTitle">Éxito </h5>
+						</div>
+						<div class="modal-body">
+	                         	<span>La Orden de Venta se embarcó con éxito.</span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	        <!-- Modal Error -->
+            <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalCenterTitle">Error</h5>
+						</div>
+						<div class="modal-body">
+	                         	<span id="mensajeError"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>               
     </div>
     <!-- Scrips -->
     <script th:src="@{/jquery/jquery.min.js}"></script>
     <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/data-tables/datatables.min.js}"></script>
-   	<script th:src="@{/js/embarcarOrden.js}"></script>
+   	<script th:src="@{/js/embarcarorden2.js}"></script>
 </body>
 
 </html>

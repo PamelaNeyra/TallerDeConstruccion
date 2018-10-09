@@ -17,12 +17,10 @@ import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
-// TODO: Falta el implements
 @Repository("ordenVentaRepository")
 public class OrdenVentaRepository implements IOrdenVentaRepository{
 
@@ -31,7 +29,7 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 	
 	public void registrarOrdenVenta(Session sesion, OrdenVenta ordenVenta) {
 		try {
-			//Nombre de PA por verificar
+			//TODO: Nombre de PA por verificar
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_orden_venta");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
@@ -81,23 +79,29 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 	}
 	
 	public OrdenVentaModel obtenerOrdenVenta(EntityManager sesion, OrdenVenta orden) {
-		OrdenVentaModel ordenVenta = new OrdenVentaModel();
+		
 		try {
-			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_informacion_asignacion");
+			OrdenVentaModel ordenVenta = new OrdenVentaModel() ;
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_informacion_orden");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
 			myquery.setParameter(1, orden.getIdOrdenVenta());
 			myquery.execute();
-			List<Object[]> lista = myquery.getResultList();
-			lista.forEach(o -> {
-				OrdenVentaModel aux = new OrdenVentaModel();
-				/*FALTA COMPLETAR*/
-			   ordenVenta=aux;
-			});
+			OrdenVentaModel ordenModel = new OrdenVentaModel();
+			List<Object[]> rsOrden = myquery.getResultList();
+			if(rsOrden.size() == 1) {
+				
+				Object[] ordenRow = rsOrden.get(0);
+				ordenModel.setIdOrdenVenta((String) ordenRow[0]);
+				ordenModel.setNombreCliente((String) ordenRow[1]);
+				ordenModel.setFechaAsignacion(((Date) ordenRow[2]).toLocalDate());
+				ordenModel.setCertificado((String) ordenRow[3]);
+				ordenModel.setNombrePlanta((String) ordenRow[4]);
+			}
+			return ordenModel;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
 		}
-		return ordenVenta;
 	}
 
 	@Override
@@ -108,9 +112,25 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 
 	@Override
 	public void actualizarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
-		// TODO Auto-generated method stub
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_embarcar_orden_venta");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, LocalTime.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
+			myquery.setParameter(1, ordenVenta.getIdOrdenVenta())
+					.setParameter(2, ordenVenta.getFechaEmbarque())
+					.setParameter(3,ordenVenta.getHoraEmbarque())
+					.setParameter(4,ordenVenta.getPaisDestino());
+			myquery.execute();			
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
+		}
 		
 	}
+
+	
 
 	@Override
 	public void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {

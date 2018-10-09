@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es"
     xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
     <title>Registrar Lote</title>
@@ -42,7 +41,7 @@
 	                        <div class="col-sm-12 form-inline justify-content-center">
 	                            <!-- Código de Lote-->
 	                            <label for="codigo" class="col-sm-1">Código de Lote</label>
-	                            <input type="text" class="form-control col-sm-2" 
+	                            <input type="text" class="form-control col-sm-2"  
 	                                    placeholder="Ingrese código" id="codigo">
 	                            <!-- Fecha de Producción -->
 	                            <label for="fecha" class="col-sm-2">Fecha de Producción</label>
@@ -50,7 +49,7 @@
 	                                    placeholder="dd/mm/aaaa" id="fecha">
 	                            <!-- Cantidad Recepcionada -->
 	                            <label for="cantidad" class="col-sm-2">Cantidad Recepcionada</label>
-	                            <input type="number" class="form-control col-sm-2" 
+	                            <input type="number" class="form-control col-sm-2" step="0.5" min="0"
 	                                    placeholder="0" id="cantidad">        
 	                        </div>
 	                    </div>
@@ -88,7 +87,7 @@
 		                    	<!-- Tabla de Presentacion -->
 		                    	<div id="tabla1" class="tab-pane active">
 			                    	<div class="table-responsive-sm">
-			                            <table id="presentacionesTabla" class="table table-hover table-condensed table-bordered tablasercosta">
+			                            <table id="presentacionesTabla" class="table table-hover table-condensed table-bordered tablasercosta" style="width:100%;">
 			                            <!-- Cabecera de Tabla -->
 			                                <thead>
 			                                    <tr>
@@ -127,11 +126,11 @@
 											</div>
 											<div class="modal-body">
 						                         	<label>Cantidad a Ingresar:</label>
-						                         	<input type="number" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
+						                         	<input type="number" min="0" step="0.5" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
 											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+											<div class="modal-footer">											
 												<button id="botonAgregar" type="button" class="btn btn-primary">Agregar</button>
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 											</div>
 										</div>
 									</div>
@@ -144,7 +143,7 @@
 												<h5 class="modal-title" id="exampleModalCenterTitle">Éxito </h5>
 											</div>
 											<div class="modal-body">
-						                         	<label>El Lote se ha registrado con éxito</label>
+						                         	<span>El Lote se ha registrado con éxito</span>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -157,10 +156,10 @@
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalCenterTitle">Error </h5>
+												<h5 class="modal-title" id="exampleModalCenterTitle">Error</h5>
 											</div>
 											<div class="modal-body">
-						                         	<label>Hubo un error al registrar el Lote</label>
+						                         	<span id="mensajeError"></span>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

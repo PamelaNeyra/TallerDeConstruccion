@@ -26,7 +26,6 @@ import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 //TODO: falta revisar que parametros se le manda
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "registrarAsignacionProcedimientoAlmacenado", query = "CALL registrarAsignacion()", resultClass = Asignacion.class) })
-// TODO: Falta el implements
 @Repository("asignacionRepository")
 public class AsignacionRepository implements IAsignacionRepository{
 
