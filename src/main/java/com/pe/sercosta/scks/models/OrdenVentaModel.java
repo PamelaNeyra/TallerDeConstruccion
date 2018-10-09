@@ -16,6 +16,11 @@ public class OrdenVentaModel {
 	private double cantidadTotal;
 	private String estado;
 	
+	
+	public void OrdenVentaModel() {
+		
+	}
+	
 	public String getNombreCliente() {
 		return nombreCliente;
 	}
@@ -42,18 +47,6 @@ public class OrdenVentaModel {
 
 	public OrdenVentaModel() {
 		
-	}
-	
-	public String getnombreCliente() {
-		return nombreCliente;
-	}
-
-	public void setnombreCliente(String cliente) {
-		this.nombreCliente = cliente;
-	}
-	
-	public double getcantidadTotal() {
-		return cantidadTotal;
 	}
 
 	public void setCantidadTotal(double cantidadTotal) {

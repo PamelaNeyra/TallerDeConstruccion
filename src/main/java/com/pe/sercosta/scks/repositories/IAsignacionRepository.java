@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.models.AsignacionModel;
 
 
 public interface IAsignacionRepository {
@@ -21,7 +23,7 @@ public interface IAsignacionRepository {
 	 * @param planta
 	 * @return List<Asignacion>
 	 */
-	public abstract List<Asignacion> buscarAsignacion(EntityManager sesion, Asignacion asignacion, Planta planta);
+	public abstract List<AsignacionModel> listarAsignacion(EntityManager sesion, OrdenVenta orden);
 	
 	/**
 	 * Registra una asignacion

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
@@ -37,9 +38,14 @@ public class OrdenVentaService implements IOrdenVentaService {
 	}
 
 	@Override
-	public OrdenVenta listarOrdenVenta(OrdenVenta orden) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrdenVentaModel obtenerOrdenVenta(OrdenVenta orden) {
+		try {
+			return ordenVentaRepository.obtenerOrdenVenta(sesion, orden);
+		} catch (SercostaException sx) {
+			throw sx;
+		} catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override

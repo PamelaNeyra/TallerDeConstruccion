@@ -51,8 +51,8 @@ public class EmbarcarOrdenRestController {
 	private IAsignacionService asignacionService;
 
 	
-	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.POST)
-	public List<OrdenVentaView> listarOrdenVenta(PlantaModel planta) {
+	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
+	public List<OrdenVentaView> listarOrdenVenta() {
 		List<OrdenVentaView> listaOrdenVenta = new ArrayList<>();
 		try {
 			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1));
@@ -80,13 +80,26 @@ public class EmbarcarOrdenRestController {
 		}
 	}
 	
-	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.GET)
+	
+	@RequestMapping(path = "/EmbarcarOrden/obtenerOrdenVenta", method = RequestMethod.POST)
+	public OrdenVentaModel obtenerOrdenVenta(@RequestBody(required = true) OrdenVentaModel orden) {
+		OrdenVentaModel ordenVenta = new OrdenVentaModel();
+		try {
+			ordenVenta = ordenVentaService.obtenerOrdenVenta(ordenVentaConverter.convertToEntity(orden));
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+		}
+		return ordenVenta;
+	}
+
+	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
 	public List<AsignacionModel> listarAsignacion(@RequestBody(required = true) OrdenVentaModel orden) {
 		List<AsignacionModel> listaAsignacion = new ArrayList<>();
 		try {
-			listaAsignacion = asignacionService.listarAsignacion(ordenVentaConverter.convertToEntity(orden))
-								.stream()
-								.map(entity -> asignacionConverter.convertToModel(entity)).collect(Collectors.toList());
+			listaAsignacion = asignacionService.listarAsignacion(ordenVentaConverter.convertToEntity(orden));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
@@ -94,20 +107,5 @@ public class EmbarcarOrdenRestController {
 			LOG.error(CAPA + ex.getMessage());
 		}
 		return listaAsignacion;
-	}
-	
-	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVentaE", method = RequestMethod.GET)
-	public OrdenVentaModel listarOrdenVentaE(@RequestBody(required = true) OrdenVentaModel orden) {
-		OrdenVenta listaOrden = new OrdenVenta();
-		try {
-			listaOrden = ordenVentaService.listarOrdenVenta(ordenVentaConverter.convertToEntity(orden));
-						
-		} catch (SercostaException sx) {
-			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
-			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
-		} catch (Exception ex) {
-			LOG.error(CAPA + ex.getMessage());
-		}
-		return ordenVentaConverter.convertToModel(listaOrden);
 	}
 }

@@ -17,6 +17,8 @@ import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.AsignacionModel;
+import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
@@ -76,6 +78,26 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
 		}
 		return listaOrdenVenta;
+	}
+	
+	public OrdenVentaModel obtenerOrdenVenta(EntityManager sesion, OrdenVenta orden) {
+		OrdenVentaModel ordenVenta = new OrdenVentaModel();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_informacion_asignacion");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, orden.getIdOrdenVenta());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				OrdenVentaModel aux = new OrdenVentaModel();
+				/*FALTA COMPLETAR*/
+			   ordenVenta=aux;
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
+		}
+		return ordenVenta;
 	}
 
 	@Override

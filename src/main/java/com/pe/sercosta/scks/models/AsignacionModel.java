@@ -7,9 +7,9 @@ public class AsignacionModel {
 	private String idPresentacion;
 	private String descripcion;
 	private Double cantidad;
-	private Double saldo; /*VER*/
+	private Double saldo; 
 	
-	
+
 	public AsignacionModel() {
 		
 	}
