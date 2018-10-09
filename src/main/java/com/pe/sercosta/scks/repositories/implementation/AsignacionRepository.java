@@ -4,6 +4,9 @@ package com.pe.sercosta.scks.repositories.implementation;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -13,8 +16,11 @@ import org.apache.commons.logging.LogFactory;
 //import org.hibernate.query.Query;
 import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.AsignacionModel;
+import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 
 //TODO: falta revisar que parametros se le manda
@@ -26,7 +32,35 @@ public class AsignacionRepository implements IAsignacionRepository{
 	private static final Log LOG = LogFactory.getLog(AsignacionRepository.class);
 	private static final String CAPA = "[Repository : Asignacion] -> ";
 	
-	public void registrarAsignacion(Session sesion, Asignacion asignacion) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AsignacionModel> listarAsignacion(EntityManager sesion, OrdenVenta orden) {
+		List<AsignacionModel> listaAsignacion = new ArrayList<AsignacionModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_informacion_asignacion");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, orden.getIdOrdenVenta());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				AsignacionModel aux = new AsignacionModel();
+				aux.setIdLote((String) o[0]);
+				aux.setOT((String) o[1]);
+				aux.setIdPresentacion((String) o[2]);
+				aux.setDescripcion((String) o[3]);
+				aux.setCantidad((double) o[4]);
+                aux.setSaldo((double) o[5]);
+			    listaAsignacion.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
+		}
+		return listaAsignacion;
+	}
+
+	@Override
+	public void registrarAsignacion(EntityManager sesion, Asignacion asignacion) {
 		try {
 			//Nombre de PA por verificar
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_asignacion");
@@ -43,18 +77,8 @@ public class AsignacionRepository implements IAsignacionRepository{
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al registrar la orden de venta", ex.getMessage());
 		}
-	}
-
-	@Override
-	public List<Asignacion> buscarAsignacion(EntityManager sesion, Asignacion asignacion, Planta planta) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void registrarAsignacion(EntityManager sesion, Asignacion asignacion) {
-		// TODO Auto-generated method stub
 		
 	}
 
+	
 }

@@ -16,7 +16,10 @@ public class OrdenVentaModel {
 	private double cantidadTotal;
 	private String estado;
 	
-	
+	public OrdenVentaModel() {
+		
+	}
+
 	public String getNombreCliente() {
 		return nombreCliente;
 	}
@@ -39,10 +42,6 @@ public class OrdenVentaModel {
 
 	public void setEstaEmbarcado(boolean estaEmbarcado) {
 		this.estaEmbarcado = estaEmbarcado;
-	}
-
-	public OrdenVentaModel() {
-		
 	}
 	
 	public void setCantidadTotal(double cantidadTotal) {

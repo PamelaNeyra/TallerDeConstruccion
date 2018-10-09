@@ -1,16 +1,10 @@
 package com.pe.sercosta.scks.services;
 
-
-
 import java.util.List;
-
-//import com.pe.sercosta.scks.entities.Asignacion;
-
 //import javax.persistence.EntityManager;
-
 import com.pe.sercosta.scks.entities.OrdenVenta;
-//import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 
 public interface IOrdenVentaService {
@@ -23,8 +17,9 @@ public interface IOrdenVentaService {
 	 */
 	public abstract List<OrdenVentaView> listarOrdenVenta(Planta planta);
 	
-	public abstract OrdenVenta listarOrdenVenta(OrdenVenta orden);
 	
+	public abstract OrdenVentaModel obtenerOrdenVenta(OrdenVenta orden);
+		
 	/**
 	 * Lógica de negocios para
 	 * - O5 - Registrar OrdenVenta

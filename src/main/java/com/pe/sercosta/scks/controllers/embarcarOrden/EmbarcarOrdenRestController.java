@@ -2,7 +2,6 @@ package com.pe.sercosta.scks.controllers.embarcarOrden;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.OrdenVentaConverter;
 import com.pe.sercosta.scks.converter.implementation.AsignacionConverter;
 import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
-import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
@@ -79,13 +77,25 @@ public class EmbarcarOrdenRestController {
 		}
 	}
 	
+	@RequestMapping(path = "/EmbarcarOrden/obtenerOrdenVenta", method = RequestMethod.POST)
+	public OrdenVentaModel obtenerOrdenVenta(@RequestBody(required = true) OrdenVentaModel orden) {
+		OrdenVentaModel ordenVenta = new OrdenVentaModel();
+		try {
+			ordenVenta = ordenVentaService.obtenerOrdenVenta(ordenVentaConverter.convertToEntity(orden));
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+		}
+		return ordenVenta;
+	}
+
 	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
 	public List<AsignacionModel> listarAsignacion(@RequestBody(required = true) OrdenVentaModel orden) {
 		List<AsignacionModel> listaAsignacion = new ArrayList<>();
 		try {
-			listaAsignacion = asignacionService.listarAsignacion(ordenVentaConverter.convertToEntity(orden))
-								.stream()
-								.map(entity -> asignacionConverter.convertToModel(entity)).collect(Collectors.toList());
+			listaAsignacion = asignacionService.listarAsignacion(ordenVentaConverter.convertToEntity(orden));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
@@ -93,20 +103,5 @@ public class EmbarcarOrdenRestController {
 			LOG.error(CAPA + ex.getMessage());
 		}
 		return listaAsignacion;
-	}
-	
-	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVentaE", method = RequestMethod.GET)
-	public OrdenVentaModel listarOrdenVentaE(@RequestBody(required = true) OrdenVentaModel orden) {
-		OrdenVenta listaOrden = new OrdenVenta();
-		try {
-			listaOrden = ordenVentaService.listarOrdenVenta(ordenVentaConverter.convertToEntity(orden));
-						
-		} catch (SercostaException sx) {
-			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
-			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
-		} catch (Exception ex) {
-			LOG.error(CAPA + ex.getMessage());
-		}
-		return ordenVentaConverter.convertToModel(listaOrden);
 	}
 }

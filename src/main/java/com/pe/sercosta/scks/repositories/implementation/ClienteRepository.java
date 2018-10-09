@@ -1,6 +1,5 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-//import java.io.Serializable; /*Descomentar*/
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -8,17 +7,11 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
-import org.hibernate.annotations.NamedNativeQueries;
-import org.hibernate.annotations.NamedNativeQuery;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IClienteRepository;
 
-@NamedNativeQueries({
-		@NamedNativeQuery(name = "listarClientesProcedimientoAlmacenado", query = "CALL listarClientes()", resultClass = Cliente.class) })
 @Repository("clienteRepository")
 public class ClienteRepository implements IClienteRepository {
 
@@ -26,34 +19,26 @@ public class ClienteRepository implements IClienteRepository {
 	private static final String CAPA = "[Repository : Cliente] -> ";
 	
 
-	public List<Cliente> listarClientes(Session sesion) {
-		List<Cliente> listaBD = new ArrayList<Cliente>();
+	@SuppressWarnings("unchecked")
+	public List<Cliente> listarClientes(EntityManager sesion) {
 		List<Cliente> listaClientes = new ArrayList<Cliente>();
-		Cliente clienteTemporal = new Cliente();
 		try {
-			@SuppressWarnings("unchecked")
-			Query<Cliente> myquery = sesion.getNamedQuery(
-					"sp_listar_clientes"); /* Falta actualizar el nombre del procedimiento */
-			listaBD = myquery.list();
-			for (Cliente cliente : listaBD) {
-				clienteTemporal.setIdCliente(cliente.getIdCliente());
-				clienteTemporal.setNombreCliente(cliente.getNombreCliente());
-				listaClientes.add(clienteTemporal);
-			}
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_clientes");
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Cliente aux = new Cliente();
+				aux.setIdCliente((Integer) o[0]);
+				aux.setNombreCliente((String) o[1]);
+				listaClientes.add(aux);
+			});
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar los clientes", ex.getMessage());
 		}
 		return listaClientes;
 	}
-
-
-	@Override
-	public List<Cliente> listarClientes(EntityManager sesion) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cliente> buscarCliente(EntityManager sesion, Cliente cliente) {

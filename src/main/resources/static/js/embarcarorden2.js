@@ -25,17 +25,20 @@ var lenguaje = {
 
 $(document).ready( function () {
 		
-	var ordenVenta = {
+	var orden = {
 			idOrdenVenta: $('#codigo').val()
-	}
+	};
 	
-	var listarAsignaciones = function(ordenVenta) {
+	function listarAsignaciones(orden) {
 		var tabla = $('#asignacionesTabla').DataTable({
 			ajax: {
-				url: "/EmbarcarOrden/listarAsignacion",
 				type: "POST",
 				contentType: "application/json",
-				data: JSON.stringify(ordenVenta),
+				url: "/EmbarcarOrden/listarAsignacion",
+				data: JSON.stringify(orden),
+				beforeSend() {
+					console.log(JSON.stringify(orden));
+				},
 			    error: function(xhr, ajaxOptions, thrownError) {
 			    	var response = JSON.parse(xhr.responseText);	   
 		        	$('#mensajeError').text(response.message);
@@ -47,7 +50,7 @@ $(document).ready( function () {
 			responsive: true,
 			columns: [
 				{data: "idLote"},
-				{data: "OT"},
+				{data: "ot"},
 				{data: "idPresentacion"},
 				{data: "descripcion"},
 				{data: "cantidad"},
@@ -63,7 +66,7 @@ $(document).ready( function () {
 	        type: "POST",
 	        contentType: "application/json",
 	        url: "/EmbarcarOrden/actualizarOrden",
-	        data: JSON.stringify(ordenVenta),
+	        data: JSON.stringify(orden),
 	        success: function (data) {	        	
 	            $('#modalExito').modal('show');
 	        },
@@ -75,7 +78,7 @@ $(document).ready( function () {
 	    });
 	});
 
-	listarAsignaciones(ordenVenta);
+	listarAsignaciones(orden);
 	
 });
 
