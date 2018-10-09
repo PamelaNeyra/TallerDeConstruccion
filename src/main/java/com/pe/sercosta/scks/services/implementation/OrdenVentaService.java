@@ -90,7 +90,20 @@ public class OrdenVentaService implements IOrdenVentaService {
 
 	@Override
 	public void actualizarOrdenVenta(OrdenVenta ordenVenta) {
-		// TODO Auto-generated method stub
+		try {
+			validarActualizarOrdenVenta(ordenVenta);
+			ordenVentaRepository.actualizarOrdenVenta(sesion,ordenVenta);			
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
 		
 	}
 	
@@ -105,6 +118,17 @@ public class OrdenVentaService implements IOrdenVentaService {
 			throw new Exception("La fechaAsignacion es requerida");
 		if(ordenVenta.getAsignacionList() == null || ordenVenta.getAsignacionList().isEmpty())
 			throw new Exception("La lista de asignaciones es requerida.");
+	}
+
+	private void validarActualizarOrdenVenta(OrdenVenta ordenVenta) throws Exception {
+		if(ordenVenta.getIdOrdenVenta().isEmpty() || ordenVenta.getIdOrdenVenta() == null)
+			throw new Exception("El idOrdenVenta es requerido.");
+		if(ordenVenta.getFechaEmbarque()== null)
+			throw new Exception("la fecha de embarque es requerido");
+		if(ordenVenta.getHoraEmbarque() == null)
+			throw new Exception("La Hora de embarque es requerido");
+		if(ordenVenta.getPaisDestino() == null)
+			throw new Exception("El pais de destino es requerido");
 	}
 
 }

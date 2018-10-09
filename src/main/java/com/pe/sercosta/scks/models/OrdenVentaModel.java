@@ -15,9 +15,19 @@ public class OrdenVentaModel {
 	private String nombreCliente;
 	private double cantidadTotal;
 	private String estado;
+	private String nombrePlanta;
 	
 	public OrdenVentaModel() {
-		
+	
+	}
+	
+	
+	public String getNombrePlanta() {
+		return nombrePlanta;
+	}
+
+	public void setNombrePlanta(String nombrePlanta) {
+		this.nombrePlanta = nombrePlanta;
 	}
 
 	public String getNombreCliente() {
