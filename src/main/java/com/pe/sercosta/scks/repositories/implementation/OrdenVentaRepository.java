@@ -133,6 +133,8 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 		
 	}
 
+	
+
 	@Override
 	public void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
 		// TODO Auto-generated method stub
