@@ -4,7 +4,7 @@ public class ProductoTerminadoModel {
 	
 	private String idProductoTerminado;
 	private String descripcion;
-	private double cantidadSinMuestrear;
+	private Double cantidadTotal;
 
 	public ProductoTerminadoModel() {
 		
@@ -26,12 +26,12 @@ public class ProductoTerminadoModel {
 		this.descripcion = descripcion;
 	}
 
-	public double getCantidadSinMuestrear() {
-		return cantidadSinMuestrear;
+	public Double getCantidadTotal() {
+		return cantidadTotal;
 	}
 
-	public void setCantidadSinMuestrear(double cantidadSinMuestrear) {
-		this.cantidadSinMuestrear = cantidadSinMuestrear;
+	public void setCantidadTotal(Double cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
 	}
 
 }

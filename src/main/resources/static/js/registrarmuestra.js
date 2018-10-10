@@ -61,7 +61,7 @@ $(document).ready( function () {
 				{data: "descripcion"},
 				{data: "cantidadTotal"},
 				{defaultContent:"<span class='btn btn-danger'>" + 
-					             "<span class='fa fa-tras'></span></span>" }
+					             "<span class='fa fa-minus'></span></span>" }
 			],
 			language: lenguaje
 		});
@@ -72,7 +72,7 @@ $(document).ready( function () {
 		var producto = {
 			idProductoTerminado: idPro,
 			descripcion: desc,
-			cantidad: cant
+			cantidadTotal: cant
 		}
 		cantTotal = cantTotal + Number(cant);
 		productoList.push(producto);
@@ -81,13 +81,13 @@ $(document).ready( function () {
 		$('#modalAgregar').modal('hide');
 	});
 	
-	$('#"botonGuardar"').on("click", function() {
+	$('#botonGuardar').on("click", function() {
 		var esValido = validarRegistrarMuestra();
 		if(esValido) {
 			var muestra = {
 				fechaCreacion: $('#fecha').val(),
 				idPlanta: 2,
-				nombreLaboratorio: $('#laboratorio').val,
+				nombreLaboratorio: $('#laboratorio').val(),
 				productoTerminadoList: productoList
 			}
 			registrarMuestra(muestra);

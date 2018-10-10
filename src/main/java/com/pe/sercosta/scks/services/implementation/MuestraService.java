@@ -28,9 +28,9 @@ public class MuestraService implements IMuestraService{
 	
 	@Override
 	public void registrarMuestra(Muestra muestra) {
-		EntityTransaction tx = sesion.getTransaction();
+		//EntityTransaction tx = sesion.getTransaction();
 		boolean errorValidacion = false;
-		tx.begin();
+		//tx.begin();
 		try {
 			//TODO: Validaciones de O2 - Muestrear Contenido
 			if( muestra.getIdMuestra() != null || muestra.getIdMuestra().equals("")) {
@@ -38,7 +38,7 @@ public class MuestraService implements IMuestraService{
 					if(muestra.getIdLaboratorio() != null || muestra.getIdLaboratorio().equals("")) {
 						//TODO: Falta la interface de IMuestraRepository
 						//muestraRepository.registrarMuestra(sesion, muestra);
-						tx.commit();
+						//tx.commit();
 					}else {
 						errorValidacion = true;
 					}
@@ -58,7 +58,7 @@ public class MuestraService implements IMuestraService{
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			tx.rollback();
+			//tx.rollback();
 			throw new SercostaException("Hubo un error al registrar la muestra", ex.getMessage());
 		} finally {
 			sesion.close();

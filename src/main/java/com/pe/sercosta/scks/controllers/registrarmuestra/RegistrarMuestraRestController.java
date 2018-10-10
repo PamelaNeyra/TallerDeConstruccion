@@ -48,8 +48,10 @@ public class RegistrarMuestraRestController {
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 	}
 
@@ -63,8 +65,10 @@ public class RegistrarMuestraRestController {
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 		return listaProducto;
 	}

@@ -2,22 +2,16 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.annotations.NamedNativeQueries;
-import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.stereotype.Repository;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
 
-@NamedNativeQueries({
-		@NamedNativeQuery(name = "listarProductoTerminadoProcedimientoAlmacenado", query = "CALL listarProductoTerminado()", resultClass = ProductoTerminado.class),
-		@NamedNativeQuery(name = "buscarProductoTerminadoProcedimientoAlmacenado", query = "CALL buscarProductoTerminado(:id_producto_terminado)", resultClass = ProductoTerminado.class) })
 @Repository("productoTerminadoRepository")
 public class ProductoTerminadoRepository implements IProductoTerminadoRepository{
 
@@ -27,20 +21,22 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductoTerminado> listarProductoTerminado(EntityManager sesion) {
-		List<ProductoTerminado> listaBD = new ArrayList<ProductoTerminado>();
 		List<ProductoTerminado> listaProductoTerminado = new ArrayList<ProductoTerminado>();
-		ProductoTerminado productoTerminadoTmp = new ProductoTerminado();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_productos_terminados");
-			listaBD = myquery.getResultList();
-			for (ProductoTerminado productoTerminado : listaBD) {
-				productoTerminadoTmp.setIdProductoTerminado(productoTerminado.getIdProductoTerminado());
-				productoTerminadoTmp.setIdSubproducto(productoTerminado.getIdSubproducto());
-				productoTerminadoTmp.setDescripcion(productoTerminado.getDescripcion());
-				productoTerminadoTmp.setCantidadTotal(productoTerminado.getCantidadTotal());
-				productoTerminadoTmp.setComprometidoTotal(productoTerminado.getComprometidoTotal());
-				listaProductoTerminado.add(productoTerminadoTmp);
-			}
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
+			myquery.setParameter(1, 1);
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				ProductoTerminado aux = new ProductoTerminado();
+				aux.setIdProductoTerminado((String) o[0]);
+				//aux.setIdSubproducto((String) o[1]);
+				aux.setDescripcion((String) o[1]);
+				aux.setCantidadTotal((Double) o[2]);
+				//aux.setComprometidoTotal();
+				listaProductoTerminado.add(aux);
+			});
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar los productos terminados", ex.getMessage());

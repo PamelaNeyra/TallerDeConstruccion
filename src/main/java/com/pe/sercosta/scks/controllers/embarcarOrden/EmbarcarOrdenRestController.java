@@ -92,9 +92,11 @@ public class EmbarcarOrdenRestController {
 	}
 
 	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
-	public List<AsignacionModel> listarAsignacion(@RequestBody(required = true) OrdenVentaModel orden) {
+	public List<AsignacionModel> listarAsignacion(@RequestBody(required = false) OrdenVentaModel orden) {
 		List<AsignacionModel> listaAsignacion = new ArrayList<>();
 		try {
+			orden = new OrdenVentaModel();
+			orden.setIdOrdenVenta("0001-2018");
 			listaAsignacion = asignacionService.listarAsignacion(ordenVentaConverter.convertToEntity(orden));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

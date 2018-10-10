@@ -35,9 +35,9 @@ $(document).ready( function () {
 				type: "POST",
 				contentType: "application/json",
 				url: "/EmbarcarOrden/listarAsignacion",
-				data: JSON.stringify(orden),
+				//data: ordenJSON,
 				beforeSend() {
-					console.log(JSON.stringify(orden));
+					console.log(orden);
 				},
 			    error: function(xhr, ajaxOptions, thrownError) {
 			    	var response = JSON.parse(xhr.responseText);	   
@@ -61,6 +61,26 @@ $(document).ready( function () {
 		
 	}
 	
+	function obtenerDatos(orden) {
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/EmbarcarOrden/obtenerOrdenVenta",
+	        data: JSON.stringify(orden),
+	        success: function (data) {	        	
+	            $('#cliente').val(data.nombreCliente);
+	            $('#fechaA').val(data.fechaAsignacion);
+	            $('#certificado').val(data.certificado);
+	            $('#planta').val(data.nombrePlanta);
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	        	var response = JSON.parse(xhr.responseText);	   
+	        	$('#mensajeError').text(response.message);
+	        	$('#modalError').modal('show');
+	        }
+	    });
+	}
+	
 	$('#botonEmbarcarAsignacion').on("click", function() {
 		$.ajax({
 	        type: "POST",
@@ -79,6 +99,8 @@ $(document).ready( function () {
 	});
 
 	listarAsignaciones(orden);
+	
+	obtenerDatos(orden);
 	
 });
 

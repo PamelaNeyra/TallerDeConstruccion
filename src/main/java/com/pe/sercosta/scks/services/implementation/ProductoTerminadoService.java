@@ -7,6 +7,8 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pe.sercosta.scks.entities.ProductoTerminado;
@@ -20,6 +22,8 @@ public class ProductoTerminadoService implements IProductoTerminadoService{
 	private static final Log LOG = LogFactory.getLog(LoteService.class);
 	private static final String CAPA = "[Service : ProductoTerminado] -> ";
 	
+	@Autowired
+	@Qualifier("productoTerminadoRepository")
 	private IProductoTerminadoRepository productoTerminadoRepository;
 	
 	@PersistenceContext
