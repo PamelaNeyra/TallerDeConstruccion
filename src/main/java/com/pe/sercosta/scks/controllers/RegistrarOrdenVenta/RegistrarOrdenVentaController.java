@@ -22,6 +22,5 @@ public class RegistrarOrdenVentaController {
 		mav.addObject("nombreCliente", nombreCliente);
 		return mav;
 	}
-
-}
+}	
 

@@ -1,6 +1,7 @@
 var idPre = '';
 var desc = '';
 var presentacionesList = [];
+var tabla='';
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
 	    "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -27,9 +28,19 @@ var lenguaje = {
 }
 
 $(document).ready( function () {
-		
+	
+
+	var eliminarFila = function(tbody,table){
+		$(tbody).on('click', 'span.btn', function () {
+			table
+			.row( $(this).parents('tr') )
+			.remove()
+			.draw();
+		});
+	}
+	
 	var actualizarTablaPresentacionesComprometidas = function(){
-		$('#presentacionesTablaComprometidas').DataTable({
+		var tabla=$('#presentacionesTablaComprometidas').DataTable({
 			destroy: true,
 			data: presentacionesList,
 			order: [[ 0, "asc" ]],
@@ -37,22 +48,14 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
-				{defaultContent: "<span class='btn btn-danger'>" +
+				{defaultContent: "<span class='btn btn-danger' data-toggle='modal' data-target=''>" +
 				"<span class='fa fa-minus-circle'></span></span>"}
 			],
 			language: lenguaje
 		});
+		eliminarFila('#presentacionesTablaComprometidas tbody',tabla)
 	}
 
-	
-	var agregarPresentacion = function(tbody, table) {
-		$(tbody).on("click", "span.btn", function(){
-			var data = table.row($(this).parents("tr")).data();
-			idPre = data.idPresentacion;
-			desc = data.descripcion;
-			$('#exampleModalCenterTitle').text(data.idPresentacion);			
-		});
-	}
 	
 	$('#botonAgregar').on("click", function() {
 		var presentacion = {
@@ -66,7 +69,48 @@ $(document).ready( function () {
 		$('#modalAgregar').modal('hide');
 	});
 	
+	var actualizarTablaPresentaciones = function(){
+		$('#presentacionesTabla').DataTable({
+			destroy: true,
+			data: presentacionesList,
+			order: [[ 0, "asc" ]],
+			responsive: true,
+			columns: [
+				{data: "idPresentacion"},
+				{data: "descripcion"},
+				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
+				"<span class='fa fa-plus-circle'></span></span>"}
+			],
+			language: lenguaje
+		});
+		
+	}
+	
+	$('#botonQuitar').on("click", function() {
+		var presentacion = {
+			idPresentacion: idPre,
+			descripcion: desc
+		}
+		//cantTotal = cantTotal + Number(cant);
+		presentacionesList.push(presentacion);
+		actualizarTablaPresentaciones();
+		//actualizarCantidadTotal();
+		$('#modalQuitar').modal('hide');
+	});
+	
+	
+	
+	
 	/*LISTAR*/
+	var agregarPresentacion = function(tbody, table) {
+		$(tbody).on("click", "span.btn", function(){
+			var data = table.row($(this).parents("tr")).data();
+			idPre = data.idPresentacion;
+			desc = data.descripcion;
+			$('#exampleModalCenterTitle').text(data.idPresentacion);			
+		});
+	}
+	
 	var listar = function() {
 		var tabla = $('#presentacionesTabla').DataTable({
 			ajax: {
@@ -96,12 +140,6 @@ $(document).ready( function () {
 	listar();	
 	/*FIN LISTAR*/
 	
-	/*$('#btn_asignar_cliente').on("click", function() {
-		var data = table.row($(this).parents("tr")).data();
-		idCli = data.idCliente;
-		nombreCli = data.nombreCliente;
-		docuement.cliente.value = nombreCli;
-	});*/
 	
 	
 });

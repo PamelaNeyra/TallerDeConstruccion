@@ -92,7 +92,7 @@
 			                            		<td></td>
 			                            		<td></td>
 			                            		<td style="text-align: center;"  align="center">
-													<span class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalAsignarCantidad" id="btnAsignarcantidad"> 
+													<span class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalAgregar" id="btnAsignarcantidad"> 
 														<span class="fa fa-plus-circle"></span>
 													</span>
 												</td>
@@ -111,6 +111,17 @@
 			                                    <th></th>
 			                                </tr>
 			                            </thead>
+			                            <tbody>
+			                            	<tr>
+			                            		<td></td>
+			                            		<td></td>
+			                            		<td style="text-align: center;"  align="center">
+													<span class="btn btn-danger btn-sm" data-toggle="modal" data-target=""> 
+														<span class="fa fa-minus-circle"></span>
+													</span>
+												</td>
+			                            	</tr>
+			                            </tbody>
 			                        </table>  
 			                    </div>
 		                    </div>
@@ -118,23 +129,6 @@
 		        	</div>
 		        </div>
 		    </div>
-		</div>
-	</div>
-	
-	<!-- Modal Éxito -->
-               	<div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Éxito </h5>
-				</div>
-				<div class="modal-body">
-                        	<span>La Orden de Venta se ha registrado con éxito</span>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				</div>
-			</div>
 		</div>
 	</div>
 	<!-- Modal Agregar -->
@@ -152,6 +146,42 @@
 				</div>
 				<div class="modal-footer">											
 					<button id="botonAgregar" type="button" class="btn btn-primary">Aceptar</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Eliminar de lista de presentaciones comprometidas -->
+	<div class="modal fade" id="modalQuitar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Presentación comprometida: </h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+                        	<label>¿Desea eliminar esta presentación de la lista de comprometidos?</label>
+				</div>
+				<div class="modal-footer">											
+					<button id="botonQuitar" type="button" class="btn btn-primary">Aceptar</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Éxito -->
+    <div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Éxito </h5>
+				</div>
+				<div class="modal-body">
+                        	<span>La Orden de Venta se ha registrado con éxito</span>
+				</div>
+				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
