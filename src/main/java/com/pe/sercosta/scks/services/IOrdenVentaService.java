@@ -3,7 +3,6 @@ package com.pe.sercosta.scks.services;
 import java.util.List;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
-import com.pe.sercosta.scks.models.views.OrdenVentaView;
 
 public interface IOrdenVentaService {
 	
@@ -13,9 +12,15 @@ public interface IOrdenVentaService {
 	 * : Lista las ordenes de venta con filtro: planta
 	 * @return List<OrdenVenta>
 	 */
-	public abstract List<OrdenVentaView> listarOrdenVenta(Planta planta);
+	public abstract List<OrdenVenta> listarOrdenVenta(Planta planta);
 	
-	
+	/**
+	 * Lógica de negocios para
+	 * - 06 - Obtener Orden de Venta
+	 * : Obtiene una orden de venta con filtro: orden
+	 * @param orden
+	 * @return
+	 */
 	public abstract OrdenVenta obtenerOrdenVenta(OrdenVenta orden);
 		
 	/**

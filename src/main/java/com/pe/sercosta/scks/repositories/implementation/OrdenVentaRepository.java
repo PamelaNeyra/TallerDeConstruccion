@@ -16,7 +16,6 @@ import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
 @Repository("ordenVentaRepository")
@@ -52,8 +51,8 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrdenVentaView> listarOrdenVenta(EntityManager sesion, Planta planta) {
-		List<OrdenVentaView> listaOrdenVenta = new ArrayList<OrdenVentaView>();
+	public List<OrdenVenta> listarOrdenVenta(EntityManager sesion, Planta planta) {
+		List<OrdenVenta> listaOrdenVenta = new ArrayList<OrdenVenta>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_orden_venta");
 			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
@@ -61,12 +60,14 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 			myquery.execute();
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {
-				OrdenVentaView aux = new OrdenVentaView();
+				OrdenVenta aux = new OrdenVenta();
 				aux.setIdOrdenVenta((String) o[0]);
-				aux.setCliente((String) o[1]);
+				Cliente cliente = new Cliente();
+				cliente.setNombreCliente((String) o[1]);
+				aux.setIdCliente(cliente);
 				aux.setFechaAsignacion(((Date) o[2]).toLocalDate());
-				aux.setCantidadTotal((double) o[3]);
-				aux.setEstado((String) o[4]);
+				aux.setCantidadTotal((Double) o[3]);
+				aux.setEstaEmbarcado(((Boolean) o[4]));
 				listaOrdenVenta.add(aux);
 			});
 		} catch (Exception ex) {
@@ -132,8 +133,6 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 		}
 		
 	}
-
-	
 
 	@Override
 	public void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {

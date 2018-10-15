@@ -1,11 +1,11 @@
-package com.pe.sercosta.scks.models.views;
+package com.pe.sercosta.scks.models;
 
-public class ClienteView {
+public class ClienteModel {
 
 	public Integer idCliente;
 	public String nombreCliente;
 	
-	public ClienteView() {
+	public ClienteModel() {
 		
 	}
 

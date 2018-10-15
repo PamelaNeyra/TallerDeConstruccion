@@ -73,9 +73,11 @@ public class AsignacionRepository implements IAsignacionRepository{
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_embarcar_asignacion");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
 			myquery.setParameter(1, asignacion.getOrdenVenta().getIdOrdenVenta())
-					.setParameter(2, asignacion.getContenido().getContenidoPK().getIdPresentacion());
+					.setParameter(2, asignacion.getContenido().getContenidoPK().getIdPresentacion())
+					.setParameter(3, asignacion.getContenido().getContenidoPK().getIdLote());
 			myquery.execute();
 		} catch(Exception ex) {
 			LOG.error(CAPA + ex.getMessage());

@@ -14,6 +14,7 @@ public class OrdenVentaConverter extends IAbstractConverter<OrdenVentaModel, Ord
 	@Override
 	public OrdenVentaModel convertToModel(OrdenVenta entity) {
 		OrdenVentaModel model = MAPPER.map(entity, OrdenVentaModel.class);
+		model.setEstado(entity.getEstaEmbarcado() ? "Embarcado" : "No Embarcado");
 		return model;
 	}
 

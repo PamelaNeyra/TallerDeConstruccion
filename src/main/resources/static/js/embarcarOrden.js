@@ -56,7 +56,7 @@ $(document).ready( function () {
 			responsive: true,
 			columns: [
 				{data: "idOrdenVenta"},  
-				{data: "cliente"},
+				{data: "nombreCliente"},
 				{data: "fechaAsignacion"},
 				{data: "cantidadTotal"},
 				{data: "estado"},

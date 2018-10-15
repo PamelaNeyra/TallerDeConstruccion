@@ -8,13 +8,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
@@ -37,7 +35,7 @@ public class OrdenVentaService implements IOrdenVentaService {
 	private IAsignacionRepository asignacionRepository;
 	
 	@Override
-	public List<OrdenVentaView> listarOrdenVenta(Planta planta) {
+	public List<OrdenVenta> listarOrdenVenta(Planta planta) {
 		try {
 			return ordenVentaRepository.listarOrdenVenta(sesion, planta);
 		} catch (SercostaException sx) {

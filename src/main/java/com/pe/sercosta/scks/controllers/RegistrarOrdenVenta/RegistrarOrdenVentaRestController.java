@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.ClienteConverter;
 import com.pe.sercosta.scks.converter.implementation.PresentacionConverter;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.views.ClienteView;
+import com.pe.sercosta.scks.models.ClienteModel;
 import com.pe.sercosta.scks.models.PresentacionModel;
 import com.pe.sercosta.scks.services.IClienteService;
 import com.pe.sercosta.scks.services.IPresentacionService;
@@ -41,8 +41,8 @@ public class RegistrarOrdenVentaRestController {
 	private IPresentacionService presentacionService;
 
 	@RequestMapping(path = "/RegistrarOrdenVenta/listarClientes", method = RequestMethod.GET)
-	public List<ClienteView> listarClientes() {
-		List<ClienteView> listaClientes = new ArrayList<>();
+	public List<ClienteModel> listarClientes() {
+		List<ClienteModel> listaClientes = new ArrayList<>();
 		try {
 			listaClientes = clienteService.listarClientes()
 								.stream()

@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.controllers.embarcarOrden;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
-import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
 import com.pe.sercosta.scks.services.IAsignacionService;
@@ -49,11 +49,14 @@ public class EmbarcarOrdenRestController {
 
 	
 	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
-	public List<OrdenVentaView> listarOrdenVenta() {
-		List<OrdenVentaView> listaOrdenVenta = new ArrayList<>();
+	public List<OrdenVentaModel> listarOrdenVenta() {
+		List<OrdenVentaModel> listaOrdenVenta = new ArrayList<>();
 		try {
 			//TODO: Obtener Planta de Sesión
-			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1));
+			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1))
+								.stream()
+								.map(entity -> ordenVentaConverter.convertToModel(entity))
+								.collect(Collectors.toList());
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
