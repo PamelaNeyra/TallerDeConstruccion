@@ -1,4 +1,4 @@
-package com.pe.sercosta.scks.controllers.registrarmuestra;
+package com.pe.sercosta.scks.controllers.registrarMuestra;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

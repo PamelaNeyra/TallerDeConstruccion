@@ -1,4 +1,4 @@
-package com.pe.sercosta.scks.controllers.registrarlote;
+package com.pe.sercosta.scks.controllers.registrarLote;
 
 import java.util.ArrayList;
 import java.util.List;

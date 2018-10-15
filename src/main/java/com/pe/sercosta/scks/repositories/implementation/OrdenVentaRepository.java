@@ -1,6 +1,5 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-// import java.io.Serializable; /*Descomentar*/
 import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -12,12 +11,11 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import org.hibernate.query.Query;
 import org.hibernate.Session;
+import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
@@ -78,7 +76,8 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 		return listaOrdenVenta;
 	}
 	
-	public OrdenVentaModel obtenerOrdenVenta(EntityManager sesion, OrdenVenta orden) {
+	@SuppressWarnings("unchecked")
+	public OrdenVenta obtenerOrdenVenta(EntityManager sesion, OrdenVenta orden) {
 		
 		try {
 			//OrdenVentaModel ordenVenta = new OrdenVentaModel() ;
@@ -86,18 +85,22 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
 			myquery.setParameter(1, orden.getIdOrdenVenta());
 			myquery.execute();
-			OrdenVentaModel ordenModel = new OrdenVentaModel();
+			OrdenVenta ordenVen = new OrdenVenta();
 			List<Object[]> rsOrden = myquery.getResultList();
 			if(rsOrden.size() == 1) {
-				
 				Object[] ordenRow = rsOrden.get(0);
-				ordenModel.setIdOrdenVenta((String) ordenRow[0]);
-				ordenModel.setNombreCliente((String) ordenRow[1]);
-				ordenModel.setFechaAsignacion(((Date) ordenRow[2]).toLocalDate());
-				ordenModel.setCertificado((String) ordenRow[3]);
-				ordenModel.setNombrePlanta((String) ordenRow[4]);
+				ordenVen.setIdOrdenVenta((String) ordenRow[0]);
+				Cliente cliente = new Cliente();
+				cliente.setNombreCliente((String) ordenRow[1]);
+				ordenVen.setIdCliente(cliente);
+				ordenVen.setFechaAsignacion(((Date) ordenRow[2]).toLocalDate());
+				ordenVen.setCertificado((String) ordenRow[3]);
+				Planta planta = new Planta();
+				planta.setNombrePlanta(((String) ordenRow[4]));
+				ordenVen.setIdPlanta(planta);
+				ordenVen.setCantidadTotal((Double) ordenRow[5]);
 			}
-			return ordenModel;
+			return ordenVen;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());

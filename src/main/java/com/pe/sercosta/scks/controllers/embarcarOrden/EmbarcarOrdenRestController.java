@@ -52,6 +52,7 @@ public class EmbarcarOrdenRestController {
 	public List<OrdenVentaView> listarOrdenVenta() {
 		List<OrdenVentaView> listaOrdenVenta = new ArrayList<>();
 		try {
+			//TODO: Obtener Planta de Sesión
 			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
@@ -64,45 +65,47 @@ public class EmbarcarOrdenRestController {
 		return listaOrdenVenta;
 	}
 	
-	@RequestMapping(path = "/EmbarcarOrden/actualizarOrden", method = RequestMethod.POST)
+	@RequestMapping(path = "/EmbarcarOrden/embarcarOrden", method = RequestMethod.POST)
 	public void actualizarOrden(@RequestBody(required = true) OrdenVentaModel orden) {
 		try {
-			// TODO: Poner planta del usuario al lote
 			ordenVentaService.actualizarOrdenVenta(ordenVentaConverter.convertToEntity(orden));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 	}
 	
 	@RequestMapping(path = "/EmbarcarOrden/obtenerOrdenVenta", method = RequestMethod.POST)
 	public OrdenVentaModel obtenerOrdenVenta(@RequestBody(required = true) OrdenVentaModel orden) {
-		OrdenVentaModel ordenVenta = new OrdenVentaModel();
 		try {
-			ordenVenta = ordenVentaService.obtenerOrdenVenta(ordenVentaConverter.convertToEntity(orden));
+			return ordenVentaConverter.convertToModel(
+					ordenVentaService.obtenerOrdenVenta(ordenVentaConverter.convertToEntity(orden)));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
-		return ordenVenta;
 	}
 
 	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
 	public List<AsignacionModel> listarAsignacion(@RequestBody(required = false) OrdenVentaModel orden) {
 		List<AsignacionModel> listaAsignacion = new ArrayList<>();
 		try {
-			orden = new OrdenVentaModel();
-			orden.setIdOrdenVenta("0001-2018");
 			listaAsignacion = asignacionService.listarAsignacion(ordenVentaConverter.convertToEntity(orden));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
+			throw ex;
 		}
 		return listaAsignacion;
 	}

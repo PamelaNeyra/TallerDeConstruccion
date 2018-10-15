@@ -1,4 +1,4 @@
-package com.pe.sercosta.scks.controllers.registrarmuestra;
+package com.pe.sercosta.scks.controllers.registrarMuestra;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

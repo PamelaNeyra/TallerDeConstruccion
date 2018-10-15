@@ -12,6 +12,7 @@ public class LoteModel {
 	@DateTimeFormat(iso=ISO.DATE)
 	private LocalDate fechaProduccion;
 	private double cantidadRecepcion;
+	private Boolean esReempaque;
 	private List<ContenidoModel> contenidoList;
 	
 	public LoteModel() {
@@ -55,6 +56,14 @@ public class LoteModel {
 
 	public void setIdPlanta(Integer idPlanta) {
 		this.idPlanta = idPlanta;
+	}	
+
+	public Boolean getEsReempaque() {
+		return esReempaque;
+	}
+
+	public void setEsReempaque(Boolean esReempaque) {
+		this.esReempaque = esReempaque;
 	}
 	
 }

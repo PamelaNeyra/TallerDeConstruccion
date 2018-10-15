@@ -40,17 +40,23 @@
 	                        <!-- Fila del Cuerpo-->
 	                        <div class="col-sm-12 form-inline justify-content-center">
 	                            <!-- Código de Lote-->
-	                            <label for="codigo" class="col-sm-1">Código de Lote</label>
+	                            <label for="codigo" class="col-sm-1 mx-auto">Código de Lote</label>
 	                            <input type="text" class="form-control col-sm-2"  
 	                                    placeholder="Ingrese código" id="codigo">
 	                            <!-- Fecha de Producción -->
-	                            <label for="fecha" class="col-sm-2">Fecha de Producción</label>
+	                            <label for="fecha" class="col-sm-1 mx-auto">Fecha de Producción</label>
 	                            <input type="date" class="form-control col-sm-2" 
 	                                    placeholder="dd/mm/aaaa" id="fecha">
 	                            <!-- Cantidad Recepcionada -->
-	                            <label for="cantidad" class="col-sm-2">Cantidad Recepcionada</label>
+	                            <label for="cantidad" class="col-sm-1 mx-auto">Cantidad Recepcionada</label>
 	                            <input type="number" class="form-control col-sm-2" step="0.5" min="0"
-	                                    placeholder="0" id="cantidad">        
+	                                    placeholder="0" id="cantidad">     
+	                            <!-- Es reempaque -->
+	                            <div class="form-check col-sm-2">
+								  <label class="form-check-label">
+								    <input id="reempaque" type="checkbox" class="form-check-input" value="false">¿Es reempaque?
+								  </label>
+								</div>   
 	                        </div>
 	                    </div>
 	                </div>
@@ -77,7 +83,7 @@
 								<!-- Barra de Contenidos -->
 								<li class="nav-item">
 									<a class="nav-link" data-toggle="tab" href="#tabla2">
-										<strong>Contenidos Seleccionados</strong>
+										<strong>Presentaciones Seleccionadas</strong>
 									</a>
 								</li>
 							</ul>
@@ -93,7 +99,7 @@
 			                                    <tr>
 			                                        <th>Código SAP</th>
 			                                        <th>Descripcion</th>
-			                                        <th></th>
+			                                        <th align="center"></th>
 			                                    </tr>
 			                                </thead>
 			                            </table>  
@@ -115,54 +121,74 @@
 			                    	</div>
 		                    	</div>
 		                    	<!-- Modal Agregar -->
-		                    	<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		                    	<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalCenterTitle">Presentación: </h5>
+												<h5 class="modal-title" id="tituloModal">Presentación: </h5>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
-											<div class="modal-body">
+											<div id="cuerpoAgregar" class="modal-body">
 						                         	<label>Cantidad a Ingresar:</label>
 						                         	<input type="number" min="0" step="0.5" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
 											</div>
 											<div class="modal-footer">											
 												<button id="botonAgregar" type="button" class="btn btn-primary">Agregar</button>
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 											</div>
 										</div>
 									</div>
 								</div>
 								<!-- Modal Éxito -->
-		                    	<div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		                    	<div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content">
+										<div class="modal-content alert alert-success">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalCenterTitle">Éxito </h5>
+												<h5 class="modal-title" id="tituloModal">Éxito </h5>
 											</div>
 											<div class="modal-body">
-						                         	<span>El Lote se ha registrado con éxito</span>
+						                         	<span>El Lote se ha registrado con éxito.</span>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 											</div>
 										</div>
 									</div>
 								</div>
 								<!-- Modal Error -->
-		                    	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		                    	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content">
+										<div class="modal-content alert alert-danger">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalCenterTitle">Error</h5>
+												<h5 class="modal-title" id="tituloModal">Error</h5>
 											</div>
 											<div class="modal-body">
 						                         	<span id="mensajeError"></span>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Modal Confirmación -->
+					            <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="tituloModal">Lote: </h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+						                         	<label>¿Desea registrar este lote?</label>
+											</div>
+											<div class="modal-footer">											
+												<button id="botonConfirmar" type="button" class="btn btn-primary">Aceptar</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 											</div>
 										</div>
 									</div>
@@ -175,7 +201,7 @@
     </div>
     <!-- Scrips -->
     <script th:src="@{/jquery/jquery.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/data-tables/datatables.min.js}"></script>
    	<script th:src="@{/js/registrarlote.js}"></script>
 </body>

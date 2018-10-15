@@ -15,7 +15,7 @@ public class EmbarcarOrdenController {
 		return "/EmbarcarOrden/index";
 	}
 	
-	@RequestMapping(path = "/Orden/{idOrden}", method = RequestMethod.GET)
+	@RequestMapping(path = "/{idOrden}", method = RequestMethod.GET)
 	public ModelAndView index2(@PathVariable("idOrden") String idOrden) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/EmbarcarOrden/index2");

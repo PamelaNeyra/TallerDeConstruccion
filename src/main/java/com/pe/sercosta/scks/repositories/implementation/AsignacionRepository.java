@@ -1,10 +1,6 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
-// import java.io.Serializable; /*Descomentar*/
-import org.hibernate.annotations.NamedNativeQueries;
-import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -12,16 +8,12 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import org.hibernate.query.Query;
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 
-//TODO: falta revisar que parametros se le manda
-@NamedNativeQueries({
-		@NamedNativeQuery(name = "registrarAsignacionProcedimientoAlmacenado", query = "CALL registrarAsignacion()", resultClass = Asignacion.class) })
 @Repository("asignacionRepository")
 public class AsignacionRepository implements IAsignacionRepository{
 
@@ -76,5 +68,19 @@ public class AsignacionRepository implements IAsignacionRepository{
 		
 	}
 
+	@Override
+	public void actualizarAsignacion(EntityManager sesion, Asignacion asignacion) {
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_embarcar_asignacion");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+			myquery.setParameter(1, asignacion.getOrdenVenta().getIdOrdenVenta())
+					.setParameter(2, asignacion.getContenido().getContenidoPK().getIdPresentacion());
+			myquery.execute();
+		} catch(Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar la asignación", ex.getMessage());
+		}
+	}	
 	
 }

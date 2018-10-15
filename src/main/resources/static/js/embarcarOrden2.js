@@ -24,10 +24,10 @@ var lenguaje = {
 }
 
 $(document).ready( function () {
-		
+			
 	var orden = {
 			idOrdenVenta: $('#codigo').val()
-	};
+	}
 	
 	function listarAsignaciones(orden) {
 		var tabla = $('#asignacionesTabla').DataTable({
@@ -35,9 +35,8 @@ $(document).ready( function () {
 				type: "POST",
 				contentType: "application/json",
 				url: "/EmbarcarOrden/listarAsignacion",
-				//data: ordenJSON,
-				beforeSend() {
-					console.log(orden);
+				data: function(data) {
+					return JSON.stringify(orden);
 				},
 			    error: function(xhr, ajaxOptions, thrownError) {
 			    	var response = JSON.parse(xhr.responseText);	   
@@ -58,7 +57,7 @@ $(document).ready( function () {
 			],
 			language: lenguaje
 		});
-		
+				
 	}
 	
 	function obtenerDatos(orden) {
@@ -72,6 +71,7 @@ $(document).ready( function () {
 	            $('#fechaA').val(data.fechaAsignacion);
 	            $('#certificado').val(data.certificado);
 	            $('#planta').val(data.nombrePlanta);
+	            $('#total').val(data.cantidadTotal);
 	        },
 	        error: function (xhr, ajaxOptions, thrownError) {
 	        	var response = JSON.parse(xhr.responseText);	   
@@ -81,11 +81,48 @@ $(document).ready( function () {
 	    });
 	}
 	
-	$('#botonEmbarcarAsignacion').on("click", function() {
+	$('#botonConfirmar').on("click", function() {
+		var orden = {
+			idOrdenVenta: $('#codigo').val(),
+			fechaEmbarque: $('#fechaE').val(),
+			horaEmbarque: $('#hora').val(),
+			paisDestino: $('#destino').val(),
+		}
+		$('#modalConfirmar').modal('hide');
+		embarcarOrden(orden);
+	});
+	
+	$('#embarcarOrden').on("click", function() {
+		var valido = validarEmbarco();
+		if(valido) {
+			$('#tituloModal').text($('#codigo').val());
+			$('#modalConfirmar').modal('show');
+		}
+	});
+	
+	function validarEmbarco() {
+		var mensaje = "";
+		if($('#fechaE').val() === "")
+			mensaje = "La Fecha de Embarque es requerida.";
+		if($('#hora').val() === "")
+			mensaje = "La Hora de Embarque es requerida.";
+		if($('#destino').val() <= 0)
+			mensaje = "El País de Destino es requerido.";
+		if(mensaje != "")
+		{
+        	$('#mensajeError').text(mensaje);
+        	$('#modalError').modal('show');
+        	return false;	
+		} else {
+			return true;
+		}
+	}
+	
+	function embarcarOrden(orden) {
 		$.ajax({
 	        type: "POST",
 	        contentType: "application/json",
-	        url: "/EmbarcarOrden/actualizarOrden",
+	        url: "/EmbarcarOrden/embarcarOrden",
 	        data: JSON.stringify(orden),
 	        success: function (data) {	        	
 	            $('#modalExito').modal('show');
@@ -96,7 +133,7 @@ $(document).ready( function () {
 	        	$('#modalError').modal('show');
 	        }
 	    });
-	});
+	}
 
 	listarAsignaciones(orden);
 	

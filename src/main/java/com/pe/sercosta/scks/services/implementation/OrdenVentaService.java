@@ -8,10 +8,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.views.OrdenVentaView;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
@@ -51,13 +53,18 @@ public class OrdenVentaService implements IOrdenVentaService {
 	}
 
 	@Override
-	public OrdenVentaModel obtenerOrdenVenta(OrdenVenta orden) {
+	public OrdenVenta obtenerOrdenVenta(OrdenVenta orden) {
 		try {
 			return ordenVentaRepository.obtenerOrdenVenta(sesion, orden);
 		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
 			throw sx;
 		} catch (Exception ex) {
-			throw ex;
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al obtener la orden de venta", ex.getMessage());
+		} finally {
+			sesion.close();
 		}
 	}
 
@@ -68,7 +75,13 @@ public class OrdenVentaService implements IOrdenVentaService {
 		try {
 			validarRegistrarOrdenVenta(ordenVenta);
 			ordenVentaRepository.registrarOrdenVenta(sesion, ordenVenta);
-			ordenVenta.getAsignacionList().forEach(a -> asignacionRepository.registrarAsignacion(sesion, a));
+			asignacionRepository.listarAsignacion(sesion, ordenVenta)
+								.forEach(a -> {
+									Asignacion asignacion = new Asignacion();
+									asignacion.setContenido(new Contenido(a.getIdLote(), a.getIdPresentacion()));
+									asignacion.setOrdenVenta(ordenVenta);
+									asignacionRepository.actualizarAsignacion(sesion, asignacion);
+								});
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
@@ -99,7 +112,6 @@ public class OrdenVentaService implements IOrdenVentaService {
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			//tx.rollback();
 			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
 		} finally {
 			sesion.close();
@@ -124,11 +136,11 @@ public class OrdenVentaService implements IOrdenVentaService {
 		if(ordenVenta.getIdOrdenVenta().isEmpty() || ordenVenta.getIdOrdenVenta() == null)
 			throw new Exception("El idOrdenVenta es requerido.");
 		if(ordenVenta.getFechaEmbarque()== null)
-			throw new Exception("la fecha de embarque es requerido");
+			throw new Exception("La Fecha de Embarque es requerido.");
 		if(ordenVenta.getHoraEmbarque() == null)
-			throw new Exception("La Hora de embarque es requerido");
+			throw new Exception("La Hora de Embarque es requerido.");
 		if(ordenVenta.getPaisDestino() == null)
-			throw new Exception("El pais de destino es requerido");
+			throw new Exception("El País de Destino es requerido.");
 	}
 
 }

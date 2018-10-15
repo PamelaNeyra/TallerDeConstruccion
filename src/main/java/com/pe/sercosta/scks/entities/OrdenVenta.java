@@ -32,6 +32,9 @@ public class OrdenVenta implements Serializable {
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate fechaAsignacion;
     
+    @Column(name = "cantidad_total")
+    private Double cantidadTotal;
+    
     @Column(name = "fecha_embarque")
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate fechaEmbarque;
@@ -153,5 +156,13 @@ public class OrdenVenta implements Serializable {
     public void setIdPlanta(Planta idPlanta) {
         this.idPlanta = idPlanta;
     }
-    
+
+	public Double getCantidadTotal() {
+		return cantidadTotal;
+	}
+
+	public void setCantidadTotal(Double cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
+	}
+        
 }

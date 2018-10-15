@@ -1,4 +1,4 @@
-package com.pe.sercosta.scks.controllers.registrarlote;
+package com.pe.sercosta.scks.controllers.registrarLote;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

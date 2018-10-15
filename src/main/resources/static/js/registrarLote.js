@@ -2,6 +2,7 @@ var idPre = '';
 var cant = 0;
 var cantTotal = 0;
 var contenidoList = [];
+var bloque = 0;
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
 	    "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -26,20 +27,47 @@ var lenguaje = {
 	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
 	    }
 }
+var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>');
 
 $(document).ready( function () {
 	
+	var eliminarContenido = function(tbody,table){
+		$(tbody).on('click', 'span.btn', function () {
+			var data = table.row($(this).parents("tr")).data();
+			idPre = data.idPresentacion;
+			console.log(contenidoList.findIndex(x => x.idPresentacion == idPre));
+		});
+	}
+	
+	var eliminarFila = function(tbody,table){
+		$(tbody).on('click', 'span.btn', function () {
+			table
+			.row( $(this).parents('tr') )
+			.remove()
+			.draw();
+		});
+	}
+	
+	var obtenerBloque = function(descripcion) {
+		var posAux = descripcion.search("kg");
+		var subDes = descripcion.slice(posAux + 2, descripcion.length);
+		posAux = subDes.search("kg");
+		return subDes.slice(posAux - 5, posAux).trim();
+	}
+
 	var agregarCantidad = function(tbody, table) {
 		$(tbody).on("click", "span.btn", function(){
+			alertaValidacion.remove();
 			$('#cantidadAgregar').val("");
 			var data = table.row($(this).parents("tr")).data();
 			idPre = data.idPresentacion;
-			$('#exampleModalCenterTitle').text(data.idPresentacion);			
+			bloque = obtenerBloque(data.descripcion);
+			$('#tituloModal').text(data.idPresentacion);			
 		});
 	}
 	
 	var actualizarTablaContenido = function(){
-		$('#contenidosTabla').DataTable({
+		var tabla = $('#contenidosTabla').DataTable({
 			destroy: true,
 			data: contenidoList,
 			order: [[ 0, "asc" ]],
@@ -52,36 +80,67 @@ $(document).ready( function () {
 			],
 			language: lenguaje
 		});
+		eliminarFila('#contenidosTabla tbody',tabla)
+		//eliminarContenido('#contenidosTabla tbody', tabla);
 	}
 	
 	$('#botonAgregar').on("click", function() {
 		cant = $('#cantidadAgregar').val();
-		var contenido = {
-			idLote: "",
-			idPresentacion: idPre,
-			cantidad: cant
+		if(cant != 0)
+		{
+			if(esMultiplo(cant))
+			{
+				alertaValidacion.remove();
+				var contenido = {
+					idLote: "",
+					idPresentacion: idPre,
+					cantidad: cant
+				}
+				cantTotal = cantTotal + Number(cant);
+				contenidoList.push(contenido);
+				actualizarTablaContenido();
+				actualizarCantidadTotal();
+				$('#modalAgregar').modal('hide');
+			} else {
+				alertaValidacion.appendTo($('#cuerpoAgregar'));
+				$('#validacion').text("La cantidad debe ser múltiplo de " + bloque + ".");
+			}
+		} else {
+			alertaValidacion.appendTo($('#cuerpoAgregar'));
+			$('#validacion').text("Elija la cantidad.");
 		}
-		cantTotal = cantTotal + Number(cant);
-		contenidoList.push(contenido);
-		actualizarTablaContenido();
-		actualizarCantidadTotal();
-		$('#modalAgregar').modal('hide');
+	});
+	
+	$('#botonConfirmar').on("click", function() {
+		for(i = 0; i < contenidoList.length; i++) {
+			contenidoList[i].idLote = $('#codigo').val();
+		}
+		var lote = {
+			idLote: $('#codigo').val(),
+			idPlanta: 2,
+			fechaProduccion: $('#fecha').val(),
+			cantidadRecepcion: $('#cantidad').val(),
+			esReempaque: $('#reempaque').val(),
+			contenidoList: contenidoList	
+		}
+		$('#modalConfirmar').modal('hide');
+		registrarLote(lote);
 	});
 	
 	$('#guardarLote').on("click", function() {
 		var esValido = validarRegistrarLote();
 		if(esValido) {
-			for(i = 0; i < contenidoList.length; i++) {
-				contenidoList[i].idLote = $('#codigo').val();
-			}
-			var lote = {
-				idLote: $('#codigo').val(),
-				idPlanta: 2,
-				fechaProduccion: $('#fecha').val(),
-				cantidadRecepcion: $('#cantidad').val(),
-				contenidoList: contenidoList	
-			}
-			registrarLote(lote);
+			$('#tituloModal').text($('#codigo').val());
+			$('#modalConfirmar').modal('show');
+		}
+	});
+	
+	$('#reempaque').on("click", function() {
+		var valor = $('#reempaque').val();
+		if(valor === 'true') {
+			$('#reempaque').val('false');
+		} else {
+			$('#reempaque').val('true');
 		}
 	});
 	
@@ -103,12 +162,12 @@ $(document).ready( function () {
 				{data: "idPresentacion"},
 				{data: "descripcion"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
-						"<span class='fa fa-plus-circle'></span></span>"}
+						"Agregar <span class='fa fa-plus-circle'></span></span>"}
 			],
 			language: lenguaje
 		});
 		
-		agregarCantidad('#presentacionesTabla tbody',tabla);
+		agregarCantidad('#presentacionesTabla tbody', tabla);
 	}
 	
 	function registrarLote(lote) {
@@ -161,6 +220,15 @@ $(document).ready( function () {
 		} else {
 			return true;
 		}
+	}
+	
+	function esMultiplo(cantidad) {
+		var resto = cantidad % bloque;   
+	    if ( resto != 0 ){
+	    	return false;
+	    } else {
+	    	return true;
+	    }
 	}
 	
 	listar();

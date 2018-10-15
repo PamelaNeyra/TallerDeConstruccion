@@ -31,5 +31,13 @@ public interface IAsignacionRepository {
 	 * @param asignacion
 	 */
 	public abstract void registrarAsignacion(EntityManager sesion, Asignacion asignacion);
+	
+	/**
+	 * Actualiza una asignacion
+	 * en la base de datos.
+	 * @param sesion
+	 * @param asignacion
+	 */
+	public abstract void actualizarAsignacion(EntityManager sesion, Asignacion asignacion);
 
 }

@@ -30,7 +30,13 @@ $(document).ready( function () {
 		$(tbody).on("click", "span.btn", function(){
 			var data = table.row($(this).parents("tr")).data();
 			idOrden = data.idOrdenVenta;
-			$('#exampleModalCenterTitle').text(data.idOrdenVenta);	
+			if(data.estado === 'Embarcado') {
+	        	$('#mensajeError').text('Esta orden ya está embarcada.');
+	        	$('#modalError').modal('show');
+			} else {
+	        	$('#modalConfirmar').modal('show');
+				$('#tituloModal').text(data.idOrdenVenta);	
+			}
 		});
 	}		
 	
@@ -54,8 +60,8 @@ $(document).ready( function () {
 				{data: "fechaAsignacion"},
 				{data: "cantidadTotal"},
 				{data: "estado"},
-				{defaultContent: "<span class='btn btn-info' data-toggle='modal' data-target='#modalElegir'>" +
-										"<span class='fa fa-ship'></span></span>"}
+				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
+										"Embarcar <span class='fa fa-ship'></span></span>"}
 			],
 			language: lenguaje
 		});
@@ -66,7 +72,7 @@ $(document).ready( function () {
 	listar();
 
 	$('#botonAceptar').on("click", function() {
-		window.location.href = "/EmbarcarOrden/Orden/" + idOrden;
+		window.location.href = "/EmbarcarOrden/" + idOrden;
 	});
 
 });

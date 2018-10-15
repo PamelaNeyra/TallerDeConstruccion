@@ -26,11 +26,13 @@ public class LoteRepository implements ILoteRepository {
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(4, Double.class, ParameterMode.IN);
+					.registerStoredProcedureParameter(4, Double.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(5, Boolean.class, ParameterMode.IN);
 			myquery.setParameter(1, lote.getIdLote())
 					.setParameter(2, lote.getIdPlanta().getIdPlanta())
 					.setParameter(3, lote.getFechaProduccion())
-					.setParameter(4, lote.getCantidadRecepcion());
+					.setParameter(4, lote.getCantidadRecepcion())
+					.setParameter(5, lote.getEsReempaque());
 			myquery.execute();			
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
