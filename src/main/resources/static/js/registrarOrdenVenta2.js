@@ -29,7 +29,6 @@ var lenguaje = {
 
 $(document).ready( function () {
 	
-
 	var eliminarFila = function(tbody,table){
 		$(tbody).on('click', 'span.btn', function () {
 			table
@@ -48,6 +47,8 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
+				{data: "comprometidoTotal"},
+				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-danger' data-toggle='modal' data-target=''>" +
 				"<span class='fa fa-minus-circle'></span></span>"}
 			],
@@ -60,7 +61,9 @@ $(document).ready( function () {
 	$('#botonAgregar').on("click", function() {
 		var presentacion = {
 			idPresentacion: idPre,
-			descripcion: desc
+			descripcion: desc,
+			comprometidoTotal: comproTotal,
+			cantidadTotal: cantot
 		}
 		//cantTotal = cantTotal + Number(cant);
 		presentacionesList.push(presentacion);
@@ -78,8 +81,8 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
-				{data: "cantidadTotal"},
 				{data: "comprometidoTotal"},
+				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 				"<span class='fa fa-plus-circle'></span></span>"}
 			],
@@ -90,8 +93,10 @@ $(document).ready( function () {
 	
 	$('#botonQuitar').on("click", function() {
 		var presentacion = {
-			idPresentacion: idPre,
-			descripcion: desc
+				idPresentacion: idPre,
+				descripcion: desc,
+				comprometidoTotal: comproTotal,
+				cantidadTotal: cantot
 		}
 		//cantTotal = cantTotal + Number(cant);
 		presentacionesList.push(presentacion);
@@ -109,8 +114,8 @@ $(document).ready( function () {
 			var data = table.row($(this).parents("tr")).data();
 			idPre = data.idPresentacion;
 			desc = data.descripcion;
-			comproTotal = data.comprometido_total;
-			saldo = data.saldo;
+			comproTotal = data.comprometidoTotal;
+			cantot = data.cantidadTotal
 			$('#exampleModalCenterTitle').text(data.idPresentacion);			
 		});
 	}
@@ -132,8 +137,8 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
-				{data: "cantidadTotal"},
 				{data: "comprometidoTotal"},
+				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 						"<span class='fa fa-plus-circle'></span></span>"}
 			],
