@@ -149,8 +149,6 @@ public class OrdenVentaService implements IOrdenVentaService {
 			throw new Exception("El idCliente es requerido.");
 		if (ordenVenta.getFechaAsignacion() == null)
 			throw new Exception("La fechaAsignacion es requerida");
-		if (ordenVenta.getAsignacionList() == null || ordenVenta.getAsignacionList().isEmpty())
-			throw new Exception("La lista de asignaciones es requerida.");
 	}
 
 	private void validarActualizarOrdenVenta(OrdenVenta ordenVenta) throws Exception {

@@ -96,8 +96,8 @@ public class ContenidoRepository implements IContenidoRepository {
 				Contenido aux = new Contenido();
 				aux.setPresentacion(new Presentacion((String) o[0]));
 				aux.setLote(new Lote((String) o[1]));
-				aux.setCantidad((Integer) o[2]);
-				aux.setComprometido((Integer) o[3]);
+				aux.setCantidad((Double) o[2]);
+				aux.setComprometido((Double) o[3]);
 				listaContenidos.add(aux);
 			});
 		} catch (Exception ex) {

@@ -27,54 +27,13 @@ var lenguaje = {
 }
 
 $(document).ready( function () {
-	
-	/*LISTAR*/
-	/*var listar = function() {
-		var tabla = $('#presentacionesTabla').DataTable({
-			ajax: {
-				url: "/RegistrarOrdenVenta/listarPresentacion",
-				type: "GET",
-			    error: function(xhr, ajaxOptions, thrownError) {
-			        alert(xhr.status);
-			        alert(thrownError);
-			    }
-			},
-			sAjaxDataProp: "",
-			order: [[ 0, "asc" ]],
-			responsive: true,
-			columns: [
-				{data: "idPresentacion"},
-				{data: "descripcion"},
-				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
-						"<span class='fa fa-plus-circle'></span></span>"}
-			],
-			language: lenguaje
-		});
-		
-		agregarPresentacion('#presentacionesTabla tbody',tabla)
-	}*/
-	
-	//listar();
-	
-	/*var actualizarTablaPresentacionesComprometidas = function(){
-		$('#presentacionesTablaComprometidas').DataTable({
-			destroy: true,
-			data: contenidoList,
-			order: [[ 0, "asc" ]],
-			responsive: true,
-			columns: [
-				{title: "Código SAP"},
-				{title: "Descripciónn"}
-			],
-			language: lenguaje
-		});
-	}*/
+
 	var elegirCliente = function(tbody, table) {
 		$(tbody).on("click", "span.btn", function(){
 			var data = table.row($(this).parents("tr")).data();
 			idCliente = data.idCliente;
 			nombreCliente = data.nombreCliente;
-			$('#exampleModalCenterTitle').text(data.nombreCliente);	
+			$('#tituloModal').text(data.nombreCliente);	
 		});
 	}
 	
@@ -96,7 +55,7 @@ $(document).ready( function () {
 				{data: "idCliente"},
 				{data: "nombreCliente"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalElegir'>" +
-				"<span class='fa fa-user'></span></span>"}
+				"Elegir <span class='fa fa-user'></span></span>"}
 			],
 			language: lenguaje
 		});
@@ -104,18 +63,9 @@ $(document).ready( function () {
 		elegirCliente('#tabla_clientes tbody',tabla)
 	}
 	
-	/*FIN LISTAR*/
-	
 	$('#botonAceptar').on("click", function() {
-		window.location.href = "/RegistrarOrdenVenta/Orden/" + nombreCliente +"/"+idCliente;
+		window.location.href = "/RegistrarOrdenVenta/Orden/" + nombreCliente + "/" + idCliente;
 	});
-	
-	/*$('#btn_asignar_cliente').on("click", function() {
-		var data = table.row($(this).parents("tr")).data();
-		idCli = data.idCliente;
-		nombreCli = data.nombreCliente;
-		docuement.cliente.value = nombreCli;
-	});*/
 	
 	listarClientes();
 	

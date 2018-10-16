@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="es"
+    xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Registrar Orden</title>
@@ -16,10 +17,9 @@
 	            <h1><strong>Escoger Cliente a Asignar</strong></h1>
 	        </div>
 	    </div>
-	    <hr> 
+	<hr> 
 	</div>
-
-	<div class="container d-flex justify-content-end mb-2">
+	<div class="container d-flex justify-content-end mb-2" style="visibility: hidden;">
 		<div class="row">
 	    	<div class="p-2" style="margin: auto;">
 		        <button type="button" class="btn btn-secondary">Actualizar</button>
@@ -51,11 +51,11 @@
 	</div>
 	
 	<!-- Modal Elegir -->
-	<div class="modal fade" id="modalElegir" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal fade" id="modalElegir" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Cliente: </h5>
+					<h5 class="modal-title" id="tituloModal">Cliente: </h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -65,32 +65,24 @@
 				</div>
 				<div class="modal-footer">											
 					<button id="botonAceptar" type="button" class="btn btn-primary">Aceptar</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
-<!--<div class="container d-flex justify-content-end mb-2" style="margin-top: 30px;">
-		<div class="row">
-			<div class="p-3" style="margin: auto;">
-			    <button type="button" class="btn btn-primary" id="btn_asignar_cliente">Asignar a clientes</button>
-			</div>		
-		</div>
-	</div>-->
 	
 	<!-- Modal Error -->
-	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Error</h5>
+					<h5 class="modal-title" id="tituloModal">Error</h5>
 				</div>
 				<div class="modal-body">
                         	<span id="mensajeError"></span>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>

@@ -44,6 +44,7 @@ public class RegistrarLoteRestController {
 	@RequestMapping(path = "/RegistrarLote/registrarLote", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) LoteModel lote) {
 		try {
+			lote.setIdPlanta(1);
 			loteService.registrarLote(loteConverter.convertToEntity(lote));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

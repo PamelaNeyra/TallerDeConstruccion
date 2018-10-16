@@ -4,6 +4,7 @@ public class PresentacionModel {
 
 	private String idPresentacion;
 	private String descripcion;
+	private Double cantidadTotal;
 	
 	public PresentacionModel() {
 		
@@ -23,6 +24,14 @@ public class PresentacionModel {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Double getCantidadTotal() {
+		return cantidadTotal;
+	}
+
+	public void setCantidadTotal(Double cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
 	}
 	
 }

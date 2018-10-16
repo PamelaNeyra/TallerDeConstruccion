@@ -24,8 +24,4 @@ public class OrdenVentaConverter extends IAbstractConverter<OrdenVentaModel, Ord
 		return entity;
 	}
 
-
-
-	
-
 }

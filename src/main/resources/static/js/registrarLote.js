@@ -36,7 +36,6 @@ $(document).ready( function () {
 		$(tbody).on('click', 'span.btn', function () {
 			var data = table.row($(this).parents("tr")).data();
 			if(data != undefined) {
-				console.log(data);
 				var idPre = data.idPresentacion;
 				var cant = data.cantidad;
 				var pos = contenidoList.findIndex(x => x.idPresentacion == idPre);
@@ -97,7 +96,7 @@ $(document).ready( function () {
 	//Evento cuando se da clic en agregar
 	$('#botonAgregar').on("click", function() {
 		cant = $('#cantidadAgregar').val();
-		if(cant >= 0) {
+		if(cant > 0) {
 			if(esMultiplo(cant)) {
 				alertaValidacion.remove();
 				var contenido = {
@@ -116,7 +115,7 @@ $(document).ready( function () {
 			}
 		} else {
 			alertaValidacion.appendTo($('#cuerpoAgregar'));
-			$('#validacion').text("Elija la cantidad.");
+			$('#validacion').text("La cantidad no puede ser negativa ni 0.");
 		}
 	});
 	
@@ -127,7 +126,6 @@ $(document).ready( function () {
 		}
 		var lote = {
 			idLote: $('#codigo').val(),
-			idPlanta: 2,
 			fechaProduccion: $('#fecha').val(),
 			cantidadRecepcion: $('#cantidad').val(),
 			esReempaque: $('#reempaque').val(),
