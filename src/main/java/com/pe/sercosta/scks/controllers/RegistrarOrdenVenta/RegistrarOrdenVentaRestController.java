@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.ClienteConverter;
+import com.pe.sercosta.scks.converter.implementation.OrdenVentaConverter;
+import com.pe.sercosta.scks.converter.implementation.PresentacionConverter;
 import com.pe.sercosta.scks.converter.implementation.PresentacionViewConverter;
-import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.ClienteModel;
+import com.pe.sercosta.scks.models.OrdenVentaModel;
+import com.pe.sercosta.scks.models.PresentacionModel;
 import com.pe.sercosta.scks.models.views.PresentacionView;
 import com.pe.sercosta.scks.services.IClienteService;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
@@ -31,14 +34,22 @@ public class RegistrarOrdenVentaRestController {
 	@Autowired
 	@Qualifier("clienteConverter")
 	private ClienteConverter clienteConverter;
-
+	
 	@Autowired
-	@Qualifier("clienteService")
-	private IClienteService clienteService;
+	@Qualifier("ordenVentaConverter")
+	private OrdenVentaConverter ordenVentaConverter;
+	
+	@Autowired
+	@Qualifier("presentacionConverter")
+	private PresentacionConverter presentacionConverter;	
 
 	@Autowired
 	@Qualifier("presentacionViewConverter")
 	private PresentacionViewConverter presentacionViewConverter;
+
+	@Autowired
+	@Qualifier("clienteService")
+	private IClienteService clienteService;
 
 	@Autowired
 	@Qualifier("ordenVentaService")
@@ -87,10 +98,15 @@ public class RegistrarOrdenVentaRestController {
 	}
 	
 	@RequestMapping(path = "/RegistrarOrdenVenta/registrarOrdenVenta", method = RequestMethod.POST)
-	public void registrarOrdenVenta(@RequestBody(required = true) OrdenVenta ordenVenta) {
+	public void registrarOrdenVenta(@RequestBody(required = true) OrdenVentaModel ordenVenta,
+									@RequestBody(required = true) List<PresentacionModel> listaPresentacion) {
 		try {
 			// TODO: Poner planta del usuario al lote
-			ordenVentaService.registrarOrdenVenta(ordenVenta);
+			ordenVenta.setIdPlanta(1);
+			ordenVentaService.registrarOrdenVenta(ordenVentaConverter.convertToEntity(ordenVenta),
+													listaPresentacion.stream()
+													.map(p -> presentacionConverter.convertToEntity(p))
+													.collect(Collectors.toList()));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());

@@ -3,6 +3,7 @@ package com.pe.sercosta.scks.services;
 import java.util.List;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Presentacion;
 
 public interface IOrdenVentaService {
 	
@@ -29,7 +30,7 @@ public interface IOrdenVentaService {
 	 * : Registra una orden de venta
 	 * @param ordenVenta
 	 */
-	public abstract void registrarOrdenVenta(OrdenVenta ordenVenta);
+	public abstract void registrarOrdenVenta(OrdenVenta ordenVenta, List<Presentacion> listaPresentacion);
 	
 	/**
 	 * Lógica de negocios para

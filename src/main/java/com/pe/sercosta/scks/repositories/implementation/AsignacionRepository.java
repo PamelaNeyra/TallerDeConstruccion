@@ -69,7 +69,7 @@ public class AsignacionRepository implements IAsignacionRepository{
 	}
 
 	@Override
-	public void actualizarAsignacion(EntityManager sesion, Asignacion asignacion) {
+	public void embarcarAsignacion(EntityManager sesion, Asignacion asignacion) {
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_embarcar_asignacion");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)

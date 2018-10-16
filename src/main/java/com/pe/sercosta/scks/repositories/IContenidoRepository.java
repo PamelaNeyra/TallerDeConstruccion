@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Presentacion;
 
 public interface IContenidoRepository {
 	
@@ -32,6 +34,14 @@ public interface IContenidoRepository {
 	 */
 	public abstract void actualizarContenido(EntityManager sesion, Contenido contenido);
 	
-
+	/**
+	 * Lista los contenidos con
+	 * filtro de Presentación y
+	 * Planta.
+	 * @param sesion
+	 * @param presentacion
+	 * @return
+	 */
+	public abstract List<Contenido> listarContenidos(EntityManager sesion, Planta planta, Presentacion presentacion);
 	
 }
