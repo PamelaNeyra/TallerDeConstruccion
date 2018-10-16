@@ -1,7 +1,6 @@
 var idPro = '';
 var desc = '';
 var cant = 0;
-var cantTotal = 0;
 var productoList = [];
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
@@ -39,17 +38,6 @@ $(document).ready( function () {
 		});
 	}
 	
-	var agregarCantidad = function(tbody, table) {
-		$(tbody).on("click", "span.btn", function(){
-			$('#cantidad').val("");
-			var data = table.row($(this).parents("tr")).data();
-			idPro = data.idProductoTerminado;
-			desc = data.descripcion;
-			cant = data.cantidadTotal;
-			$('#exampleModalCenterTitle1').text(data.idProductoTerminado);			
-		});
-	}
-	
 	var actualizarTablaProductoSeleccionado = function(){
 		var tabla=$('#productoSeleccionadoTabla').DataTable({
 			destroy: true,
@@ -60,12 +48,20 @@ $(document).ready( function () {
 				{data: "idProductoTerminado"},
 				{data: "descripcion"},
 				{data: "cantidadTotal"},
-				{defaultContent:"<span class='btn btn-danger'>" + 
-					             "<span class='fa fa-minus'></span></span>" }
+				{defaultContent: "<span class='btn btn-danger'>" + 
+					             "Quitar <span class='fa fa-minus-circle'></span></span>" }
 			],
 			language: lenguaje
 		});
-		eliminarFila('#productoSeleccionadoTabla tbody',tabla)
+	}
+	
+	var agregarFila= function(tbody, table) {
+		$(tbody).on("click", "span.btn", function(){
+			var data = table.row($(this).parents("tr")).data();
+			idPro = data.idProductoTerminado;			
+			desc=data.descripcion;
+			cant=data.cantidadTotal;
+		});
 	}
 	
 	$('#botonAgregar').on("click", function() {
@@ -74,10 +70,8 @@ $(document).ready( function () {
 			descripcion: desc,
 			cantidadTotal: cant
 		}
-		cantTotal = cantTotal + Number(cant);
 		productoList.push(producto);
 		actualizarTablaProductoSeleccionado();
-		actualizarCantidadTotal();
 		$('#modalAgregar').modal('hide');
 	});
 	
@@ -86,7 +80,6 @@ $(document).ready( function () {
 		if(esValido) {
 			var muestra = {
 				fechaCreacion: $('#fecha').val(),
-				idPlanta: 2,
 				nombreLaboratorio: $('#laboratorio').val(),
 				productoTerminadoList: productoList
 			}
@@ -113,12 +106,12 @@ $(document).ready( function () {
 				{data: "descripcion"},
 				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
-						"<span class='fa fa-plus-circle'></span></span>"}
+						"Agregar <span class='fa fa-plus-circle'></span></span>"}
 			],
 			language: lenguaje
 		});
 		
-		agregarCantidad('#productoTerminado tbody',tabla)
+		agregarFila('#productoTerminado tbody', tabla);
 	}
 	
 	function registrarMuestra(muestra) {

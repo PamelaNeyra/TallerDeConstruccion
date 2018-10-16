@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.MuestraConverter;
 import com.pe.sercosta.scks.converter.implementation.ProductoTerminadoConverter;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.MuestraModel;
 import com.pe.sercosta.scks.models.ProductoTerminadoModel;
@@ -59,7 +60,7 @@ public class RegistrarMuestraRestController {
 	public List<ProductoTerminadoModel> listarProducto() {
 		List<ProductoTerminadoModel> listaProducto = new ArrayList<>();
 		try {
-			listaProducto = productoTerminadoService.listarProducto()
+			listaProducto = productoTerminadoService.listarProducto(new Planta(2))
 					       .stream()
 				        	.map(entity -> productoTerminadoConverter.convertToModel(entity)).collect(Collectors.toList());
 		} catch (SercostaException sx) {

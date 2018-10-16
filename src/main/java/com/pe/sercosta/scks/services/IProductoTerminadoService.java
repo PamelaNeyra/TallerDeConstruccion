@@ -1,6 +1,8 @@
 package com.pe.sercosta.scks.services;
 
 import java.util.List;
+
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 
 public interface IProductoTerminadoService {
@@ -11,7 +13,7 @@ public interface IProductoTerminadoService {
 	 * : Lista de productos terminados
 	 * @return List<ProdcutosTerminados>
 	 */
-	public abstract List<ProductoTerminado> listarProducto();
+	public abstract List<ProductoTerminado> listarProducto(Planta planta);
 	
 	/**
 	 * Lógica de negocios para
