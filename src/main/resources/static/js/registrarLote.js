@@ -31,23 +31,24 @@ var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>
 
 $(document).ready( function () {
 	
+	//Elimina el registro de la segunda tabla
 	var eliminarContenido = function(tbody,table){
 		$(tbody).on('click', 'span.btn', function () {
 			var data = table.row($(this).parents("tr")).data();
-			idPre = data.idPresentacion;
-			console.log(contenidoList.findIndex(x => x.idPresentacion == idPre));
+			if(data != undefined) {
+				console.log(data);
+				var idPre = data.idPresentacion;
+				var cant = data.cantidad;
+				var pos = contenidoList.findIndex(x => x.idPresentacion == idPre);
+				contenidoList.splice(pos, 1);
+				cantTotal = cantTotal - Number(cant);
+				actualizarTablaContenido();
+				actualizarCantidadTotal();
+			}
 		});
 	}
 	
-	var eliminarFila = function(tbody,table){
-		$(tbody).on('click', 'span.btn', function () {
-			table
-			.row( $(this).parents('tr') )
-			.remove()
-			.draw();
-		});
-	}
-	
+	//Obtiene el bloque de la presentación
 	var obtenerBloque = function(descripcion) {
 		var posAux = descripcion.search("kg");
 		var subDes = descripcion.slice(posAux + 2, descripcion.length);
@@ -55,17 +56,26 @@ $(document).ready( function () {
 		return subDes.slice(posAux - 5, posAux).trim();
 	}
 
+	//Muestra el modal para agregar la cantidad
 	var agregarCantidad = function(tbody, table) {
 		$(tbody).on("click", "span.btn", function(){
-			alertaValidacion.remove();
-			$('#cantidadAgregar').val("");
 			var data = table.row($(this).parents("tr")).data();
 			idPre = data.idPresentacion;
-			bloque = obtenerBloque(data.descripcion);
-			$('#tituloModal').text(data.idPresentacion);			
+			var encontrado = contenidoList.find(x => x.idPresentacion == idPre);
+			if(encontrado != undefined) {
+				$('#mensajeError').text("Esta presentación ya fue agregada");
+	        	$('#modalError').modal('show');
+			} else {
+	        	$('#modalAgregar').modal('show');
+				alertaValidacion.remove();
+				$('#cantidadAgregar').val("");
+				bloque = obtenerBloque(data.descripcion);
+				$('#tituloModal').text(data.idPresentacion);		
+			}	
 		});
 	}
 	
+	//Actualiza la segunda tabla
 	var actualizarTablaContenido = function(){
 		var tabla = $('#contenidosTabla').DataTable({
 			destroy: true,
@@ -76,20 +86,19 @@ $(document).ready( function () {
 				{data: "idPresentacion"},
 				{data: "cantidad"},
 				{defaultContent: "<span class='btn btn-danger'>" +
-					"<span class='fa fa-minus-circle'></span></span>"}
+					"Retirar <span class='fa fa-minus-circle'></span></span>"}
 			],
 			language: lenguaje
 		});
-		eliminarFila('#contenidosTabla tbody',tabla)
-		//eliminarContenido('#contenidosTabla tbody', tabla);
+		
+		eliminarContenido('#contenidosTabla tbody',tabla);
 	}
 	
+	//Evento cuando se da clic en agregar
 	$('#botonAgregar').on("click", function() {
 		cant = $('#cantidadAgregar').val();
-		if(cant != 0)
-		{
-			if(esMultiplo(cant))
-			{
+		if(cant >= 0) {
+			if(esMultiplo(cant)) {
 				alertaValidacion.remove();
 				var contenido = {
 					idLote: "",
@@ -111,6 +120,7 @@ $(document).ready( function () {
 		}
 	});
 	
+	//Evento cuando se da clic en confirmar
 	$('#botonConfirmar').on("click", function() {
 		for(i = 0; i < contenidoList.length; i++) {
 			contenidoList[i].idLote = $('#codigo').val();
@@ -127,6 +137,7 @@ $(document).ready( function () {
 		registrarLote(lote);
 	});
 	
+	//Evento cuando se da clic en guardar
 	$('#guardarLote').on("click", function() {
 		var esValido = validarRegistrarLote();
 		if(esValido) {
@@ -135,6 +146,7 @@ $(document).ready( function () {
 		}
 	});
 	
+	//Evento cuando se marca el check de reempaque
 	$('#reempaque').on("click", function() {
 		var valor = $('#reempaque').val();
 		if(valor === 'true') {
@@ -144,6 +156,7 @@ $(document).ready( function () {
 		}
 	});
 	
+	//Llenar la tabla 1
 	var listar = function() {
 		var tabla = $('#presentacionesTabla').DataTable({
 			ajax: {
@@ -161,7 +174,7 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
-				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
+				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
 						"Agregar <span class='fa fa-plus-circle'></span></span>"}
 			],
 			language: lenguaje
@@ -170,6 +183,7 @@ $(document).ready( function () {
 		agregarCantidad('#presentacionesTabla tbody', tabla);
 	}
 	
+	//Registra el Lote
 	function registrarLote(lote) {
 		$.ajax({
 	        type: "POST",
@@ -190,6 +204,7 @@ $(document).ready( function () {
 	    });
 	}
 	
+	//Limpia los controles
 	function limpiarControles() {
 		$('#codigo').val("");
 		$('#fecha').val("");
@@ -198,10 +213,12 @@ $(document).ready( function () {
 		cantTotal = 0;
 	}
 	
+	//Actualiza la cantidad total
 	function actualizarCantidadTotal() {
 		$('#cantidadTotal').text('Cantidad Total: ' + cantTotal)
 	}
 	
+	//Valida los campos
 	function validarRegistrarLote() {
 		var mensaje = "";
 		if($('#codigo').val() === "")
@@ -212,8 +229,7 @@ $(document).ready( function () {
 			mensaje = "La Cantidad Recepcionada debe ser mayor a 0.";
 		if(contenidoList.length === 0)
 			mensaje = "La Lista de Contenidos no puede ser vacía.";
-		if(mensaje != "")
-		{
+		if(mensaje != "") {
         	$('#mensajeError').text(mensaje);
         	$('#modalError').modal('show');
         	return false;	
@@ -222,6 +238,7 @@ $(document).ready( function () {
 		}
 	}
 	
+	//Pregunta si es múltiplo
 	function esMultiplo(cantidad) {
 		var resto = cantidad % bloque;   
 	    if ( resto != 0 ){
@@ -231,6 +248,7 @@ $(document).ready( function () {
 	    }
 	}
 	
+	//Inicializa la tabla 1
 	listar();
 	
 });

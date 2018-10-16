@@ -2,9 +2,6 @@ package com.pe.sercosta.scks.repositories;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-
-import org.hibernate.Session;
-
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 
@@ -45,7 +42,6 @@ public interface IOrdenVentaRepository {
 	 * @param planta
 	 */
 	public abstract void actualizarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta);
-	
 	
 	/**
 	 * Registra una orden de venta
