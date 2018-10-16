@@ -27,49 +27,75 @@ var lenguaje = {
 	    }
 }
 
+var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>');
+
 $(document).ready( function () {
+	
+	
+	
+	var obtenerBloque = function(descripcion) {
+		var posAux = descripcion.search("kg");
+		var subDes = descripcion.slice(posAux + 2, descripcion.length);
+		posAux = subDes.search("kg");
+		return subDes.slice(posAux - 5, posAux).trim();
+	}
+
+	
 	
 	var eliminarFila = function(tbody,table){
 		$(tbody).on('click', 'span.btn', function () {
-			table
-			.row( $(this).parents('tr') )
-			.remove()
-			.draw();
+			var data = table.row($(this).parents("tr")).data();
+			if(data != undefined) {
+				console.log(data);
+				var idPre = data.idPresentacion;
+				var cant = data.cantidad;
+				var pos = presentacionesList.findIndex(x => x.idPresentacion == idPre);
+				presentacionesList.splice(pos, 1);
+				actualizarTablaPresentacionesComprometidas();
+			}
 		});
 	}
 	
 	var actualizarTablaPresentacionesComprometidas = function(){
-		var tabla=$('#presentacionesTablaComprometidas').DataTable({
+		var tabla = $('#presentacionesTablaComprometidas').DataTable({
 			destroy: true,
 			data: presentacionesList,
 			order: [[ 0, "asc" ]],
 			responsive: true,
 			columns: [
 				{data: "idPresentacion"},
-				{data: "descripcion"},
-				{data: "comprometidoTotal"},
-				{data: "cantidadTotal"},
-				{defaultContent: "<span class='btn btn-danger' data-toggle='modal' data-target=''>" +
-				"<span class='fa fa-minus-circle'></span></span>"}
+				{data: "cantidad"},
+				{defaultContent: "<span class='btn btn-danger'>" +
+					"<span class='fa fa-minus-circle'></span></span>"}
 			],
 			language: lenguaje
 		});
-		eliminarFila('#presentacionesTablaComprometidas tbody',tabla)
+		
+		eliminarFila('#presentacionesTablaComprometidas tbody',tabla);
 	}
 
 	
+	
 	$('#botonAgregar').on("click", function() {
-		var presentacion = {
-			idPresentacion: idPre,
-			descripcion: desc,
-			comprometidoTotal: comproTotal,
-			cantidadTotal: cantot
+		cant = $('#cantidadAgregar').val();
+		if(cant >= 0) {
+			if(esMultiplo(cant)) {
+				alertaValidacion.remove();
+				var presentacionComprometida = {
+					idPresentacion: idPre,
+					cantidad: cant
+				}
+				presentacionesList.push(presentacionComprometida);
+				actualizarTablaPresentacionesComprometidas();
+				$('#modalAgregar').modal('hide');
+			} else {
+				alertaValidacion.appendTo($('#cuerpoAgregar'));
+				$('#validacion').text("La cantidad debe ser múltiplo de " + bloque + ".");
+			}
+		} else {
+			alertaValidacion.appendTo($('#cuerpoAgregar'));
+			$('#validacion').text("Elija la cantidad.");
 		}
-		//cantTotal = cantTotal + Number(cant);
-		presentacionesList.push(presentacion);
-		actualizarTablaPresentacionesComprometidas();
-		//actualizarCantidadTotal();
-		$('#modalAgregar').modal('hide');
 	});
 	
 	var actualizarTablaPresentaciones = function(){
@@ -82,7 +108,7 @@ $(document).ready( function () {
 				{data: "idPresentacion"},
 				{data: "descripcion"},
 				{data: "comprometidoTotal"},
-				{data: "cantidadTotal"},
+				{data: "saldo"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 				"<span class='fa fa-plus-circle'></span></span>"}
 			],
@@ -96,7 +122,7 @@ $(document).ready( function () {
 				idPresentacion: idPre,
 				descripcion: desc,
 				comprometidoTotal: comproTotal,
-				cantidadTotal: cantot
+				saldo: sal
 		}
 		//cantTotal = cantTotal + Number(cant);
 		presentacionesList.push(presentacion);
@@ -113,10 +139,18 @@ $(document).ready( function () {
 		$(tbody).on("click", "span.btn", function(){
 			var data = table.row($(this).parents("tr")).data();
 			idPre = data.idPresentacion;
-			desc = data.descripcion;
-			comproTotal = data.comprometidoTotal;
-			cantot = data.cantidadTotal
-			$('#exampleModalCenterTitle').text(data.idPresentacion);			
+			saldoPre = data.saldo;
+			var encontrado = presentacionesList.find(x => x.idPresentacion == idPre);
+			if(encontrado != undefined) {
+				$('#mensajeError').text("Esta presentación ya fue agregada");
+	        	$('#modalError').modal('show');
+			} else {
+	        	$('#modalAgregar').modal('show');
+				alertaValidacion.remove();
+				$('#cantidadAgregar').val("");
+				bloque = obtenerBloque(data.descripcion);
+				$('#tituloModal').text(data.idPresentacion);		
+			}	
 		});
 	}
 	
@@ -138,7 +172,7 @@ $(document).ready( function () {
 				{data: "idPresentacion"},
 				{data: "descripcion"},
 				{data: "comprometidoTotal"},
-				{data: "cantidadTotal"},
+				{data: "saldo"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 						"<span class='fa fa-plus-circle'></span></span>"}
 			],
@@ -202,13 +236,25 @@ $(document).ready( function () {
 				idCliente: 1,
 				certificado: $('#tipo_cert').val(),
 				fechaAsignacion: $('#fch_asig').val(),
-				paisDestino: $('#destino').val(),
-				asignacionList: presentacionesList
+				paisDestino: $('#destino').val()
 			}
-			registrarOrdenVenta(ordenVenta);
+			
+			var obj = {
+					ordenVenta: ordenVenta,
+					listaPresentacion: presentacionesList
+			}
+			
+			registrarOrdenVenta(obj);
 		}
 	});
 	
-	
+	function esMultiplo(cantidad) {
+		var resto = cantidad % bloque;   
+	    if ( resto != 0 ){
+	    	return false;
+	    } else {
+	    	return true;
+	    }
+	}
 	
 });

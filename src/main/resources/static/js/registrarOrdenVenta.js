@@ -1,5 +1,6 @@
 var idCliente = '';
 var nombreCliente = '';
+var idCliente = '';
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
 	    "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -106,7 +107,7 @@ $(document).ready( function () {
 	/*FIN LISTAR*/
 	
 	$('#botonAceptar').on("click", function() {
-		window.location.href = "/RegistrarOrdenVenta/Orden/" + nombreCliente;
+		window.location.href = "/RegistrarOrdenVenta/Orden/" + nombreCliente +"/"+idCliente;
 	});
 	
 	/*$('#btn_asignar_cliente').on("click", function() {

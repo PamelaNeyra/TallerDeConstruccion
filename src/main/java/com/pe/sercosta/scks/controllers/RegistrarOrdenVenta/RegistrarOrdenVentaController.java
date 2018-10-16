@@ -15,11 +15,12 @@ public class RegistrarOrdenVentaController {
 		return "/RegistrarOrdenVenta/index";
 	}
 	
-	@RequestMapping(path = "/Orden/{nombreCliente}", method = RequestMethod.GET)
-	public ModelAndView index2(@PathVariable("nombreCliente") String nombreCliente) {		
+	@RequestMapping(path = "/Orden/{nombreCliente}/{idCliente}", method = RequestMethod.GET)
+	public ModelAndView index2(@PathVariable("nombreCliente") String nombreCliente,@PathVariable("idCliente") String idCliente) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/RegistrarOrdenVenta/index2");
 		mav.addObject("nombreCliente", nombreCliente);
+		mav.addObject("idCliente", idCliente);
 		return mav;
 	}
 }	
