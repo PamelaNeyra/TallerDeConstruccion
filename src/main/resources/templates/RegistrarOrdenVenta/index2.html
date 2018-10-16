@@ -109,16 +109,12 @@
 			                            <thead>
 			                                <tr>
 			                                    <th>Código SAP</th>
-			                                    <th>Descripción</th>
-			                                    <th>Comprometido Total</th>
-			                                    <th>Saldo</th>
+			                                    <th>Cantidad</th>
 			                                    <th></th>
 			                                </tr>
 			                            </thead>
 			                            <tbody>
 			                            	<tr>
-			                            		<td></td>
-			                            		<td></td>
 			                            		<td></td>
 			                            		<td></td>
 			                            		<td style="text-align: center;"  align="center">
@@ -147,8 +143,9 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-                        	<label>¿Desea elegir esta presentación?</label>
+				<div id="cuerpoAgregar" class="modal-body">
+					<label>Cantidad a Ingresar:</label>
+					<input type="number" min="0" step="0.5" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
 				</div>
 				<div class="modal-footer">											
 					<button id="botonAgregar" type="button" class="btn btn-primary">Aceptar</button>

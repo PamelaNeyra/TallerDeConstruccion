@@ -73,13 +73,7 @@ public class OrdenVentaService implements IOrdenVentaService {
 		try {
 			validarRegistrarOrdenVenta(ordenVenta);
 			ordenVentaRepository.registrarOrdenVenta(sesion, ordenVenta);
-			asignacionRepository.listarAsignacion(sesion, ordenVenta)
-								.forEach(a -> {
-									Asignacion asignacion = new Asignacion();
-									asignacion.setContenido(new Contenido(a.getIdLote(), a.getIdPresentacion()));
-									asignacion.setOrdenVenta(ordenVenta);
-									asignacionRepository.actualizarAsignacion(sesion, asignacion);
-								});
+			
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
@@ -103,7 +97,14 @@ public class OrdenVentaService implements IOrdenVentaService {
 	public void actualizarOrdenVenta(OrdenVenta ordenVenta) {
 		try {
 			validarActualizarOrdenVenta(ordenVenta);
-			ordenVentaRepository.actualizarOrdenVenta(sesion,ordenVenta);			
+			ordenVentaRepository.actualizarOrdenVenta(sesion,ordenVenta);
+			asignacionRepository.listarAsignacion(sesion, ordenVenta)
+								.forEach(a -> {
+									Asignacion asignacion = new Asignacion();
+									asignacion.setContenido(new Contenido(a.getIdLote(), a.getIdPresentacion()));
+									asignacion.setOrdenVenta(ordenVenta);
+									asignacionRepository.actualizarAsignacion(sesion, asignacion);
+								});
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());

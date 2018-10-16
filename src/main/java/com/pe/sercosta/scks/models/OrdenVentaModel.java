@@ -16,6 +16,7 @@ public class OrdenVentaModel {
 	private double cantidadTotal;
 	private String estado;
 	private String nombrePlanta;
+	private Integer idPlanta;
 	
 	public OrdenVentaModel() {
 	
@@ -113,4 +114,15 @@ public class OrdenVentaModel {
 	public void setPaisDestino(String paisDestino) {
 		this.paisDestino = paisDestino;
 	}
+
+
+	public Integer getIdPlanta() {
+		return idPlanta;
+	}
+
+
+	public void setIdPlanta(Integer idPlanta) {
+		this.idPlanta = idPlanta;
+	}
+	
 }

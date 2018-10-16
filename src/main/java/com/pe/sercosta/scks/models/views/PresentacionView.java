@@ -6,6 +6,7 @@ public class PresentacionView {
 	private String descripcion;
 	private Double comprometidoTotal;
 	private Double cantidadTotal;
+	private Double saldo;
 	
 	public PresentacionView() {
 		
@@ -41,6 +42,14 @@ public class PresentacionView {
 
 	public void setCantidadTotal(Double cantidadTotal) {
 		this.cantidadTotal = cantidadTotal;
+	}
+
+	public Double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
 	}
 
 }
