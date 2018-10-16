@@ -3,7 +3,6 @@ package com.pe.sercosta.scks.services.implementation;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
@@ -51,18 +50,39 @@ public class ContenidoService implements IContenidoService{
 	
 	@Override
 	public List<Contenido> listarContenidos() {
-		EntityTransaction tx = sesion.getTransaction();
-		tx.begin();
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
 		try {
 			return contenidoRepository.listarContenidos(sesion);
+			//tx.commit();
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
 			throw sx;
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			tx.rollback();
+			//tx.rollback();
 			throw new SercostaException("Hubo un error al listar contenido", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@Override
+	public void actualizarContenido(Contenido contenido) {
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
+		try {
+			contenidoRepository.actualizarContenido(sesion,contenido);
+			//tx.commit();
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al actualizar contenido", ex.getMessage());
 		} finally {
 			sesion.close();
 		}

@@ -1,5 +1,7 @@
 package com.pe.sercosta.scks.services.implementation;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 //import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
@@ -8,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
@@ -47,6 +50,46 @@ public class LoteService implements ILoteService {
 			LOG.error(CAPA + ex.getMessage());
 			//tx.rollback();
 			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@Override
+	public void actualizarLote(Lote lote) {
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
+		try {
+			loteRepository.actualizarLote(sesion, lote);
+			lote.getContenidoList().forEach(c -> contenidoRepository.actualizarContenido(sesion, c));
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al actualizar el lote", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@Override
+	public List<Lote> listarLotes() {
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
+		try {
+			return loteRepository.listarLotes(sesion);
+			//tx.commit();
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar lote", ex.getMessage());
 		} finally {
 			sesion.close();
 		}

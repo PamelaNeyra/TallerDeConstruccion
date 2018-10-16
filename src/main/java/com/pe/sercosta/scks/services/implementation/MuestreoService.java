@@ -1,5 +1,7 @@
 package com.pe.sercosta.scks.services.implementation;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -7,8 +9,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.repositories.ILoteRepository;
 import com.pe.sercosta.scks.repositories.IMuestreoRepository;
 import com.pe.sercosta.scks.services.IMuestreoService;
 
@@ -19,6 +23,7 @@ public class MuestreoService implements IMuestreoService{
 	private static final String CAPA = "[Service : Contenido] -> ";
 
 	private IMuestreoRepository muestreoRepository;
+	private ILoteRepository loteRepository;
 	
 	@PersistenceContext
     private EntityManager sesion;
@@ -29,8 +34,19 @@ public class MuestreoService implements IMuestreoService{
 		//tx.begin();
 		try {
 			//TODO: Validaciones de O2 - Muestrear Contenido
-			validarRegstrarMuestreo(muestreo);
+			List<Lote> listaLotes = null;
+			
+			//Listamos los lotes y actualizamos
+			listaLotes = loteRepository.listarLotes(sesion);
+			for (Lote l : listaLotes) {
+				if(muestreo.getMuestreoPK().getIdLote() == l.getIdLote()) {
+					loteRepository.actualizarLote(sesion, l);
+					}
+			}
+			
+			validarRegistrarMuestreo(muestreo);
 			muestreoRepository.registrarMuestreo(sesion, muestreo);
+			
 			//tx.commit();
 					
 		} catch (SercostaException sx) {
@@ -46,7 +62,7 @@ public class MuestreoService implements IMuestreoService{
 		}
 	}
 	
-	public void validarRegstrarMuestreo(Muestreo muestreo) throws Exception {
+	public void validarRegistrarMuestreo(Muestreo muestreo) throws Exception {
 		if(muestreo.getMuestreoPK().getIdLote() == null)
 			throw new Exception("El idLote es requerido.");
 		if(muestreo.getMuestreoPK().getIdPresentacion() == null)

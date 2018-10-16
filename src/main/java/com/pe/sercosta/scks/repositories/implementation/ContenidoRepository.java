@@ -27,6 +27,7 @@ public class ContenidoRepository implements IContenidoRepository {
 	
 	/* Falta un metodo en la interfaz para sobreescribir el listado de contenidos */
 
+
 	@SuppressWarnings("unchecked")
 	public List<Contenido> listarContenidos(EntityManager sesion) {
 		List<Contenido> listaBD = new ArrayList<Contenido>();
@@ -66,6 +67,23 @@ public class ContenidoRepository implements IContenidoRepository {
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al registrar el contenido", ex.getMessage());
+		}
+	}
+
+	@Override
+	public void actualizarContenido(EntityManager sesion, Contenido contenido) {
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_actualizar_contenido");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, Double.class, ParameterMode.IN);
+			myquery.setParameter(1, contenido.getLote().getIdLote())
+					.setParameter(2, contenido.getPresentacion().getIdPresentacion())
+					.setParameter(3, contenido.getCantidad());
+			myquery.execute();
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al actualizar el contenido", ex.getMessage());
 		}
 	}
 

@@ -36,7 +36,7 @@ public class MuestraService implements IMuestraService{
 				if(muestra.getIdPlanta() != null || muestra.getIdMuestra().equals("")){
 					if(muestra.getIdLaboratorio() != null || muestra.getIdLaboratorio().equals("")) {
 						//TODO: Falta la interface de IMuestraRepository
-						//muestraRepository.registrarMuestra(sesion, muestra);
+						muestraRepository.registrarMuestra(sesion, muestra);
 						//tx.commit();
 					}else {
 						errorValidacion = true;

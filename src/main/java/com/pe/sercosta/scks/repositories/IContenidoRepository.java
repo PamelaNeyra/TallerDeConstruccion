@@ -23,6 +23,14 @@ public interface IContenidoRepository {
 	 * @param contenido
 	 */
 	public abstract void registrarContenido(EntityManager sesion, Contenido contenido);
+
+	/**
+	 * Actualiza un contenido
+	 * en la base de datos.
+	 * @param sesion
+	 * @param contenido
+	 */
+	public abstract void actualizarContenido(EntityManager sesion, Contenido contenido);
 	
 
 	

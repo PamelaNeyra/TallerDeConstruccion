@@ -23,4 +23,12 @@ public interface IContenidoService {
 	 * @param contenido
 	 */
 	public abstract List<Contenido> listarContenidos();
+
+	/**
+	 * Lógica de negocios para
+	 * - O2 - Actualizar Contenido
+	 * : Actualiza un contenido
+	 * @param contenido
+	 */
+	public abstract void actualizarContenido(Contenido contenido);
 }
