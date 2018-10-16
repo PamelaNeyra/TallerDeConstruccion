@@ -43,8 +43,6 @@
 									<div class="form-inline">
 									    <div class="text-left control-label col-sm-2" for="cliente" >Cliente:</div>
 									    	<input type="text" class="form-control col-sm-2" id="cliente" name="cliente" th:value="${nombreCliente}" readonly="readonly">
-									    <div class="text-left control-label col-sm-2" for="pta_prodc" >Planta Productora:</div>    
-									       <input type="input" class="form-control col-sm-2" id="pta_prodc" name="pta_prodc">
 									    <div class="text-left control-label col-sm-2" for="destino" style="text-align:left;">Destino:</div>    
 									       <input type="input" class="form-control col-sm-2" id="destino" name="destino">
 									</div>
@@ -84,11 +82,15 @@
 			                                <tr>
 			                                    <th>Código SAP</th>
 			                                    <th>Descripción</th>
+			                                    <th>Cantidad Total</th>
+			                                    <th>Comprometido Total</th>
 			                                    <th></th>
 			                                </tr>
 			                            </thead>
 			                            <tbody>
 			                            	<tr>
+			                            		<td></td>
+			                            		<td></td>
 			                            		<td></td>
 			                            		<td></td>
 			                            		<td style="text-align: center;"  align="center">
@@ -207,7 +209,7 @@
 	<div class="container d-flex justify-content-end mb-1">
 		<div class="row">
 	    	<div class="p-3" style="margin: auto;">
-		        <button type="button" class="btn btn-primary">Terminar Registro</button>
+		        <button type="button" class="btn btn-primary" id="terminarRegistro">Terminar Registro</button>
 		    </div>
 	    </div>
 	</div>

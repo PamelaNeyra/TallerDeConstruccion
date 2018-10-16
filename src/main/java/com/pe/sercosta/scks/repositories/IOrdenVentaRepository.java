@@ -2,6 +2,9 @@ package com.pe.sercosta.scks.repositories;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
+
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 

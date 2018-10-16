@@ -1,5 +1,6 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
+
 import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -11,7 +12,6 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
 import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
@@ -24,7 +24,8 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 	private static final Log LOG = LogFactory.getLog(OrdenVentaRepository.class);
 	private static final String CAPA = "[Repository : OrdenVenta] -> ";
 	
-	public void registrarOrdenVenta(Session sesion, OrdenVenta ordenVenta) {
+	
+	public void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
 		try {
 			//TODO: Nombre de PA por verificar
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_orden_venta");
@@ -34,14 +35,14 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(6, String.class, ParameterMode.IN);
-				/*.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);*/
+				//.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);
 			myquery.setParameter(1, ordenVenta.getIdOrdenVenta())
 					.setParameter(2, ordenVenta.getIdPlanta().getIdPlanta())
 					.setParameter(3, ordenVenta.getIdCliente().getIdCliente())
 					.setParameter(4, ordenVenta.getFechaAsignacion())
 					.setParameter(5, ordenVenta.getCertificado())
 					.setParameter(6, ordenVenta.getPaisDestino());
-			/*		.setParameter(7, ordenVenta.getPaisDestino()); */
+			//	.setParameter(7, ordenVenta.getPaisDestino()); 
 			myquery.execute();	
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
@@ -134,10 +135,6 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 		
 	}
 
-	@Override
-	public void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }

@@ -78,6 +78,8 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
+				{data: "cantidadTotal"},
+				{data: "comprometidoTotal"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 				"<span class='fa fa-plus-circle'></span></span>"}
 			],
@@ -107,6 +109,8 @@ $(document).ready( function () {
 			var data = table.row($(this).parents("tr")).data();
 			idPre = data.idPresentacion;
 			desc = data.descripcion;
+			comproTotal = data.comprometido_total;
+			saldo = data.saldo;
 			$('#exampleModalCenterTitle').text(data.idPresentacion);			
 		});
 	}
@@ -128,6 +132,8 @@ $(document).ready( function () {
 			columns: [
 				{data: "idPresentacion"},
 				{data: "descripcion"},
+				{data: "cantidadTotal"},
+				{data: "comprometidoTotal"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
 						"<span class='fa fa-plus-circle'></span></span>"}
 			],
@@ -139,6 +145,64 @@ $(document).ready( function () {
 	
 	listar();	
 	/*FIN LISTAR*/
+	function limpiarControles() {
+		$('#cod_orden').val("");
+		$('#tipo_cert').val("");
+		$('#fch_asig').val("");
+		$('#destino').val("");
+		presentacionesList = [];
+	}
+	
+	function registrarOrdenVenta(ordenVenta) {
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/RegistrarOrdenVenta/registrarOrdenVenta",
+	        data: JSON.stringify(ordenVenta),
+	        success: function (data) {	        	
+	            $('#modalTerminarRegistro').modal('show');
+	            limpiarControles();
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	        	var response = JSON.parse(xhr.responseText);	   
+	        	$('#mensajeError').text(response.message);
+	        	$('#modalError').modal('show');
+	        }
+	    });
+	}
+	
+	function validarRegistrarOrdenventa() {
+		var mensaje = "";
+		if($('#cod_orden').val() === "")
+			mensaje = "El código es requerido.";
+		if($('#tipo_cert').val() <= 0)
+			mensaje = "El certificado es requerido.";
+		if(presentacionesList.length === 0)
+			mensaje = "La Lista de Presentaciones no puede ser vacía.";
+		if(mensaje != "")
+		{
+        	$('#mensajeError').text(mensaje);
+        	$('#modalError').modal('show');
+        	return false;	
+		} else {
+			return true;
+		}
+	}
+	
+	$('#terminarRegistro').on("click", function() {
+		var esValido = validarRegistrarOrdenventa();
+		if(esValido) {
+			var ordenVenta = {
+				idOrdenVenta: $('#cod_orden').val(),
+				idCliente: 1,
+				certificado: $('#tipo_cert').val(),
+				fechaAsignacion: $('#fch_asig').val(),
+				paisDestino: $('#destino').val(),
+				asignacionList: presentacionesList
+			}
+			registrarOrdenVenta(ordenVenta);
+		}
+	});
 	
 	
 	
