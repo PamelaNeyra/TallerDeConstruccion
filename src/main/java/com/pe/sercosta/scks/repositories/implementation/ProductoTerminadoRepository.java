@@ -8,6 +8,8 @@ import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
+
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
@@ -20,12 +22,12 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductoTerminado> listarProductoTerminado(EntityManager sesion) {
+	public List<ProductoTerminado> listarProductoTerminado(EntityManager sesion, Planta planta) {
 		List<ProductoTerminado> listaProductoTerminado = new ArrayList<ProductoTerminado>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_productos_terminados");
 			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
-			myquery.setParameter(1, 1);
+			myquery.setParameter(1, planta.getIdPlanta());
 			myquery.execute();
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {

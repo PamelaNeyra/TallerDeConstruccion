@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
@@ -30,11 +31,11 @@ public class ProductoTerminadoService implements IProductoTerminadoService{
     private EntityManager sesion;
 	
 	@Override
-	public List<ProductoTerminado> listarProducto() {
+	public List<ProductoTerminado> listarProducto(Planta planta) {
 		//EntityTransaction tx = sesion.getTransaction();
 		//tx.begin();
 		try {
-			return productoTerminadoRepository.listarProductoTerminado(sesion);
+			return productoTerminadoRepository.listarProductoTerminado(sesion,planta);
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());

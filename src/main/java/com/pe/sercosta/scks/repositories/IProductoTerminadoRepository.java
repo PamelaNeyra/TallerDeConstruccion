@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 
 public interface IProductoTerminadoRepository {
@@ -14,5 +15,5 @@ public interface IProductoTerminadoRepository {
 	 * @param sesion
 	 * @param ProductoTerminado
 	 */
-	public abstract List<ProductoTerminado> listarProductoTerminado(EntityManager sesion);
+	public abstract List<ProductoTerminado> listarProductoTerminado(EntityManager sesion,Planta planta);
 }
