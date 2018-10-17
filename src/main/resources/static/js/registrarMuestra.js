@@ -2,6 +2,7 @@ var idPro = '';
 var desc = '';
 var cant = 0;
 var productoList = [];
+var cantTotal = 0;
 var lenguaje = {
 	    "sProcessing":     "Procesando...",
 	    "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -29,12 +30,18 @@ var lenguaje = {
 
 $(document).ready( function () {
 	
-	var eliminarFila = function(tbody,table){
+	var eliminarProducto = function(tbody,table){
 		$(tbody).on('click', 'span.btn', function () {
-			table
-			.row( $(this).parents('tr') )
-			.remove()
-			.draw();
+			var data = table.row($(this).parents("tr")).data();
+			if(data != undefined) {
+				var idPro = data.idProductoTerminado;
+				var cant = data.cantidadTotal;
+				var pos = productoList.findIndex(x => x.idProductoTerminado == idPro);
+				productoList.splice(pos, 1);
+				cantTotal = cantTotal - Number(cant);
+				actualizarTablaProductoSeleccionado();
+				actualizarCantidadTotal();
+			}
 		});
 	}
 	
@@ -49,18 +56,28 @@ $(document).ready( function () {
 				{data: "descripcion"},
 				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-danger'>" + 
-					             "Quitar <span class='fa fa-minus-circle'></span></span>" }
+					             "Retirar <span class='fa fa-minus-circle'></span></span>" }
 			],
 			language: lenguaje
 		});
+		
+		eliminarProducto('#productoSeleccionadoTabla tbody',tabla);
 	}
 	
 	var agregarFila= function(tbody, table) {
 		$(tbody).on("click", "span.btn", function(){
 			var data = table.row($(this).parents("tr")).data();
 			idPro = data.idProductoTerminado;			
-			desc=data.descripcion;
-			cant=data.cantidadTotal;
+			desc = data.descripcion;
+			cant = data.cantidadTotal;
+			var encontrado = productoList.find(x => x.idProductoTerminado == idPro);
+			if(encontrado != undefined) {
+				$('#mensajeError').text("Este producto terminado ya fue agregado.");
+	        	$('#modalError').modal('show');
+			} else {
+	        	$('#modalAgregar').modal('show');
+				$('#tituloModal').text(data.idProductoTerminado);		
+			}	
 		});
 	}
 	
@@ -70,7 +87,9 @@ $(document).ready( function () {
 			descripcion: desc,
 			cantidadTotal: cant
 		}
+		cantTotal = cantTotal + Number(cant);
 		productoList.push(producto);
+		actualizarCantidadTotal();
 		actualizarTablaProductoSeleccionado();
 		$('#modalAgregar').modal('hide');
 	});
@@ -78,12 +97,15 @@ $(document).ready( function () {
 	$('#botonGuardar').on("click", function() {
 		var esValido = validarRegistrarMuestra();
 		if(esValido) {
-			var muestra = {
-				fechaCreacion: $('#fecha').val(),
-				nombreLaboratorio: $('#laboratorio').val(),
+			var obj = {
+				muestra: {
+					fechaCreacion: $('#fecha').val(),
+					idLaboratorio: 1
+					//nombreLaboratorio: $('#laboratorio').val()
+				},
 				productoTerminadoList: productoList
 			}
-			registrarMuestra(muestra);
+			registrarMuestra(obj);
 		}
 	});
 	
@@ -105,7 +127,7 @@ $(document).ready( function () {
 				{data: "idProductoTerminado"},
 				{data: "descripcion"},
 				{data: "cantidadTotal"},
-				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalAgregar'>" +
+				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
 						"Agregar <span class='fa fa-plus-circle'></span></span>"}
 			],
 			language: lenguaje
@@ -114,12 +136,12 @@ $(document).ready( function () {
 		agregarFila('#productoTerminado tbody', tabla);
 	}
 	
-	function registrarMuestra(muestra) {
+	function registrarMuestra(obj) {
 		$.ajax({
 	        type: "POST",
 	        contentType: "application/json",
 	        url: "/RegistrarMuestra/registrarMuestra",
-	        data: JSON.stringify(muestra),
+	        data: JSON.stringify(obj),
 	        success: function (data) {	        	
 	            $('#modalTerminarRegistro').modal('show');
 	            limpiarControles();

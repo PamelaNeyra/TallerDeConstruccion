@@ -1,4 +1,5 @@
 package com.pe.sercosta.scks.controllers.registrarMuestra;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.MuestraModel;
 import com.pe.sercosta.scks.models.ProductoTerminadoModel;
+import com.pe.sercosta.scks.models.multiple.MuestraMultiple;
 import com.pe.sercosta.scks.services.IMuestraService;
 import com.pe.sercosta.scks.services.IProductoTerminadoService;
 
@@ -42,10 +44,15 @@ public class RegistrarMuestraRestController {
 	private IProductoTerminadoService productoTerminadoService;
 
 	@RequestMapping(path = "/RegistrarMuestra/registrarMuestra", method = RequestMethod.POST)
-	public void registrarLote(@RequestBody(required = true) MuestraModel muestra) {
+	public void registrarLote(@RequestBody(required = true) MuestraMultiple muestraMultiple) {
 		try {
-			// TODO: Poner planta del usuario al lote
-			muestraService.registrarMuestra(muestraConverter.convertToEntity(muestra));
+			MuestraModel muestra = muestraMultiple.getMuestra();
+			muestra.setIdLaboratorio(1);
+			muestra.setIdPlanta(1);
+			muestraService.registrarMuestra(muestraConverter.convertToEntity(muestra)
+											, muestraMultiple.getProductoTerminadoList().stream()
+												.map(p -> productoTerminadoConverter.convertToEntity(p))
+												.collect(Collectors.toList()));												
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
@@ -60,7 +67,7 @@ public class RegistrarMuestraRestController {
 	public List<ProductoTerminadoModel> listarProducto() {
 		List<ProductoTerminadoModel> listaProducto = new ArrayList<>();
 		try {
-			listaProducto = productoTerminadoService.listarProducto(new Planta(2))
+			listaProducto = productoTerminadoService.listarProducto(new Planta(1))
 					       .stream()
 				        	.map(entity -> productoTerminadoConverter.convertToModel(entity)).collect(Collectors.toList());
 		} catch (SercostaException sx) {

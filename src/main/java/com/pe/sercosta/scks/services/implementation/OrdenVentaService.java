@@ -90,11 +90,15 @@ public class OrdenVentaService implements IOrdenVentaService {
 						cantidadTotal -= c.getCantidad() - c.getComprometido();
 					} else {
 						cantidadInsertar = cantidadTotal;
+						cantidadTotal = 0;
 					}
 					asignacionRepository.registrarAsignacion(sesion, 
 							new Asignacion(
 									new AsignacionPK(c.getLote().getIdLote(), c.getPresentacion().getIdPresentacion(), ordenVenta.getIdOrdenVenta())
 									, cantidadInsertar));
+					if(cantidadTotal == 0) {
+						break;
+					}
 				}
 			});
 		} catch (SercostaException sx) {

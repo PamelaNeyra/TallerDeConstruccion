@@ -1,16 +1,14 @@
 package com.pe.sercosta.scks.models;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class MuestraModel {
 	
 	private String idMuestra;
 	private Integer idPlanta;  
 	private Integer idLaboratorio;
-	private LocalDate fechaProduccion;
+	private LocalDate fechaCreacion;
 	private double cantidadMuestrear;
-	private List<ProductoTerminadoModel> productoTerminadoList;
 	
 	public MuestraModel() {
 		
@@ -40,12 +38,12 @@ public class MuestraModel {
 		this.idLaboratorio = idLaboratorio;
 	}
 
-	public LocalDate getFechaProduccion() {
-		return fechaProduccion;
+	public LocalDate getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFechaProduccion(LocalDate fechaProduccion) {
-		this.fechaProduccion = fechaProduccion;
+	public void setFechaCreacion(LocalDate fechaProduccion) {
+		this.fechaCreacion = fechaProduccion;
 	}
 
 	public double getCantidadMuestrear() {
@@ -55,14 +53,5 @@ public class MuestraModel {
 	public void setCantidadMuestrear(double cantidadMuestrear) {
 		this.cantidadMuestrear = cantidadMuestrear;
 	}
-
-	public List<ProductoTerminadoModel> getProductoTerminadoList() {
-		return productoTerminadoList;
-	}
-
-	public void setProductoTerminadoList(List<ProductoTerminadoModel> productoTerminadoList) {
-		this.productoTerminadoList = productoTerminadoList;
-	}
-
 	
 }

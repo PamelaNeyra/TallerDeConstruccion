@@ -1,4 +1,4 @@
-package com.pe.sercosta.scks.controllers.RegistrarOrdenVenta;
+package com.pe.sercosta.scks.controllers.registrarOrdenVenta;
 
 import java.util.ArrayList;
 import java.util.List;

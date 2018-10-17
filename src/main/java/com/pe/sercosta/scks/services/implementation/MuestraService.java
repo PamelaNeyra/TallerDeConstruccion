@@ -1,5 +1,7 @@
 package com.pe.sercosta.scks.services.implementation;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
@@ -8,8 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Muestreo;
+import com.pe.sercosta.scks.entities.MuestreoPK;
+import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.IMuestraRepository;
+import com.pe.sercosta.scks.repositories.IMuestreoRepository;
 import com.pe.sercosta.scks.services.IMuestraService;
 
 @Service("muestraService")
@@ -25,18 +32,35 @@ public class MuestraService implements IMuestraService{
 	@Qualifier("muestraRepository")
 	private IMuestraRepository muestraRepository;
 	
+	@Autowired
+	@Qualifier("muestreoRepository")
+	private IMuestreoRepository muestreoRepository;
+	
+	@Autowired
+	@Qualifier("contenidoRepository")
+	private IContenidoRepository contenidoRepository;
+	
 	@Override
-	public void registrarMuestra(Muestra muestra) {
+	public void registrarMuestra(Muestra muestra, List<ProductoTerminado> listaProducto) {
 		//EntityTransaction tx = sesion.getTransaction();
 		boolean errorValidacion = false;
 		//tx.begin();
 		try {
 			//TODO: Validaciones de O2 - Muestrear Contenido
-			if( muestra.getIdMuestra() != null || muestra.getIdMuestra().equals("")) {
-				if(muestra.getIdPlanta() != null || muestra.getIdMuestra().equals("")){
-					if(muestra.getIdLaboratorio() != null || muestra.getIdLaboratorio().equals("")) {
-						//TODO: Falta la interface de IMuestraRepository
+				if(muestra.getIdPlanta() != null){
+					if(muestra.getIdLaboratorio() != null) {
 						muestraRepository.registrarMuestra(sesion, muestra);
+						//Recuperar muestra
+						listaProducto.forEach(p -> {
+							contenidoRepository.listarContenidos(sesion, muestra.getIdPlanta(), p)
+							.forEach(c -> {
+								Muestreo muestreo = new Muestreo();
+								muestreo.setMuestreoPK(new MuestreoPK(c.getLote().getIdLote(), 
+										c.getPresentacion().getIdPresentacion(), 0));
+								muestreo.setCantidad(c.getCantidad());
+								muestreoRepository.registrarMuestreo(sesion, muestreo);
+							});
+						});
 						//tx.commit();
 					}else {
 						errorValidacion = true;
@@ -44,9 +68,6 @@ public class MuestraService implements IMuestraService{
 				}else {
 					errorValidacion = true;
 				}
-			}else {
-				errorValidacion = true;				
-			}
 			if(errorValidacion == true) {
 				LOG.error("Error al validar los campos de la Muestra");
 				throw new Exception();

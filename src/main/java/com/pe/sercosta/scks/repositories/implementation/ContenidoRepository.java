@@ -12,6 +12,7 @@ import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
+import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 
@@ -106,5 +107,33 @@ public class ContenidoRepository implements IContenidoRepository {
 		}
 		return listaContenidos;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contenido> listarContenidos(EntityManager sesion, Planta planta, ProductoTerminado producto) {
+		List<Contenido> listaContenidos = new ArrayList<Contenido>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_contenidos_producto_t");
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+			myquery.setParameter(1, planta.getIdPlanta())
+					.setParameter(2, producto.getIdProductoTerminado());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Contenido aux = new Contenido();
+				aux.setPresentacion(new Presentacion((String) o[0]));
+				aux.setLote(new Lote((String) o[1]));
+				aux.setCantidad((Double) o[2]);
+				listaContenidos.add(aux);
+			});			
+		} catch(Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());			
+		}
+		return listaContenidos;
+	}
+	
+	
 
 }

@@ -31,8 +31,8 @@
 			    <!-- Card de Muestra -->		
 				<div class="card">
 				    <!-- Título de Card -->
-					<div class="card-header text-white"  style="background-color: #2c347c">
-						<h5>Información de la Muestra</h5>
+					<div class="card-header">
+						<h3>Información de la Muestra</h3>
 					</div>
 					 <!-- Cuerpo de Card -->
 					<div class="card-body ">
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 	<hr>
-	<div class="container">
+	<div class="row">
 	     <!-- Informacion de Productos Terminados -->
 		 <div class="col-sm-12">
 	                <!-- Card de Contenido -->
@@ -112,11 +112,11 @@
 			                    	</div>
 		                    	</div>
 		                    	<!--Modal Agregar-->
-								<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
-											<div class="modal-header" style="background-color: #047cfc">
-												<h5 class="modal-title text-white" id="exampleModalCenterTitle1" >Producto Terminado: </h5>
+											<div class="modal-header">
+												<h5 class="modal-title" id="tituloModal" >Producto Terminado: </h5>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
@@ -126,45 +126,42 @@
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-primary" id="botonAgregar" >Agregar</button>
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 											</div>
 										</div>
 									</div>
 								</div>
 								<!--Modal Registro Exitoso-->
-								<div class="modal fade" id="modalTerminarRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal fade" id="modalTerminarRegistro" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content">
-											<div class="modal-header" style="background-color: #047cfc">
-												<h5 class="modal-title text-white">Registrar Muestra de Contenido</h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
+										<div class="modal-content alert alert-success">
+											<div class="modal-header">
+												<h5 class="modal-title" id="tituloModal">Registrar Muestra de Contenido</h5>
 											</div>
 											<div class="modal-body">
 												<form class="form-inline justify-content-center"  role="form">	
-													<img class="mb-2 mr-sm-3 img-fluid" th:src="@{/imagen/check.png}" alt="Chania" width="70" height="70"> 
-													<label for="cantidad" class="mb-2 mr-sm-3"><h5>¡Registro Exitoso!</h5></label>
+													<!--<img class="mb-2 mr-sm-3 img-fluid" th:src="@{/imagen/check.png}" alt="Chania" width="70" height="70">--> 
+													<label for="exito" class="mb-2 mr-sm-3">¡Registro Exitoso!</label>
 												</form>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn -success" data-dismiss="modal" id="botonAceptar">Aceptar</button>
+												<button type="button" class="btn btn-success" data-dismiss="modal" id="botonAceptar">Aceptar</button>
 											</div>
 										</div>
 									</div>
 								</div>
 								<!-- Modal Error -->
-		                    	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		                    	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content">
+										<div class="modal-content alert alert-danger">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalCenterTitle">Error</h5>
+												<h5 class="modal-title" id="tituloModal">Error</h5>
 											</div>
 											<div class="modal-body">
 						                         	<span id="mensajeError"></span>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 											</div>
 										</div>
 									</div>
