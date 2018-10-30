@@ -14,6 +14,31 @@ public interface IProductoTerminadoRepository {
 	 * de la base de datos.
 	 * @param sesion
 	 * @param ProductoTerminado
+	 * @return List<ProductoTerminado>
 	 */
 	public abstract List<ProductoTerminado> listarProductoTerminado(EntityManager sesion,Planta planta);
+	
+	/**
+	 * Registra un Producto Terminado
+	 * en la base de datos
+	 * @param sesion
+	 * @param productoTerminado
+	 */
+	public abstract void registrarProductoTerminado(EntityManager sesion,ProductoTerminado productoTerminado);
+	
+	/**
+	 * Actualiza un Producto Terminado
+	 * en la base de datos
+	 * @param sesion
+	 * @param productoTerminado
+	 */
+	public abstract void actualizarProductoTerminado(EntityManager sesion,ProductoTerminado productoTerminado);
+	
+	/**
+	 * Elimina un Producto Terminado
+	 * en la base de datos
+	 * @param sesion
+	 * @param productoTerminado
+	 */
+	public abstract void eliminarProductoTerminado(EntityManager sesion,ProductoTerminado productoTerminado);
 }

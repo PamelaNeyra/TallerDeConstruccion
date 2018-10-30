@@ -53,4 +53,22 @@ public class PresentacionRepository implements IPresentacionRepository {
 		return listaPresentacion;
 	}
 
+	@Override
+	public void registrarPresentacion(EntityManager sesion, Presentacion presentacion) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actualizarPresentacion(EntityManager sesion, Presentacion presentacion) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarPresentacion(EntityManager sesion, Presentacion presentacion) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

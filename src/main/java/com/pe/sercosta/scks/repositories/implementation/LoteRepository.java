@@ -86,4 +86,10 @@ public class LoteRepository implements ILoteRepository {
 		}
 		return listaLotes;
 	}
+
+	@Override
+	public void eliminarLote(EntityManager sesion, Lote lote) {
+		// TODO Auto-generated method stub
+		
+	}
 }

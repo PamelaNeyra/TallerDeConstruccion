@@ -14,5 +14,27 @@ public interface ILaboratorioRepository {
 	 */
 	public abstract List<Laboratorio> listarLaboratorios(EntityManager sesion);
 	
+	/**
+	 * Registra un laboratorio
+	 * en la base de datos.
+	 * @param sesion
+	 * @param labo
+	 */
+	public abstract void registrarLaboratorio(EntityManager sesion , Laboratorio laboratorio);
 	
+	/**
+	 * Actualiza un laboratorio
+	 * de la base de datos.
+	 * @param sesion
+	 * @param labo
+	 */
+	public abstract void actualizarLaboratorio(EntityManager sesion ,Laboratorio laboratorio);
+	
+	/**
+	 * Elimina un laboratorio
+	 * de la base de datos.
+	 * @param sesion
+	 * @param labo
+	 */
+	public abstract void eliminarLaboratorio(EntityManager sesion , Laboratorio laboratorio);
 }

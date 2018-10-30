@@ -24,4 +24,28 @@ public interface IPresentacionRepository {
 	 */
 	public abstract List<Presentacion> buscarPresentacion(EntityManager sesion, Presentacion presentacion);
 	
+	/**
+	 * Registra una Presentacion
+	 * en la base de datos
+	 * @param sesion
+	 * @param presentacion
+	 */
+	public abstract void registrarPresentacion(EntityManager sesion, Presentacion presentacion);
+	
+	/**
+	 * Actualiza una Presentacion
+	 * de la base de datos 
+	 * @param sesion
+	 * @param presentacion
+	 */
+	public abstract void actualizarPresentacion(EntityManager sesion, Presentacion presentacion);
+	
+	/**
+	 * Elimina una Presentacion
+	 * de la base de datos
+	 * @param sesion
+	 * @param presentacion
+	 */
+	public abstract void eliminarPresentacion(EntityManager sesion, Presentacion presentacion);
+	
 }

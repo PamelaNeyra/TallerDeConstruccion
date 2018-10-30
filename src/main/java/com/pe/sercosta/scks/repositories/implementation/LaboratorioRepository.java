@@ -38,4 +38,22 @@ public class LaboratorioRepository implements ILaboratorioRepository {
 		return listaLaboratorio;
 	}
 
+	@Override
+	public void registrarLaboratorio(EntityManager sesion, Laboratorio labo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actualizarLaboratorio(EntityManager sesion, Laboratorio labo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarLaboratorio(EntityManager sesion, Laboratorio labo) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

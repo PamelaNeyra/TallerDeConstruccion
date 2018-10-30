@@ -71,4 +71,16 @@ public class ClienteRepository implements IClienteRepository {
 		
 	}
 
+	@Override
+	public void actualizarCliente(EntityManager sesion, Cliente cliente) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarCliente(EntityManager sesion, Cliente cliente) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

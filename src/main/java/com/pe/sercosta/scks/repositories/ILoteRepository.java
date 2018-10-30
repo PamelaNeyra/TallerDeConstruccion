@@ -29,7 +29,18 @@ public interface ILoteRepository {
 	 * en la base de datos.
 	 * @param sesion
 	 * @param lote
+	 * @return List<Lote>
 	 */
 	public abstract List<Lote> listarLotes(EntityManager sesion);
+	
+	/**
+	 * Elimina un Lote
+	 * de la base de datos
+	 * @param sesion
+	 * @param lote
+	 */
+	public abstract void eliminarLote(EntityManager sesion, Lote lote);
+	
+	
 	
 }

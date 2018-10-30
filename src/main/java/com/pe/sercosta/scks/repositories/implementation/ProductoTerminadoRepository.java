@@ -46,6 +46,24 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 		return listaProductoTerminado;
 	}
 
+	@Override
+	public void registrarProductoTerminado(EntityManager sesion, ProductoTerminado productoTerminado) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actualizarProductoTerminado(EntityManager sesion, ProductoTerminado productoTerminado) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProductoTerminado(EntityManager sesion, ProductoTerminado productoTerminado) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/*@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductoTerminado> buscarProductoTerminado(Session sesion, ProductoTerminado productoTerminado) {
