@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.OtConverter;
 import com.pe.sercosta.scks.converter.implementation.LoteConverter;
 import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OtModel;
 import com.pe.sercosta.scks.models.LoteOtModel;
+import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.services.IOtService;
 import com.pe.sercosta.scks.services.ILoteService;
 
@@ -98,5 +100,20 @@ public class RegistrarOtRestController {
 			throw ex;
 		}
 		return listarLotesOt;
+	}
+	
+	
+	@RequestMapping(path = "/RegistrarOt/actualizarMuestraOt", method = RequestMethod.POST)
+	public void actualizarOrden(@RequestBody(required = true) Muestra muestra) {
+		try {
+			otService.actualizarMuestraOt(muestra);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw ex;
+		}
 	}
 }

@@ -8,9 +8,15 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.LoteOtModel;
+import com.pe.sercosta.scks.repositories.ILoteRepository;
 import com.pe.sercosta.scks.repositories.IMuestraRepository;
 import com.pe.sercosta.scks.services.IOtService;
 
@@ -26,7 +32,11 @@ public class OtService implements IOtService {
 	@Autowired
 	@Qualifier("MuestraRepository")
 	private IMuestraRepository muestraRepository;
-
+	
+	@Autowired
+	@Qualifier("LoteRepository")
+	private ILoteRepository loteRepository;
+   
 
 	@Override
 	public List<Muestra> listarMuestraOt(Planta planta) {
@@ -62,10 +72,33 @@ public class OtService implements IOtService {
 
 	@Override
 	public void actualizarMuestraOt(Muestra muestra) {
-		// TODO Auto-generated method stub
+		try {
+			validarActualizarMuestra(muestra); 
+			muestraRepository.actualizarMuestarOt(sesion, muestra);
+			loteRepository.listarLoteOt(sesion, muestra).forEach(a -> {
+				LoteOtModel lote=new LoteOtModel();
+				lote.setIdPresentacion(a.getIdPresentacion());
+				lote.setIdLote(a.getIdLote());
+				lote.setCantidadMuestreado(a.getCantidadMuestreado());
+				//TODO embarcar 
+			});
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar el ot", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
 		
 	}
-
 	
-
+	public void validarActualizarMuestra(Muestra muestra) throws Exception {
+		if(muestra.getOt().isEmpty() || muestra.getOt() == null )
+			throw new Exception("El idOt es requerido.");
+		if (muestra.getFechaMuestreado() == null)
+			throw new Exception("La Fecha de OT es requerido.");
+	}
 }

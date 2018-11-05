@@ -1,5 +1,6 @@
 package com.pe.sercosta.scks.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;

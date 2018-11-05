@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +102,19 @@ public class MuestraRepository implements IMuestraRepository {
 
 	@Override
 	public void actualizarMuestarOt(EntityManager sesion, Muestra muestra) {
-		// TODO Auto-generated method stub
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_ot");
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN);
+			myquery.setParameter(1, muestra.getIdMuestra())
+					.setParameter(2, muestra.getOt())
+					.setParameter(3,muestra.getFechaMuestreado());
+			myquery.execute();			
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar el ot", ex.getMessage());
+		}
 		
 	}
 

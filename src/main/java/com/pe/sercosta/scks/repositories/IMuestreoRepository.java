@@ -13,4 +13,5 @@ public interface IMuestreoRepository {
 	 * @param muestreo
 	 */
 	public abstract void registrarMuestreo(EntityManager sesion , Muestreo muestreo);
+	
 }
