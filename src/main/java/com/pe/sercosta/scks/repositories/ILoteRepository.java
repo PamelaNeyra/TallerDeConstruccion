@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.models.LoteOtModel;
 
 public interface ILoteRepository {
 	
@@ -41,6 +43,12 @@ public interface ILoteRepository {
 	 */
 	public abstract void eliminarLote(EntityManager sesion, Lote lote);
 	
-	
+	/**
+	 * Lista lotes 
+	 * @param sesion
+	 * @param muestra
+	 * @return List<Asignacion>
+	 */
+	public abstract List<LoteOtModel> listarLoteOt(EntityManager sesion, Muestra muestra);
 	
 }

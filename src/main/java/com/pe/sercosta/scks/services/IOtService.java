@@ -22,7 +22,7 @@ public interface IOtService {
 	 * @param Muestra
 	 * @return
 	 */
-	public abstract Muestra obtenerMuestra(Muestra muestra);
+	public abstract Muestra obtenerMuestraOt(Muestra muestra);
 		
 		
 	/**

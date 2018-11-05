@@ -17,6 +17,7 @@ import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.ILoteRepository;
 import com.pe.sercosta.scks.services.ILoteService;
+import com.pe.sercosta.scks.models.LoteOtModel;
 
 @Service("loteService")
 public class LoteService implements ILoteService {
@@ -110,9 +111,19 @@ public class LoteService implements ILoteService {
 	}
 
 	@Override
-	public List<Lote> listarLotesOT(Muestra muestra) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<LoteOtModel> listarLotesOt(Muestra muestra) {
+		try {
+			return loteRepository.listarLoteOt(sesion, muestra);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los lotes", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
 	}
 
 }

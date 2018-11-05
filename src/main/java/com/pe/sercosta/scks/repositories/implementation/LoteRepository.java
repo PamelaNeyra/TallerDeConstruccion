@@ -13,7 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.LoteOtModel;
 import com.pe.sercosta.scks.repositories.ILoteRepository;
 
 @Repository("loteRepository")
@@ -91,5 +93,29 @@ public class LoteRepository implements ILoteRepository {
 	public void eliminarLote(EntityManager sesion, Lote lote) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<LoteOtModel> listarLoteOt(EntityManager sesion, Muestra muestra) {
+		List<LoteOtModel> listaLoteOt = new ArrayList<LoteOtModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_lotes_muestra");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, muestra.getIdMuestra());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				LoteOtModel aux = new LoteOtModel();
+				aux.setIdLote((String) o[0]);
+				aux.setIdPresentacion((String) o[1]);
+				aux.setCantidadMuestreado((double) o[2]);
+			    listaLoteOt.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
+		}
+		return listaLoteOt;
 	}
 }

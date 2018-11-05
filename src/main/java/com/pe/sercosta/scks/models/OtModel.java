@@ -11,7 +11,16 @@ public class OtModel {
 	private String ot;
 	private LocalDate fechaMuestra;
 	private String estado;
+	private Double cantidadTotal;
 	
+	public Double getCantidadTotal() {
+		return cantidadTotal;
+	}
+
+	public void setCantidadTotal(Double cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
+	}
+
 	public OtModel() {
 	
 	}
