@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.ILoteRepository;
@@ -106,6 +107,12 @@ public class LoteService implements ILoteService {
 			throw new Exception("La fechaProduccion es requerida");
 		if(lote.getContenidoList() == null || lote.getContenidoList().isEmpty())
 			throw new Exception("La lista de contenidos es requerida.");
+	}
+
+	@Override
+	public List<Lote> listarLotesOT(Muestra muestra) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -26,6 +26,6 @@ public class RegistrarOtRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarOtRestController.class);
 	private static final String CAPA = "[RestController : RegistrarOt] -> ";
-
+	
 	
 }

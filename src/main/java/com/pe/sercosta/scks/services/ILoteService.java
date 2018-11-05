@@ -3,6 +3,7 @@ package com.pe.sercosta.scks.services;
 import java.util.List;
 
 import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Muestra;
 
 public interface ILoteService {
 
@@ -29,5 +30,14 @@ public interface ILoteService {
 	 * @param lote
 	 */
 	public abstract List<Lote> listarLotes();
+	
+	/**
+	 * Lógica de negocios para
+	 * - O3 - Listar Lote
+	 * : Listar los lote
+	 * @param muestra
+	 */
+	public abstract List<Lote> listarLotesOT(Muestra muestra);
+	
 	
 }
