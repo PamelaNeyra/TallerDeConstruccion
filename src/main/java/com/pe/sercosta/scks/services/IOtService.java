@@ -2,7 +2,6 @@ package com.pe.sercosta.scks.services;
 
 import java.util.List;
 import com.pe.sercosta.scks.entities.Muestra;
-import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 
 

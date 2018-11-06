@@ -1,6 +1,5 @@
 package com.pe.sercosta.scks.repositories;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -42,6 +41,6 @@ public interface IMuestraRepository {
 	 * @param sesion
 	 * @param muestra
 	 */
-	public abstract void actualizarMuestarOt(EntityManager sesion, Muestra muestra);
+	public abstract void actualizarMuestraOt(EntityManager sesion, Muestra muestra);
 
 }

@@ -2,7 +2,6 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class MuestraRepository implements IMuestraRepository {
 	}
 
 	@Override
-	public void actualizarMuestarOt(EntityManager sesion, Muestra muestra) {
+	public void actualizarMuestraOt(EntityManager sesion, Muestra muestra) {
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_ot");
 			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)

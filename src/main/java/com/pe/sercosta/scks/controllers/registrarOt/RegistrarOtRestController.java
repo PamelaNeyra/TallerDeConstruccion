@@ -19,7 +19,6 @@ import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OtModel;
 import com.pe.sercosta.scks.models.LoteOtModel;
-import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.services.IOtService;
 import com.pe.sercosta.scks.services.ILoteService;
 
@@ -49,8 +48,7 @@ public class RegistrarOtRestController {
 	@Autowired
 	@Qualifier("loteService")
 	private ILoteService loteService;
-	
-	
+		
 	@RequestMapping(path = "/RegistrarOt/listarMuestraOt", method = RequestMethod.GET)
 	public List<OtModel> listarMuestraOt() {
 		List<OtModel> listaMuestraOt = new ArrayList<>();

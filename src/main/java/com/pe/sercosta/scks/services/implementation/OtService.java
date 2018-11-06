@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.pe.sercosta.scks.entities.Asignacion;
-import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Muestra;
-import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.LoteOtModel;
@@ -20,21 +17,21 @@ import com.pe.sercosta.scks.repositories.ILoteRepository;
 import com.pe.sercosta.scks.repositories.IMuestraRepository;
 import com.pe.sercosta.scks.services.IOtService;
 
-@Service("ordenVentaService")
+@Service("otService")
 public class OtService implements IOtService {
 
-	private static final Log LOG = LogFactory.getLog(OrdenVentaService.class);
-	private static final String CAPA = "[Service : OrdenVenta] -> ";
+	private static final Log LOG = LogFactory.getLog(OtService.class);
+	private static final String CAPA = "[Service : Ot] -> ";
 
 	@PersistenceContext
 	private EntityManager sesion;
 
 	@Autowired
-	@Qualifier("MuestraRepository")
+	@Qualifier("muestraRepository")
 	private IMuestraRepository muestraRepository;
 	
 	@Autowired
-	@Qualifier("LoteRepository")
+	@Qualifier("loteRepository")
 	private ILoteRepository loteRepository;
    
 
@@ -74,7 +71,7 @@ public class OtService implements IOtService {
 	public void actualizarMuestraOt(Muestra muestra) {
 		try {
 			validarActualizarMuestra(muestra); 
-			muestraRepository.actualizarMuestarOt(sesion, muestra);
+			muestraRepository.actualizarMuestraOt(sesion, muestra);
 			loteRepository.listarLoteOt(sesion, muestra).forEach(a -> {
 				LoteOtModel lote=new LoteOtModel();
 				lote.setIdPresentacion(a.getIdPresentacion());
