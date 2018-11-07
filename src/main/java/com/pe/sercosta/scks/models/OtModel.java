@@ -6,10 +6,10 @@ import java.time.LocalDate;
 public class OtModel {
 
 	private Integer idMuestra;
-	private LocalDate fechaRegistro;
-	private String laboratorio;
+	private LocalDate fechaCreacion;
+	private String idLaboratorio;
 	private String ot;
-	private LocalDate fechaMuestra;
+	private LocalDate fechaMuestreado;
 	private String estado;
 	private Double cantidadTotal;
 	
@@ -33,22 +33,6 @@ public class OtModel {
 		this.idMuestra = idMuestra;
 	}
 
-	public LocalDate getFechaRegistro() {
-		return fechaRegistro;
-	}
-
-	public void setFechaRegistro(LocalDate fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
-	}
-
-	public String getLaboratorio() {
-		return laboratorio;
-	}
-
-	public void setLaboratorio(String laboratorio) {
-		this.laboratorio = laboratorio;
-	}
-
 	public String getOt() {
 		return ot;
 	}
@@ -57,12 +41,28 @@ public class OtModel {
 		this.ot = ot;
 	}
 
-	public LocalDate getFechaMuestra() {
-		return fechaMuestra;
+	public LocalDate getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFechaMuestra(LocalDate fechaMuestra) {
-		this.fechaMuestra = fechaMuestra;
+	public void setFechaCreacion(LocalDate fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public String getIdLaboratorio() {
+		return idLaboratorio;
+	}
+
+	public void setIdLaboratorio(String idLaboratorio) {
+		this.idLaboratorio = idLaboratorio;
+	}
+
+	public LocalDate getFechaMuestreado() {
+		return fechaMuestreado;
+	}
+
+	public void setFechaMuestreado(LocalDate fechaMuestreado) {
+		this.fechaMuestreado = fechaMuestreado;
 	}
 
 	public String getEstado() {
@@ -72,7 +72,6 @@ public class OtModel {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
 	
 	
 }

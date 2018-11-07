@@ -55,8 +55,10 @@ public class MuestraRepository implements IMuestraRepository {
 				Muestra aux = new Muestra();
 				aux.setIdMuestra((Integer) o[0]);
 				aux.setOt((String) o[1]);
-				aux.setFechaCreacion(((Date) o[2]).toLocalDate());
-				aux.setFechaMuestreado(((Date) o[3]).toLocalDate());
+				if(!o[3].getClass().getName().equals("String"))
+					aux.setFechaCreacion(((Date) o[2]).toLocalDate());
+				if(!o[3].getClass().getName().equals("String"))
+					aux.setFechaMuestreado(((Date) o[3]).toLocalDate());
 				Laboratorio lab = new Laboratorio();
 				lab.setNombreLaboratorio((String) o[4]);
 				aux.setIdLaboratorio(lab);
