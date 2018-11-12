@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.ILoteRepository;
@@ -72,6 +73,43 @@ public class MuestreoService implements IMuestreoService{
 		if(muestreo.getCantidad() <= 0.0)
 			throw new Exception("La cantidad de muestreo debe ser mayor a 0.0.");
 			
+	}
+
+	@Override
+	public List<Muestreo> listarMuestreos() {
+		try {
+			return muestreoRepository.listarMuestreos(sesion);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar los Muestreos", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
+	@Override
+	public Muestreo consultarMuestreo(Muestra muestra) {
+		try {
+			//Falta implementar la capa de datos
+			//Falta implementar el procedure 
+			//return muestraRepository.consultarMuestra(sesion, muestra);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al consultar Muestra", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+		return null;
 	}
 
 }

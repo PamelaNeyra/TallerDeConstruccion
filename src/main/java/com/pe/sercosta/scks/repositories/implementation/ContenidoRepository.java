@@ -8,8 +8,11 @@ import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
+
+import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
@@ -130,6 +133,59 @@ public class ContenidoRepository implements IContenidoRepository {
 		} catch(Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());			
+		}
+		return listaContenidos;
+	}
+
+	@Override
+	public List<Contenido> listarContenidosPorAsignacion(EntityManager sesion, Asignacion asignacion) {
+		List<Contenido> listaContenidos = new ArrayList<Contenido>();
+		try {
+			//Falta hacer el procedure 
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_contenidos_asignacion");
+			/*myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+			myquery.setParameter(1, planta.getIdPlanta())
+					.setParameter(2, producto.getIdProductoTerminado());
+			myquery.execute();*/
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Contenido aux = new Contenido();
+				aux.setPresentacion(new Presentacion((String) o[0]));
+				aux.setLote(new Lote((String) o[1]));
+				aux.setCantidad((Double) o[2]);
+				aux.setCodigoTrazabilidad((String) o[4]);
+				listaContenidos.add(aux);
+			});			
+		} catch(Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());			
+		}
+		return listaContenidos;
+	}
+
+	@Override
+	public List<Contenido> listarContenidosPorMuestreo(EntityManager sesion, Muestreo muestreo) {
+		List<Contenido> listaContenidos = new ArrayList<Contenido>();
+		try {
+			//Falta hacer el procedure 
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_contenidos_muestreo");
+			/*myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
+			myquery.setParameter(1, planta.getIdPlanta())
+					.setParameter(2, producto.getIdProductoTerminado());
+			myquery.execute();*/
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Contenido aux = new Contenido();
+				aux.setPresentacion(new Presentacion((String) o[0]));
+				aux.setLote(new Lote((String) o[1]));
+				aux.setCantidad((Double) o[2]);
+				listaContenidos.add(aux);
+			});			
+		} catch(Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los contenidos por muestreo", ex.getMessage());			
 		}
 		return listaContenidos;
 	}

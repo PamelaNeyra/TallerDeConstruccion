@@ -39,5 +39,12 @@ public interface IAsignacionRepository {
 	 * @param asignacion
 	 */
 	public abstract void embarcarAsignacion(EntityManager sesion, Asignacion asignacion);
+	
+	/**
+	 * Lista todas las asignaciones
+	 * de la base de datos
+	 * @param sesion
+	 */
+	public abstract List<Asignacion> listarAsignaciones(EntityManager sesion);
 
 }

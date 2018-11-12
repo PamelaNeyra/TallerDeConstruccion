@@ -14,4 +14,12 @@ public interface IMuestraService {
 	 */
 	public abstract void registrarMuestra(Muestra muestra, List<ProductoTerminado> listaPresentacion);
 	
+	/**
+	 * Lógica de negocios para
+	 * - O8 - Ver Saldos
+	 * :lista todas las muestras
+	 */
+	public abstract List<Muestra> listarMuestras();
+	
+	
 }

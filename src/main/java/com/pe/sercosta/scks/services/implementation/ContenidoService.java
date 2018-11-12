@@ -1,6 +1,8 @@
 package com.pe.sercosta.scks.services.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,7 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.services.IContenidoService;
@@ -88,11 +93,55 @@ public class ContenidoService implements IContenidoService{
 		}
 	}
 	
+	//Falta hacer la capa de datos y el procedure
+	@Override
+	public List<Lote> listarLotePorPresentacion(Presentacion presentacion) {
+		List<Lote> listaLotes = new ArrayList<Lote>();
+		List<Contenido> listaContenidos = new ArrayList<Contenido>();
+		try {
+			//crear un método que haga un listarContenidosPorPresentacion
+			listaContenidos = contenidoRepository.listarContenidos(sesion);
+			for(Contenido c : listaContenidos){
+				Lote aux = new Lote();
+				aux = c.getLote();
+				listaLotes.add(aux);
+			}		
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar Lotes por Presentacion", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+		return listaLotes;
+	}
+	
 	public void validarRegistrarContenido(Contenido contenido) throws Exception {
 		if(contenido.getLote().getIdLote() == null)
 			throw new Exception("El idLote es requerido.");
 		if(contenido.getPresentacion().getIdPresentacion() == null )
 			throw new Exception("El idPresentacion es requerido.");
+	}
+
+	@Override
+	public List<Contenido> listarContenidosPorAsignacion(Asignacion asignacion) {
+		try {
+			 return contenidoRepository.listarContenidosPorAsignacion(sesion, asignacion);		
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar Lotes por Presentacion", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
 	}
 
 }

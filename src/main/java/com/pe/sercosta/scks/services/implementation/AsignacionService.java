@@ -1,5 +1,6 @@
 package com.pe.sercosta.scks.services.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,7 +9,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.OrdenVenta;
+import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
@@ -43,4 +47,40 @@ public class AsignacionService implements IAsignacionService {
 		}
 	}
 
+	//Falta hacer la capa de datos y procedure
+	@Override
+	public List<Asignacion> listarAsignacionPorPresentacion(Presentacion presentacion) {
+		try {
+			//return asignacionRepository.listarAsignacionPorPresentacion(sesion, presentacion);7
+			//La línea de abajo esta para eliminar una vez implementado la capa de datos y el procedure
+			List<Asignacion> listaAsignacion = new ArrayList<Asignacion>();
+			return  listaAsignacion;
+
+		}catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las asignaciones por Presentación", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
+	@Override
+	public List<Asignacion> listarAsignacion() {
+		try {
+			return asignacionRepository.listarAsignaciones(sesion);
+		}catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las Asignaciones", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
 }

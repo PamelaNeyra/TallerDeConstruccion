@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
@@ -56,4 +58,15 @@ public interface IContenidoRepository {
 	 */
 	public abstract List<Contenido> listarContenidos(EntityManager sesion, Planta planta, ProductoTerminado producto);
 	
+	/**
+	 * Lista los contenidos con
+	 * filtro de Asignacion
+	 */
+	public abstract List<Contenido> listarContenidosPorAsignacion(EntityManager sesion, Asignacion asignacion);
+	
+	/**
+	 * Lista los contenidos con
+	 * filtro de Muestreo
+	 */
+	public abstract List<Contenido> listarContenidosPorMuestreo(EntityManager sesion, Muestreo muestreo);
 }

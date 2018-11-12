@@ -99,4 +99,23 @@ public class MuestraService implements IMuestraService{
 				throw new Exception("La fecha de creacion es requerido.");
 	}
 
+	@Override
+	public List<Muestra> listarMuestras() {
+		try {
+			//Falta implementar la capa de datos
+			//return muestraRepository.listarMuestras(sesion);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar las Muestras", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+		return null;
+	}
+
 }

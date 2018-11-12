@@ -83,6 +83,26 @@ public class AsignacionRepository implements IAsignacionRepository{
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al registrar la asignación", ex.getMessage());
 		}
+	}
+
+	@Override
+	public List<Asignacion> listarAsignaciones(EntityManager sesion) {
+		List<Asignacion> listaAsignacion = new ArrayList<Asignacion>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignacion");
+			//Falta determinar el procedure
+			/*myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
+			myquery.setParameter(1, asignacion.getOrdenVenta().getIdOrdenVenta())
+					.setParameter(2, asignacion.getContenido().getContenidoPK().getIdPresentacion())
+					.setParameter(3, asignacion.getContenido().getContenidoPK().getIdLote());
+			myquery.execute();*/
+		} catch(Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar la asignación", ex.getMessage());
+		}
+		return listaAsignacion;
 	}	
 	
 }

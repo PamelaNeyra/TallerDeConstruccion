@@ -2,9 +2,12 @@ package com.pe.sercosta.scks.services;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 
-
+import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.entities.Lote;
+import com.pe.sercosta.scks.entities.Presentacion;
 
 public interface IContenidoService {
 	
@@ -31,4 +34,18 @@ public interface IContenidoService {
 	 * @param contenido
 	 */
 	public abstract void actualizarContenido(Contenido contenido);
+	
+	/**
+	 * Lógica de negocios para
+	 * -O8 - Ver Saldos
+	 * :Lista los Lotes por Presentación mediante los Contenidos
+	 */
+	public abstract List<Lote> listarLotePorPresentacion(Presentacion presentacion);
+	
+	/**
+	 * Lógica de negocios para
+	 * -O9 - Ver Packings
+	 * :Lista los contenidos por Asiganacion
+	 */
+	public abstract List<Contenido> listarContenidosPorAsignacion(Asignacion asignacion);
 }
