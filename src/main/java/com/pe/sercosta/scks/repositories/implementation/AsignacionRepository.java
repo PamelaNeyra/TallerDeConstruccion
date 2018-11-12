@@ -89,7 +89,7 @@ public class AsignacionRepository implements IAsignacionRepository{
 	public List<Asignacion> listarAsignaciones(EntityManager sesion) {
 		List<Asignacion> listaAsignacion = new ArrayList<Asignacion>();
 		try {
-			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignacion");
+			//StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignacion");
 			//Falta determinar el procedure
 			/*myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)

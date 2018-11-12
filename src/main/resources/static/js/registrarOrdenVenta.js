@@ -55,7 +55,7 @@ $(document).ready( function () {
 				{data: "idCliente"},
 				{data: "nombreCliente"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal' data-target='#modalElegir'>" +
-				"Elegir <span class='fa fa-user'></span></span>"}
+				"Elegir <span class='fa fa-user'></span></span>", "sClass": "text-center"}
 			],
 			language: lenguaje
 		});

@@ -173,7 +173,7 @@ $(document).ready( function () {
 				{data: "idPresentacion"},
 				{data: "descripcion"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
-						"Agregar <span class='fa fa-plus-circle'></span></span>"}
+						"Agregar <span class='fa fa-plus-circle'></span></span>", "sClass": "text-center"}
 			],
 			language: lenguaje
 		});

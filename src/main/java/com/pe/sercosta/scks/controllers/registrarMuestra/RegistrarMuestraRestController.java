@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import com.pe.sercosta.scks.models.ProductoTerminadoModel;
 import com.pe.sercosta.scks.models.multiple.MuestraMultiple;
 import com.pe.sercosta.scks.services.IMuestraService;
 import com.pe.sercosta.scks.services.IProductoTerminadoService;
+import com.pe.sercosta.scks.services.IUsuarioService;
 
 @RestController
 public class RegistrarMuestraRestController {
@@ -27,6 +30,10 @@ public class RegistrarMuestraRestController {
 	private static final Log LOG = LogFactory.getLog(RegistrarMuestraRestController.class);
 	private static final String CAPA = "[RestController : RegistrarMuestra] -> ";
 
+	@Autowired
+	@Qualifier("usuarioService")
+	private IUsuarioService usuarioService;
+	
 	@Autowired
 	@Qualifier("muestraConverter")
 	private MuestraConverter muestraConverter;
@@ -46,9 +53,16 @@ public class RegistrarMuestraRestController {
 	@RequestMapping(path = "/RegistrarMuestra/registrarMuestra", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) MuestraMultiple muestraMultiple) {
 		try {
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
 			MuestraModel muestra = muestraMultiple.getMuestra();
+			//TODO: Laboratorio se Obtiene de Combo
 			muestra.setIdLaboratorio(1);
-			muestra.setIdPlanta(1);
+			muestra.setIdPlanta(planta.getIdPlanta());
 			muestraService.registrarMuestra(muestraConverter.convertToEntity(muestra)
 											, muestraMultiple.getProductoTerminadoList().stream()
 												.map(p -> productoTerminadoConverter.convertToEntity(p))
@@ -67,7 +81,13 @@ public class RegistrarMuestraRestController {
 	public List<ProductoTerminadoModel> listarProducto() {
 		List<ProductoTerminadoModel> listaProducto = new ArrayList<>();
 		try {
-			listaProducto = productoTerminadoService.listarProducto(new Planta(1))
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
+			listaProducto = productoTerminadoService.listarProducto(planta)
 					       .stream()
 				        	.map(entity -> productoTerminadoConverter.convertToModel(entity)).collect(Collectors.toList());
 		} catch (SercostaException sx) {

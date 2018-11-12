@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -29,7 +30,7 @@ public class Usuario implements Serializable {
     @Column(name = "activo")
     private boolean activo;
     
-    @ManyToMany(mappedBy = "usuarioList")
+    @ManyToMany(mappedBy = "usuarioList", fetch = FetchType.EAGER)
     private List<Rol> rolList;
     
     @JoinColumn(name = "id_planta", referencedColumnName = "id_planta")

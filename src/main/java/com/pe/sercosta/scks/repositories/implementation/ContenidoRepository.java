@@ -137,6 +137,7 @@ public class ContenidoRepository implements IContenidoRepository {
 		return listaContenidos;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contenido> listarContenidosPorAsignacion(EntityManager sesion, Asignacion asignacion) {
 		List<Contenido> listaContenidos = new ArrayList<Contenido>();
@@ -164,6 +165,7 @@ public class ContenidoRepository implements IContenidoRepository {
 		return listaContenidos;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contenido> listarContenidosPorMuestreo(EntityManager sesion, Muestreo muestreo) {
 		List<Contenido> listaContenidos = new ArrayList<Contenido>();

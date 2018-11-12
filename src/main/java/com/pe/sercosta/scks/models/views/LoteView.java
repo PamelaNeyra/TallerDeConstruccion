@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class LoteView {
 	private String idLote;
-	private Integer idPlanta;
 	@DateTimeFormat(iso=ISO.DATE)
 	private LocalDate fechaProduccion;
 	

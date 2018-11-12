@@ -2,15 +2,11 @@ package com.pe.sercosta.scks.services.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
-
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Lote;

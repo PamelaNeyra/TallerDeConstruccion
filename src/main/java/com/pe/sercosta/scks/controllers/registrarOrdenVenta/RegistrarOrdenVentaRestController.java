@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,13 +26,18 @@ import com.pe.sercosta.scks.models.views.PresentacionView;
 import com.pe.sercosta.scks.services.IClienteService;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
 import com.pe.sercosta.scks.services.IPlantaPresentacionService;
+import com.pe.sercosta.scks.services.IUsuarioService;
 
 @RestController
 public class RegistrarOrdenVentaRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarOrdenVentaRestController.class);
 	private static final String CAPA = "[RestController : RegistrarOrdenVenta] -> ";
-
+	
+	@Autowired
+	@Qualifier("usuarioService")
+	private IUsuarioService usuarioService;
+	
 	@Autowired
 	@Qualifier("clienteConverter")
 	private ClienteConverter clienteConverter;
@@ -81,8 +88,13 @@ public class RegistrarOrdenVentaRestController {
 	public List<PresentacionView> listarPresentacion() {
 		List<PresentacionView> listaPresentacion = new ArrayList<>();
 		try {
-			//TODO: La planta se obtendrá de la sesión de usuario :D
-			listaPresentacion =  plantaPresentacionService.listarPresentacion(new Planta(1))
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
+			listaPresentacion =  plantaPresentacionService.listarPresentacion(planta)
 								 .stream()
 								 .map(entity -> presentacionViewConverter.convertToModel(entity))
 								 .collect(Collectors.toList());				 
@@ -100,9 +112,14 @@ public class RegistrarOrdenVentaRestController {
 	@RequestMapping(path = "/RegistrarOrdenVenta/registrarOrdenVenta", method = RequestMethod.POST)
 	public void registrarOrdenVenta(@RequestBody(required = true) OrdenVentaMultiple ordenVentaMultiple) {
 		try {
-			// TODO: Poner planta del usuario al lote
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
 			OrdenVentaView ordenVenta = ordenVentaMultiple.getOrdenVenta();
-			ordenVenta.setIdPlanta(1);
+			ordenVenta.setIdPlanta(planta.getIdPlanta());
 			ordenVentaService.registrarOrdenVenta(ordenVentaConverter.convertToEntity(ordenVenta),
 													ordenVentaMultiple.getListaPresentacion().stream()
 													.map(p -> presentacionConverter.convertToEntity(p))

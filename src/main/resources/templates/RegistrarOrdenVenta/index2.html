@@ -1,197 +1,217 @@
 <!DOCTYPE html>
-<html lang="es"
-	xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>Registrar Orden</title>
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
-    <link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet" type="text/css">
-   	<!-- Estilos de Sercosta -->
-    <link th:href="@{/style/tablasercosta.css}" rel="stylesheet" type="text/css">
-</head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmento Head -->
+<head th:include="/Fragments/head :: headFragment('Registrar Orden Venta')"></head>
 <body>
-<div class="container">
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar('Registrar Muestra')"></header>
+	<!-- Contenido Principal -->
+	<div class="container">
 		<div class="row">
-	        <div class="col-sm-6">
-	            <h1><strong>Registrar Orden</strong></h1>
-	        </div>     
-            <div class="col-sm-4" style="margin: auto;">
-            	<span id="cantidadTotal">Cantidad Total: 0</span>
-            </div>
-            <div class="col-sm-2" style="margin: auto;">
-            	<button type="button" class="btn btn-primary" id="terminarRegistro">Guardar Cambios</button>
-            </div>
-	    </div>
-	    <hr>
-		<div class="row"  style="margin-top: 20px;">
-	        <div class="col-sm-12">
-		        <div class="card">
-		            <div class="card-header">	
-		            	<h3>Información de la Orden</h3>
-		        	</div>
-		        	<div class="card-body">
-		        		<div class="container">
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-inline">
-									    <div class="text-left control-label col-sm-2">Código de orden:</div>
-									    	<input type="text" class="form-control col-sm-2" id="cod_orden" name="cod_orden">
-									    <div class="text-left control-label col-sm-2">Tipo de certificación:</div>    
-									       <input type="text" class="form-control col-sm-2" id="tipo_cert" name="tipo_cert">
-									    <div class="text-left control-label col-sm-2" style="text-align:left;">Fecha de asignación:</div>    
-									       <input type="date" class="form-control col-sm-2" placeholder="dd/mm/aaaa" id="fch_asig" name="fch_asig">
-									</div>
-								</div>
-							</div>   
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-inline">
-									    <div class="text-left control-label col-sm-2">Cliente:</div>
-									    	<input type="text" class="form-control col-sm-2" id="cliente" name="cliente" th:value="${nombreCliente}" readonly="readonly">
-									    <div class="text-left control-label col-sm-2" style="text-align:left;">Destino:</div>    
-									       <input type="text" class="form-control col-sm-2" id="destino" name="destino">
-									</div>
-								</div>
-							</div>   
-						</div>
-		        	</div>
-		        </div>
-		    </div>
+			<div class="col-sm-6">
+				<h1>
+					<strong>Registrar Orden</strong>
+				</h1>
+			</div>
+			<div class="col-sm-4" style="margin: auto;">
+				<span id="cantidadTotal">Cantidad Total: 0</span>
+			</div>
+			<div class="col-sm-2" style="margin: auto;">
+				<button type="button" class="btn btn-primary" id="terminarRegistro">Guardar
+					Cambios</button>
+			</div>
 		</div>
 		<hr>
-		<div class="row"  style="margin-top: 20px;">
-	        <div class="col-sm-12">
-		        <div class="card">
-		            <div class="card-header">	
-		            	<h3>Información de las Asignaciones</h3>
-		        	</div>
-		        	<div class="card-body">
-		        		<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#tabla1">
-									<strong>Presentaciones</strong>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#tabla2">
-									<strong>Presentaciones Comprometidas</strong>
-								</a>
-							</li>
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<h3>Información de la Orden</h3>
+					</div>
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-inline">
+										<div class="text-left control-label col-sm-2">Código de
+											orden:</div>
+										<input type="text" class="form-control col-sm-2"
+											id="cod_orden" name="cod_orden">
+										<div class="text-left control-label col-sm-2">Tipo de
+											certificación:</div>
+										<input type="text" class="form-control col-sm-2"
+											id="tipo_cert" name="tipo_cert">
+										<div class="text-left control-label col-sm-2"
+											style="text-align: left;">Fecha de asignación:</div>
+										<input type="date" class="form-control col-sm-2"
+											placeholder="dd/mm/aaaa" id="fch_asig" name="fch_asig">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-inline">
+										<div class="text-left control-label col-sm-2">Cliente:</div>
+										<input type="text" class="form-control col-sm-2" id="cliente"
+											name="cliente" th:value="${nombreCliente}"
+											readonly="readonly">
+										<div class="text-left control-label col-sm-2"
+											style="text-align: left;">Destino:</div>
+										<input type="text" class="form-control col-sm-2" id="destino"
+											name="destino">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<h3>Información de las Asignaciones</h3>
+					</div>
+					<div class="card-body">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item"><a class="nav-link active"
+								data-toggle="tab" href="#tabla1"> <strong>Presentaciones</strong>
+							</a></li>
+							<li class="nav-item"><a class="nav-link" data-toggle="tab"
+								href="#tabla2"> <strong>Presentaciones
+										Comprometidas</strong>
+							</a></li>
 						</ul>
 						<hr>
 						<div class="tab-content">
 							<div class="container tab-pane active" id="tabla1">
-			                    <div class="table-responsive-sm">
-			                        <table id="presentacionesTabla" class="table table-bordered tablasercosta" style="width: 100%;">
-			                            <thead>
-			                                <tr>
-			                                    <th>Código SAP</th>
-			                                    <th>Descripción</th>
-			                                    <th>Comprometido Total</th>
-			                                    <th>Saldo</th>
-			                                    <th></th>
-			                                </tr>
-			                            </thead>
-			                        </table>  
-			                    </div>
-		                    </div>
-		                    <div class="container tab-pane" id="tabla2">
-			                    <div class="table-responsive-sm">
-			                        <table id="presentacionesTablaComprometidas" class="table table-bordered tablasercosta" style="width: 100%;">
-			                            <thead>
-			                                <tr>
-			                                    <th>Código SAP</th>
-			                                    <th>Cantidad</th>
-			                                    <th></th>
-			                                </tr>
-			                            </thead>
-			                        </table>  
-			                    </div>
-		                    </div>
+								<div class="table-responsive-sm">
+									<table id="presentacionesTabla"
+										class="table table-bordered tablasercosta"
+										style="width: 100%;">
+										<thead>
+											<tr>
+												<th>Código SAP</th>
+												<th>Descripción</th>
+												<th>Comprometido Total</th>
+												<th>Saldo</th>
+												<th></th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+							<div class="container tab-pane" id="tabla2">
+								<div class="table-responsive-sm">
+									<table id="presentacionesTablaComprometidas"
+										class="table table-bordered tablasercosta"
+										style="width: 100%;">
+										<thead>
+											<tr>
+												<th>Código SAP</th>
+												<th>Cantidad</th>
+												<th></th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
 						</div>
-		        	</div>
-		        </div>
-		    </div>
-		</div>
-	</div>
-	<!-- Modal Agregar -->
-	<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="tituloModal">Presentación: </h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div id="cuerpoAgregar" class="modal-body">
-					<label>Cantidad a Ingresar:</label>
-					<input type="number" min="0" step="0.5" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
-				</div>
-				<div class="modal-footer">											
-					<button id="botonAgregar" type="button" class="btn btn-primary">Aceptar</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Modal Eliminar de lista de presentaciones comprometidas -->
-	<div class="modal fade" id="modalQuitar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="tituloModal">Presentación comprometida: </h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-                        	<label>¿Desea eliminar esta presentación de la lista de comprometidos?</label>
-				</div>
-				<div class="modal-footer">											
-					<button id="botonQuitar" type="button" class="btn btn-primary">Aceptar</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal Éxito -->
-    <div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content alert alert-success">
-				<div class="modal-header">
-					<h5 class="modal-title" id="tituloModal">Éxito </h5>
-				</div>
-				<div class="modal-body">
-                        	<span>La Orden de Venta se ha registrado con éxito</span>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+		<!-- Modal Agregar -->
+		<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog"
+			aria-labelledby="tituloModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tituloModal">Presentación:</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div id="cuerpoAgregar" class="modal-body">
+						<label>Cantidad a Ingresar:</label> <input type="number" min="0"
+							step="0.5" class="form-control input-sm" id="cantidadAgregar"
+							name="cantidadAgregar">
+					</div>
+					<div class="modal-footer">
+						<button id="botonAgregar" type="button" class="btn btn-primary">Aceptar</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Modal Error -->
-               	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content alert alert-danger">
-				<div class="modal-header">
-					<h5 class="modal-title" id="tituloModal">Error</h5>
-				</div>
-				<div class="modal-body">
-                        	<span id="mensajeError"></span>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+		<!-- Modal Eliminar de lista de presentaciones comprometidas -->
+		<div class="modal fade" id="modalQuitar" tabindex="-1" role="dialog"
+			aria-labelledby="tituloModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tituloModal">Presentación
+							comprometida:</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<label>¿Desea eliminar esta presentación de la lista de
+							comprometidos?</label>
+					</div>
+					<div class="modal-footer">
+						<button id="botonQuitar" type="button" class="btn btn-primary">Aceptar</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Modal Éxito -->
+		<div class="modal fade" id="modalExito" tabindex="-1" role="dialog"
+			aria-labelledby="tituloModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content alert alert-success">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tituloModal">Éxito</h5>
+					</div>
+					<div class="modal-body">
+						<span>La Orden de Venta se ha registrado con éxito</span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal Error -->
+		<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+			aria-labelledby="tituloModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content alert alert-danger">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tituloModal">Error</h5>
+					</div>
+					<div class="modal-body">
+						<span id="mensajeError"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="text" class="form-control col-sm-2" id="idCliente"
+			name="idCliente" th:value="${idCliente}" style="visibility: hidden;">
 	</div>
-	<input type="text" class="form-control col-sm-2" id="idCliente" name="idCliente" th:value="${idCliente}" style="visibility: hidden;">
-	<script th:src="@{/jquery/jquery.min.js}"></script>
-	<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/data-tables/datatables.min.js}"></script>
-   	<script th:src="@{/js/registrarOrdenVenta2.js}"></script>
+	<!-- Fragmento Footer -->
+	<div th:include="/Fragments/head :: footer"></div>
+	<!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
+	<script th:src="@{/js/registrarOrdenVenta2.js}"></script>
 </body>
 </html>
