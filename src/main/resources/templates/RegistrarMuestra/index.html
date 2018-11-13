@@ -5,7 +5,11 @@
 <body>
 	<!-- Fragmento Navbar -->
 	<header th:include="/Fragments/navbar :: navbar('Registrar Muestra')"></header>
-	<!-- Contenido Principal -->
+	<!-- Fragmento Carga -->
+    <div id="imagenCarga" style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
+		<img th:src="@{/img/imagenCarga.gif}" />
+	</div>
+    <!-- Contenido Principal -->
 	<div class="container">
 	   <!-- Título de la Vista-->
        <div class="row">

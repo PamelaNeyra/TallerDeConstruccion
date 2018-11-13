@@ -35,6 +35,12 @@ $(document).ready( function () {
 				type: "POST",
 				contentType: "application/json",
 				url: "/EmbarcarOrden/listarAsignacion",
+				beforeSend: function() {
+					$('#imagenCarga').show();
+				},
+				complete: function() {
+					$('#imagenCarga').hide();
+				},
 				data: function(data) {
 					return JSON.stringify(orden);
 				},
@@ -66,6 +72,12 @@ $(document).ready( function () {
 	        contentType: "application/json",
 	        url: "/EmbarcarOrden/obtenerOrdenVenta",
 	        data: JSON.stringify(orden),
+			beforeSend: function() {
+				$('#imagenCarga').show();
+			},
+			complete: function() {
+				$('#imagenCarga').hide();
+			},
 	        success: function (data) {	        	
 	            $('#cliente').val(data.nombreCliente);
 	            $('#fechaA').val(data.fechaAsignacion);
@@ -124,6 +136,12 @@ $(document).ready( function () {
 	        contentType: "application/json",
 	        url: "/EmbarcarOrden/embarcarOrden",
 	        data: JSON.stringify(orden),
+			beforeSend: function() {
+				$('#imagenCarga').show();
+			},
+			complete: function() {
+				$('#imagenCarga').hide();
+			},
 	        success: function (data) {	        	
 	            $('#modalExito').modal('show');
 	        },

@@ -146,6 +146,12 @@ $(document).ready( function () {
 			ajax: {
 				url: "/RegistrarOrdenVenta/listarPresentacion",
 				type: "GET",
+				beforeSend: function() {
+					$('#imagenCarga').show();
+				},
+				complete: function() {
+					$('#imagenCarga').hide();
+				},
 			    error: function(xhr, ajaxOptions, thrownError) {
 			    	var response = JSON.parse(xhr.responseText);	   
 		        	$('#mensajeError').text(response.message);
@@ -191,6 +197,12 @@ $(document).ready( function () {
 	        contentType: "application/json",
 	        url: "/RegistrarOrdenVenta/registrarOrdenVenta",
 	        data: JSON.stringify(obj),
+			beforeSend: function() {
+				$('#imagenCarga').show();
+			},
+			complete: function() {
+				$('#imagenCarga').hide();
+			},
 	        success: function (data) {	        	
 	            $('#modalExito').modal('show');
 	            limpiarControles();
