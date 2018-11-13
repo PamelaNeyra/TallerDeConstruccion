@@ -6,8 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.Laboratorio;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.OrdenVenta;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.models.AsignacionModel;
+import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
+import com.pe.sercosta.scks.models.AsignacionSaldoModel;
 
 
 public interface IAsignacionRepository {
@@ -46,5 +51,20 @@ public interface IAsignacionRepository {
 	 * @param sesion
 	 */
 	public abstract List<Asignacion> listarAsignaciones(EntityManager sesion);
-
+	
+	/**
+	 * Lista las asignaciones 
+	 * de la base de datos
+	 * y guarda en un model
+	 */
+	public abstract List<AsignacionSaldoModel> listarAsignacionesSaldo(EntityManager sesion, Laboratorio laboratorio, Planta planta,
+															Muestra muestra);
+	
+	/**
+	 * Lista las asignaciones
+	 * de la base de datos
+	 * y agrupa
+	 */
+	public abstract List<AsignacionSaldoGrupoModel> listarAsignacionesSaldoGrupo(EntityManager sesion, Laboratorio laboratorio, Planta planta,
+															Muestra muestra );
 }

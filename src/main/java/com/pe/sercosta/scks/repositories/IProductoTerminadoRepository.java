@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.pe.sercosta.scks.entities.Laboratorio;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
+import com.pe.sercosta.scks.models.ProductoTerminadoSaldoModel;
 
 public interface IProductoTerminadoRepository {
 
@@ -41,4 +44,12 @@ public interface IProductoTerminadoRepository {
 	 * @param productoTerminado
 	 */
 	public abstract void eliminarProductoTerminado(EntityManager sesion,ProductoTerminado productoTerminado);
+	
+	/**
+	 * Lista un Producto Terminado Saldo Model
+	 * construyendolo de la base de datos
+	 * 
+	 */
+	public abstract List<ProductoTerminadoSaldoModel> listarProductosTerminadosSaldo(EntityManager sesion, Laboratorio laboratorio, Planta planta,
+														Muestra muestra);
 }

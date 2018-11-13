@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.pe.sercosta.scks.entities.Muestreo;
+import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.models.SaldoOtModel;
 
 public interface IMuestreoRepository {
 
@@ -21,5 +23,11 @@ public interface IMuestreoRepository {
 	 * de la base de datos
 	 */
 	public abstract List<Muestreo> listarMuestreos(EntityManager sesion);
+	
+	/**
+	 * Lista los Saldos 
+	 * por OT
+	 */
+	public abstract List<SaldoOtModel> listarSaldoOt(EntityManager sesion, Planta planta);
 	
 }

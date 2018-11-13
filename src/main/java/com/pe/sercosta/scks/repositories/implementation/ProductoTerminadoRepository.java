@@ -1,5 +1,6 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -9,9 +10,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
+import com.pe.sercosta.scks.entities.Laboratorio;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
+import com.pe.sercosta.scks.models.ProductoTerminadoSaldoModel;
 import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
 
 @Repository("productoTerminadoRepository")
@@ -64,6 +69,35 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 		
 	}
 
+	@Override
+	public List<ProductoTerminadoSaldoModel> listarProductosTerminadosSaldo(EntityManager sesion,
+			Laboratorio laboratorio, Planta planta, Muestra muestra) {
+		List<ProductoTerminadoSaldoModel> listaProductoTerminadoSaldoModel = new ArrayList<ProductoTerminadoSaldoModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_grupo_prod_terminado_saldos");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+			myquery.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
+			myquery.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN);
+			myquery.setParameter(1, laboratorio.getNombreLaboratorio());
+			myquery.setParameter(1, planta.getIdPlanta());
+			myquery.setParameter(1, muestra.getOt());
+			myquery.setParameter(1, muestra.getFechaMuestreado());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				ProductoTerminadoSaldoModel aux = new ProductoTerminadoSaldoModel();
+				aux.setDescripcion((String) o[0]);
+				aux.setCantidad_total((double) o[1]);
+				listaProductoTerminadoSaldoModel.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los productos terminados saldos model", ex.getMessage());
+		}
+		return listaProductoTerminadoSaldoModel;
+	}
+
 	/*@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductoTerminado> buscarProductoTerminado(Session sesion, ProductoTerminado productoTerminado) {
@@ -88,5 +122,8 @@ public class ProductoTerminadoRepository implements IProductoTerminadoRepository
 		}
 		return listaProductoTerminado;
 	}*/
+	
+	
+	
 
 }
