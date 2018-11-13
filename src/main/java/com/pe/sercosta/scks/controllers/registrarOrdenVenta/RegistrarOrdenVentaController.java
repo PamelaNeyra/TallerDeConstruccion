@@ -14,7 +14,7 @@ public class RegistrarOrdenVentaController {
 	public String index() {		
 		return "/RegistrarOrdenVenta/index";
 	}
-	
+
 	@RequestMapping(path = "/Orden/{nombreCliente}/{idCliente}", method = RequestMethod.GET)
 	public ModelAndView index2(@PathVariable("nombreCliente") String nombreCliente,@PathVariable("idCliente") String idCliente) {		
 		ModelAndView mav = new ModelAndView();

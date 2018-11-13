@@ -3,15 +3,12 @@ package com.pe.sercosta.scks.repositories.implementation;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
-
-import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
@@ -45,7 +42,7 @@ public class MuestreoRepository implements IMuestreoRepository {
 	public List<Muestreo> listarMuestreos(EntityManager sesion) {
 		List<Muestreo> listaMuestreo = new ArrayList<Muestreo>();
 		try {
-			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_muestreo");
+			//StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_muestreo");
 			//Falta determinar el procedure
 			/*myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)

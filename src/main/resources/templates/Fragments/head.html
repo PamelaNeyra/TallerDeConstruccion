@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headFragment (pageTitle)">
+<meta charset="UTF-8" />
+<title th:text="${pageTitle}">Template title</title>
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<!-- Font Awesome -->
+<link th:href="@{/font-awesome/css/all.css}"
+	rel="stylesheet" type="text/css">
+<!-- Bootstrap core CSS -->
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<!-- DataTable -->
+<link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet"
+	type="text/css">
+<!-- Estilos de Sercosta -->
+<link th:href="@{/style/tablasercosta.css}" rel="stylesheet"
+	type="text/css">
+</head>
+
+<div th:fragment="scripts">
+	<!-- JQuery -->
+	<script th:src="@{/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- DataTable -->
+	<script th:src="@{/data-tables/datatables.min.js}"></script>
+</div>
+
+<div th:fragment="footer">
+	<footer
+		class="page-footer text-center text-md-left pt-4 orange darken-3">
+		<div class="footer-copyright pt-0 pb-3 text-center">
+			<div class="container-fluid">
+				© 2018 Copyright:<a href=""> Taller de Construcción de Sistemas
+					- Grupo 2 </a>
+			</div>
+		</div>
+	</footer>
+</div>
+</html>

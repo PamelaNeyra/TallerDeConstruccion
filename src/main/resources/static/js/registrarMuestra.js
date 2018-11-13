@@ -56,7 +56,7 @@ $(document).ready( function () {
 				{data: "descripcion"},
 				{data: "cantidadTotal"},
 				{defaultContent: "<span class='btn btn-danger'>" + 
-					             "Retirar <span class='fa fa-minus-circle'></span></span>" }
+					             "Retirar <span class='fa fa-minus-circle'></span></span>", "sClass": "text-center" }
 			],
 			language: lenguaje
 		});

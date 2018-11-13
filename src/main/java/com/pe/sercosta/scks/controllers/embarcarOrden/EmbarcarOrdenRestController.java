@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.services.IOrdenVentaService;
+import com.pe.sercosta.scks.services.IUsuarioService;
 import com.pe.sercosta.scks.services.IAsignacionService;
 
 @RestController
@@ -27,6 +30,10 @@ public class EmbarcarOrdenRestController {
 	private static final Log LOG = LogFactory.getLog(EmbarcarOrdenRestController.class);
 	private static final String CAPA = "[RestController : EmbarcarOrden] -> ";
 
+	@Autowired
+	@Qualifier("usuarioService")
+	private IUsuarioService usuarioService;
+	
 	@Autowired
 	@Qualifier("plantaConverter")
 	private PlantaConverter plantaConverter;
@@ -46,14 +53,18 @@ public class EmbarcarOrdenRestController {
 	@Autowired
 	@Qualifier("asignacionService")
 	private IAsignacionService asignacionService;
-
 	
 	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
 	public List<OrdenVentaModel> listarOrdenVenta() {
 		List<OrdenVentaModel> listaOrdenVenta = new ArrayList<>();
 		try {
-			//TODO: Obtener Planta de Sesión
-			listaOrdenVenta = ordenVentaService.listarOrdenVenta(new Planta(1))
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
+			listaOrdenVenta = ordenVentaService.listarOrdenVenta(planta)
 								.stream()
 								.map(entity -> ordenVentaConverter.convertToModel(entity))
 								.collect(Collectors.toList());

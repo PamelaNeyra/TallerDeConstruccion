@@ -1,94 +1,96 @@
 <!DOCTYPE html>
-<html lang="es"
-    xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>Embarcar Orden de Venta</title>
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
-    <link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet" type="text/css">
-   	<!-- Estilos de Sercosta -->
-    <link th:href="@{/style/tablasercosta.css}" rel="stylesheet" type="text/css">
-</head>
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmento Head -->
+<head th:include="/Fragments/head :: headFragment('Embarcar Orden')"></head>
 <body>
-    <div class="container">
-            <!-- Título de la Vista-->
-            <div class="row">
-	            <div class="col-sm-10">
-	                <h1><strong>Embarcar Orden de Venta</strong></h1>
-	            </div>
-	        </div>
-			<hr>
-	        <div class="card">
-	            <!-- Header de Card Ordenes-->
-	            <div class="card-header">
-	            	<div class="row">
-			            <div class="col-sm-10">
-			                <h2><strong>Información de las Ordenes</strong></h2>
-			            </div>
-	        		</div>
-	            </div>
-	            <!-- Cuerpo de Card-->
-                <div class="card-body">	                    		            	
-                	<!-- Tablas -->	                    	
-                    <table id="ordenesTabla" class="table table-hover table-condensed table-bordered" style="width: 100%;">
-                    <!-- Cabecera de Tabla -->
-                    	<thead>
-                        	<tr>
-                            	<th>Código de Orden</th>
-                                <th>Cliente</th>
-                                <th>Fecha de Asignación</th>
-                                <th>Cantidad Total</th>
-                                <th>Estado</th>
-                                <th></th>
-							</tr>
-                    	</thead>                               
-                     </table>  
-              	</div>
-	        </div> 
-	        <!-- Modal Elegir -->
-            <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="tituloModal">Orden de Venta: </h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-	                         	<label>¿Desea elegir esta orden de venta?</label>
-						</div>
-						<div class="modal-footer">											
-							<button id="botonAceptar" type="button" class="btn btn-primary">Aceptar</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-						</div>
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar('Embarcar Orden')"></header>
+	<!-- Contenido Principal -->
+	<div class="container">
+		<!-- Título de la Vista-->
+		<div class="row">
+			<div class="col-sm-10">
+				<h1>
+					<strong>Embarcar Orden de Venta</strong>
+				</h1>
+			</div>
+		</div>
+		<hr>
+		<div class="card">
+			<!-- Header de Card Ordenes-->
+			<div class="card-header">
+				<div class="row">
+					<div class="col-sm-10">
+						<h2>
+							<strong>Información de las Ordenes</strong>
+						</h2>
 					</div>
 				</div>
 			</div>
-	        <!-- Modal Error -->
-            <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content alert alert-danger">
-						<div class="modal-header">
-							<h5 class="modal-title" id="tituloModal">Error</h5>
-						</div>
-						<div class="modal-body">
-	                         	<span id="mensajeError"></span>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-						</div>
+			<!-- Cuerpo de Card-->
+			<div class="card-body">
+				<!-- Tablas -->
+				<table id="ordenesTabla"
+					class="table table-hover table-condensed table-bordered"
+					style="width: 100%;">
+					<!-- Cabecera de Tabla -->
+					<thead>
+						<tr>
+							<th>Código de Orden</th>
+							<th>Cliente</th>
+							<th>Fecha de Asignación</th>
+							<th>Cantidad Total</th>
+							<th>Estado</th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<!-- Modal Confirmar -->
+		<div class="modal fade" id="modalConfirmar" tabindex="-1"
+			role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tituloModal">Orden de Venta:</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<label>¿Desea elegir esta orden de venta?</label>
+					</div>
+					<div class="modal-footer">
+						<button id="botonAceptar" type="button" class="btn btn-primary">Aceptar</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
-			</div>  
-    </div>
-    <!-- Scrips -->
-    <script th:src="@{/jquery/jquery.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/data-tables/datatables.min.js}"></script>
-   	<script th:src="@{/js/embarcarOrden.js}"></script>
+			</div>
+		</div>
+		<!-- Modal Error -->
+		<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+			aria-labelledby="tituloModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content alert alert-danger">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tituloModal">Error</h5>
+					</div>
+					<div class="modal-body">
+						<span id="mensajeError"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fragmento Footer -->
+	<div th:include="/Fragments/head :: footer"></div>
+	<!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
+	<script th:src="@{/js/embarcarOrden.js}"></script>
 </body>
-
 </html>

@@ -7,6 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,14 +22,18 @@ import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OtModel;
 import com.pe.sercosta.scks.models.LoteOtModel;
 import com.pe.sercosta.scks.services.IOtService;
+import com.pe.sercosta.scks.services.IUsuarioService;
 import com.pe.sercosta.scks.services.ILoteService;
-
 
 @RestController
 public class RegistrarOtRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarOtRestController.class);
 	private static final String CAPA = "[RestController : RegistrarOt] -> ";
+	
+	@Autowired
+	@Qualifier("usuarioService")
+	private IUsuarioService usuarioService;
 	
 	@Autowired
 	@Qualifier("plantaConverter")
@@ -53,8 +59,13 @@ public class RegistrarOtRestController {
 	public List<OtModel> listarMuestraOt() {
 		List<OtModel> listaMuestraOt = new ArrayList<>();
 		try {
-			//TODO: Obtener Planta de Sesión
-			listaMuestraOt = otService.listarMuestraOt(new Planta(1))
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
+			listaMuestraOt = otService.listarMuestraOt(planta)
 								.stream()
 								.map(entity -> otConverter.convertToModel(entity))
 								.collect(Collectors.toList());

@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html lang="es"
-    xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>Registrar Lote</title>
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
-    <link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet" type="text/css">
-   	<!-- Estilos de Sercosta -->
-    <link th:href="@{/style/tablasercosta.css}" rel="stylesheet" type="text/css">
-</head>
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmento Head -->
+<head th:include="/Fragments/head :: headFragment('Registrar Lote')"></head>
 <body>
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar('Registrar Lote')"></header>
+    <!-- Contenido Principal -->
     <div class="container">
             <!-- Título de la Vista-->
             <div class="row">
@@ -199,11 +193,10 @@
 	            </div>
             </div>           
     </div>
-    <!-- Scrips -->
-    <script th:src="@{/jquery/jquery.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{/data-tables/datatables.min.js}"></script>
+    <!-- Fragmento Footer -->
+    <div th:include="/Fragments/head :: footer"></div>    
+    <!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
    	<script th:src="@{/js/registrarlote.js}"></script>
 </body>
-
 </html>

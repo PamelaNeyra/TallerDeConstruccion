@@ -1,9 +1,6 @@
 package com.pe.sercosta.scks.services;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Lote;

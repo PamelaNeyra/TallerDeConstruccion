@@ -7,17 +7,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.LoteConverter;
 import com.pe.sercosta.scks.converter.implementation.PresentacionConverter;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.LoteModel;
 import com.pe.sercosta.scks.models.PresentacionModel;
 import com.pe.sercosta.scks.services.ILoteService;
 import com.pe.sercosta.scks.services.IPresentacionService;
+import com.pe.sercosta.scks.services.IUsuarioService;
 
 @RestController
 public class RegistrarLoteRestController {
@@ -25,6 +29,10 @@ public class RegistrarLoteRestController {
 	private static final Log LOG = LogFactory.getLog(RegistrarLoteRestController.class);
 	private static final String CAPA = "[RestController : RegistrarLote] -> ";
 
+	@Autowired
+	@Qualifier("usuarioService")
+	private IUsuarioService usuarioService;
+	
 	@Autowired
 	@Qualifier("loteConverter")
 	private LoteConverter loteConverter;
@@ -44,7 +52,13 @@ public class RegistrarLoteRestController {
 	@RequestMapping(path = "/RegistrarLote/registrarLote", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) LoteModel lote) {
 		try {
-			lote.setIdPlanta(1);
+			Planta planta = usuarioService.obtenerPlantaUsuario(
+							((User) SecurityContextHolder.
+									getContext().
+										getAuthentication().
+											getPrincipal())
+							.getUsername());
+			lote.setIdPlanta(planta.getIdPlanta());
 			loteService.registrarLote(loteConverter.convertToEntity(lote));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

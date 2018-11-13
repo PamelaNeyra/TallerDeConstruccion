@@ -61,7 +61,7 @@ $(document).ready( function () {
 				{data: "cantidadTotal"},
 				{data: "estado"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
-										"Embarcar <span class='fa fa-ship'></span></span>"}
+										"Embarcar <span class='fa fa-ship'></span></span>", "sClass": "text-center"}
 			],
 			language: lenguaje
 		});
