@@ -101,7 +101,7 @@ public class LoteRepository implements ILoteRepository {
 		List<LoteOtModel> listaLoteOt = new ArrayList<LoteOtModel>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_lotes_muestra");
-			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
 			myquery.setParameter(1, muestra.getIdMuestra());
 			myquery.execute();
 			List<Object[]> lista = myquery.getResultList();

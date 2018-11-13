@@ -53,7 +53,7 @@
 								placeholder="dd/mm/aaaa" id="fechaM">
 							<!-- Estado -->
 							<label for="estado" class="col-sm-2">Estado</label> <input
-								type="text" class="form-control col-sm-2" id="destino" disabled>
+								type="text" class="form-control col-sm-2" id="estado" disabled>
 						</div>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 							<!-- Tabla de Lotes -->
 							<div id="tabla1" class="tab-pane active">
 								<div class="table-responsive-sm">
-									<table id="asignacionesTabla"
+									<table id="lotesTabla"
 										class="table table-hover table-condensed table-bordered"
 										style="width: 100%;">
 										<!-- Cabecera de Tabla -->
@@ -133,7 +133,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="tituloModal">OT:</h5>
+						<h5 class="modal-title" id="tituloModal">OT</h5> 
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -154,6 +154,6 @@
 	<div th:include="/Fragments/head :: footer"></div>
 	<!-- Scripts -->
 	<div th:include="/Fragments/head :: scripts"></div>
-	<script th:src="@{/js/embarcarorden2.js}"></script>
+	<script th:src="@{/js/registrarOt2.js}"></script>
 </body>
 </html>
