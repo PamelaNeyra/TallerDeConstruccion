@@ -17,7 +17,7 @@ import com.pe.sercosta.scks.converter.implementation.OtConverter;
 import com.pe.sercosta.scks.converter.implementation.LoteConverter;
 import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
 import com.pe.sercosta.scks.entities.Muestra;
-import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OtModel;
 import com.pe.sercosta.scks.models.LoteOtModel;
@@ -59,13 +59,12 @@ public class RegistrarOtRestController {
 	public List<OtModel> listarMuestraOt() {
 		List<OtModel> listaMuestraOt = new ArrayList<>();
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
-			listaMuestraOt = otService.listarMuestraOt(planta)
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			listaMuestraOt = otService.listarMuestraOt(usuario.getIdPlanta())
 								.stream()
 								.map(entity -> otConverter.convertToModel(entity))
 								.collect(Collectors.toList());

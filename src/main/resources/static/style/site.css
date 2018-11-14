@@ -1,0 +1,21 @@
+body{
+    font-size: 0.9rem;
+}
+.sidebar-divider {
+    height: 0;
+    margin: .3rem 0;
+    overflow: hidden;
+    border-top: 1px solid white;
+}
+#wrapper.toggled #page-content-wrapper,
+#page-content-wrapper {
+    position: absolute;
+}
+.navbar-nav .nav-link,
+.navbar .btn-link{
+    color: white
+}
+.navbar-nav .nav-link:hover,
+.navbar .btn-link:hover{
+    color: grey
+}

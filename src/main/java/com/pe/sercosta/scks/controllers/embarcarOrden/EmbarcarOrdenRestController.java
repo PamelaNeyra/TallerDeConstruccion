@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.OrdenVentaConverter;
 import com.pe.sercosta.scks.converter.implementation.AsignacionConverter;
 import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
-import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
 import com.pe.sercosta.scks.models.AsignacionModel;
@@ -58,13 +58,12 @@ public class EmbarcarOrdenRestController {
 	public List<OrdenVentaModel> listarOrdenVenta() {
 		List<OrdenVentaModel> listaOrdenVenta = new ArrayList<>();
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
-			listaOrdenVenta = ordenVentaService.listarOrdenVenta(planta)
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			listaOrdenVenta = ordenVentaService.listarOrdenVenta(usuario.getIdPlanta())
 								.stream()
 								.map(entity -> ordenVentaConverter.convertToModel(entity))
 								.collect(Collectors.toList());

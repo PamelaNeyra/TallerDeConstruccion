@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.MuestraConverter;
 import com.pe.sercosta.scks.converter.implementation.ProductoTerminadoConverter;
-import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.MuestraModel;
 import com.pe.sercosta.scks.models.ProductoTerminadoModel;
@@ -53,16 +53,15 @@ public class RegistrarMuestraRestController {
 	@RequestMapping(path = "/RegistrarMuestra/registrarMuestra", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) MuestraMultiple muestraMultiple) {
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
 			MuestraModel muestra = muestraMultiple.getMuestra();
 			//TODO: Laboratorio se Obtiene de Combo
 			muestra.setIdLaboratorio(1);
-			muestra.setIdPlanta(planta.getIdPlanta());
+			muestra.setIdPlanta(usuario.getIdPlanta().getIdPlanta());
 			muestraService.registrarMuestra(muestraConverter.convertToEntity(muestra)
 											, muestraMultiple.getProductoTerminadoList().stream()
 												.map(p -> productoTerminadoConverter.convertToEntity(p))
@@ -81,13 +80,12 @@ public class RegistrarMuestraRestController {
 	public List<ProductoTerminadoModel> listarProducto() {
 		List<ProductoTerminadoModel> listaProducto = new ArrayList<>();
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
-			listaProducto = productoTerminadoService.listarProducto(planta)
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			listaProducto = productoTerminadoService.listarProducto(usuario.getIdPlanta())
 					       .stream()
 				        	.map(entity -> productoTerminadoConverter.convertToModel(entity)).collect(Collectors.toList());
 		} catch (SercostaException sx) {

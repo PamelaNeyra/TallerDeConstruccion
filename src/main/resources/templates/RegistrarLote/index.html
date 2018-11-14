@@ -4,203 +4,235 @@
 <head th:include="/Fragments/head :: headFragment('Registrar Lote')"></head>
 <body>
 	<!-- Fragmento Navbar -->
-	<header th:include="/Fragments/navbar :: navbar('Registrar Lote')"></header>
-    <!-- Fragmento Carga -->
-    <div id="imagenCarga" style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<!-- Fragmento Carga -->
+	<div id="imagenCarga"
+		style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
 		<img th:src="@{/img/imagenCarga.gif}" />
 	</div>
-    <!-- Contenido Principal -->
-    <div class="container">
-            <!-- Título de la Vista-->
-            <div class="row">
-	            <div class="col-sm-6">
-	                <h1><strong>Registrar Lote</strong></h1>
-	            </div>
-	            <div class="col-sm-4" style="margin: auto;">
-	            	<span id="cantidadTotal">Cantidad Total: 0</span>
-	            </div>
-	            <div class="col-sm-2" style="margin: auto;">
-	            	<button type="button" class="btn btn-primary" id="guardarLote">Guardar Cambios</button>
-	            </div>
-	        </div>
-	        <hr> 
-	        <!-- Información del Lote -->
-            <div class="row">
-	            <div class="col-sm-12">
-	                <!-- Card de Lote -->
-	                <div class="card">
-	                    <!-- Título de Card -->
-	                    <div class="card-header">
-	                            <h3>Información del Lote</h3>
-	                    </div>
-	                    <!-- Cuerpo de Card -->
-	                    <div class="card-body">
-	                        <!-- Fila del Cuerpo-->
-	                        <div class="col-sm-12 form-inline justify-content-center">
-	                            <!-- Código de Lote-->
-	                            <label for="codigo" class="col-sm-1 mx-auto">Código de Lote</label>
-	                            <input type="text" class="form-control col-sm-2"  
-	                                    placeholder="Ingrese código" id="codigo">
-	                            <!-- Fecha de Producción -->
-	                            <label for="fecha" class="col-sm-1 mx-auto">Fecha de Producción</label>
-	                            <input type="date" class="form-control col-sm-2" 
-	                                    placeholder="dd/mm/aaaa" id="fecha">
-	                            <!-- Cantidad Recepcionada -->
-	                            <label for="cantidad" class="col-sm-1 mx-auto">Cantidad Recepcionada</label>
-	                            <input type="number" class="form-control col-sm-2" step="0.5" min="0"
-	                                    placeholder="0" id="cantidad">     
-	                            <!-- Es reempaque -->
-	                            <div class="form-check col-sm-2">
-								  <label class="form-check-label">
-								    <input id="reempaque" type="checkbox" class="form-check-input" value="false">¿Es reempaque?
-								  </label>
-								</div>   
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-            </div>
-            <hr>
-            <!-- Información del Contenido -->
-            <div class="row">
-	            <div class="col-sm-12">
-	                <!-- Card de Contenido -->
-	                <div class="card">
-	                    <!-- Título de Card -->
-	                    <h3 class="card-header">Información del Contenido</h3>
-	                    <!-- Cuerpo de Card-->
-	                    <div class="card-body">	                    		            	
-			            	<!-- Barras de Navegación -->
-							<ul class="nav nav-tabs" role="tablist">
-								<!-- Barra de Presentaciones -->
-								<li class="nav-item">
-									<a class="nav-link active" data-toggle="tab" href="#tabla1">
-										<strong>Lista de Presentaciones</strong>
-									</a>
-								</li>
-								<!-- Barra de Contenidos -->
-								<li class="nav-item">
-									<a class="nav-link" data-toggle="tab" href="#tabla2">
-										<strong>Presentaciones Seleccionadas</strong>
-									</a>
-								</li>
-							</ul>
-							<hr>
-	                    	<!-- Tablas -->
-	                    	<div class="tab-content">
-		                    	<!-- Tabla de Presentacion -->
-		                    	<div id="tabla1" class="tab-pane active">
-			                    	<div class="table-responsive-sm">
-			                            <table id="presentacionesTabla" class="table table-hover table-condensed table-bordered tablasercosta" style="width:100%;">
-			                            <!-- Cabecera de Tabla -->
-			                                <thead>
-			                                    <tr>
-			                                        <th>Código SAP</th>
-			                                        <th>Descripcion</th>
-			                                        <th align="center"></th>
-			                                    </tr>
-			                                </thead>
-			                            </table>  
-			                    	</div>
-		                    	</div>
-		                    	<!-- Tabla de Contenido -->
-		                    	<div id="tabla2" class="tab-pane">
-			                    	<div class="table-responsive-sm">
-			                            <table id="contenidosTabla" class="table table-hover table-condensed table-bordered tablasercosta" style="width: 100%;">
-			                            <!-- Cabecera de Tabla -->
-			                                <thead>
-			                                    <tr>
-			                                        <th>Código SAP</th>
-			                                        <th>Cantidad</th>
-			                                        <th></th>
-			                                    </tr>
-			                                </thead>
-			                            </table>  
-			                    	</div>
-		                    	</div>
-		                    	<!-- Modal Agregar -->
-		                    	<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="tituloModal">Presentación: </h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper" th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container-fluid">
+				<!-- Título de la Vista-->
+				<div class="row">
+					<div class="col-sm-6">
+						<h1>
+							<strong>Registrar Lote</strong>
+						</h1>
+					</div>
+					<div class="col-sm-4" style="margin: auto;">
+						<span id="cantidadTotal">Cantidad Total: 0</span>
+					</div>
+					<div class="col-sm-2" style="margin: auto;">
+						<button type="button" class="btn btn-primary" id="guardarLote">Guardar
+							Cambios</button>
+					</div>
+				</div>
+				<hr>
+				<!-- Información del Lote -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Lote -->
+						<div class="card">
+							<!-- Título de Card -->
+							<div class="card-header">
+								<h3>Información del Lote</h3>
+							</div>
+							<!-- Cuerpo de Card -->
+							<div class="card-body">
+								<!-- Fila del Cuerpo-->
+								<div class="col-sm-12 form-inline justify-content-center">
+									<!-- Código de Lote-->
+									<label for="codigo" class="col-sm-1 mx-auto">Código de
+										Lote</label> <input type="text" class="form-control col-sm-2"
+										placeholder="Ingrese código" id="codigo">
+									<!-- Fecha de Producción -->
+									<label for="fecha" class="col-sm-1 mx-auto">Fecha de
+										Producción</label> <input type="date" class="form-control col-sm-2"
+										placeholder="dd/mm/aaaa" id="fecha">
+									<!-- Cantidad Recepcionada -->
+									<label for="cantidad" class="col-sm-1 mx-auto">Cantidad
+										Recepcionada</label> <input type="number"
+										class="form-control col-sm-2" step="0.5" min="0"
+										placeholder="0" id="cantidad">
+									<!-- Es reempaque -->
+									<div class="form-check col-sm-2">
+										<label class="form-check-label"> <input id="reempaque"
+											type="checkbox" class="form-check-input" value="false">¿Es
+											reempaque?
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<!-- Información del Contenido -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Contenido -->
+						<div class="card">
+							<!-- Título de Card -->
+							<h3 class="card-header">Información del Contenido</h3>
+							<!-- Cuerpo de Card-->
+							<div class="card-body">
+								<!-- Barras de Navegación -->
+								<ul class="nav nav-tabs" role="tablist">
+									<!-- Barra de Presentaciones -->
+									<li class="nav-item"><a class="nav-link active"
+										data-toggle="tab" href="#tabla1"> <strong>Lista
+												de Presentaciones</strong>
+									</a></li>
+									<!-- Barra de Contenidos -->
+									<li class="nav-item"><a class="nav-link" data-toggle="tab"
+										href="#tabla2"> <strong>Presentaciones
+												Seleccionadas</strong>
+									</a></li>
+								</ul>
+								<hr>
+								<!-- Tablas -->
+								<div class="tab-content">
+									<!-- Tabla de Presentacion -->
+									<div id="tabla1" class="tab-pane active">
+										<div class="table-responsive-sm">
+											<table id="presentacionesTabla"
+												class="table table-hover table-condensed table-bordered tablasercosta"
+												style="width: 100%;">
+												<!-- Cabecera de Tabla -->
+												<thead>
+													<tr>
+														<th>Código SAP</th>
+														<th>Descripcion</th>
+														<th align="center"></th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+									<!-- Tabla de Contenido -->
+									<div id="tabla2" class="tab-pane">
+										<div class="table-responsive-sm">
+											<table id="contenidosTabla"
+												class="table table-hover table-condensed table-bordered tablasercosta"
+												style="width: 100%;">
+												<!-- Cabecera de Tabla -->
+												<thead>
+													<tr>
+														<th>Código SAP</th>
+														<th>Cantidad</th>
+														<th></th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+									<!-- Modal Agregar -->
+									<div class="modal fade" id="modalAgregar" tabindex="-1"
+										role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="tituloModal">Presentación:
+													</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div id="cuerpoAgregar" class="modal-body">
+													<label>Cantidad a Ingresar:</label> <input type="number"
+														min="0" step="0.5" class="form-control input-sm"
+														id="cantidadAgregar" name="cantidadAgregar">
+												</div>
+												<div class="modal-footer">
+													<button id="botonAgregar" type="button"
+														class="btn btn-primary">Agregar</button>
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Cerrar</button>
+												</div>
 											</div>
-											<div id="cuerpoAgregar" class="modal-body">
-						                         	<label>Cantidad a Ingresar:</label>
-						                         	<input type="number" min="0" step="0.5" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
+										</div>
+									</div>
+									<!-- Modal Éxito -->
+									<div class="modal fade" id="modalExito" tabindex="-1"
+										role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content alert alert-success">
+												<div class="modal-header">
+													<h5 class="modal-title" id="tituloModal">Éxito</h5>
+												</div>
+												<div class="modal-body">
+													<span>El Lote se ha registrado con éxito.</span>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Cerrar</button>
+												</div>
 											</div>
-											<div class="modal-footer">											
-												<button id="botonAgregar" type="button" class="btn btn-primary">Agregar</button>
-												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+										</div>
+									</div>
+									<!-- Modal Error -->
+									<div class="modal fade" id="modalError" tabindex="-1"
+										role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content alert alert-danger">
+												<div class="modal-header">
+													<h5 class="modal-title" id="tituloModal">Error</h5>
+												</div>
+												<div class="modal-body">
+													<span id="mensajeError"></span>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Cerrar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- Modal Confirmación -->
+									<div class="modal fade" id="modalConfirmar" tabindex="-1"
+										role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="tituloModal">Lote:</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<label>¿Desea registrar este lote?</label>
+												</div>
+												<div class="modal-footer">
+													<button id="botonConfirmar" type="button"
+														class="btn btn-primary">Aceptar</button>
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Cerrar</button>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<!-- Modal Éxito -->
-		                    	<div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content alert alert-success">
-											<div class="modal-header">
-												<h5 class="modal-title" id="tituloModal">Éxito </h5>
-											</div>
-											<div class="modal-body">
-						                         	<span>El Lote se ha registrado con éxito.</span>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal Error -->
-		                    	<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content alert alert-danger">
-											<div class="modal-header">
-												<h5 class="modal-title" id="tituloModal">Error</h5>
-											</div>
-											<div class="modal-body">
-						                         	<span id="mensajeError"></span>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal Confirmación -->
-					            <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="tituloModal">Lote: </h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-						                         	<label>¿Desea registrar este lote?</label>
-											</div>
-											<div class="modal-footer">											
-												<button id="botonConfirmar" type="button" class="btn btn-primary">Aceptar</button>
-												<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-											</div>
-										</div>
-									</div>
-								</div>
-	                    	</div>
-	                    </div>
-	                </div>      
-	            </div>
-            </div>           
-    </div>
-    <!-- Fragmento Footer -->
-    <div th:include="/Fragments/head :: footer"></div>    
-    <!-- Scripts -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
+		</div>
+	</div>
+	<!-- Scripts -->
 	<div th:include="/Fragments/head :: scripts"></div>
-   	<script th:src="@{/js/registrarlote.js}"></script>
+	<script th:src="@{/js/registrarlote.js}"></script>
 </body>
 </html>

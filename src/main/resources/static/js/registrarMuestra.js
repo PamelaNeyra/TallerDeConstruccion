@@ -30,6 +30,11 @@ var lenguaje = {
 
 $(document).ready( function () {
 	
+	$("#menu-toggle").click(function (e) {
+		e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+	
 	var eliminarProducto = function(tbody,table){
 		$(tbody).on('click', 'span.btn', function () {
 			var data = table.row($(this).parents("tr")).data();

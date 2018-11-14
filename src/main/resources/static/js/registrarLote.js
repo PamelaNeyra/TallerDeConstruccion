@@ -29,8 +29,13 @@ var lenguaje = {
 }
 var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>');
 
-$(document).ready( function () {
-	
+$(document).ready( function () {	
+
+	$("#menu-toggle").click(function (e) {
+		e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+        
 	//Elimina el registro de la segunda tabla
 	var eliminarContenido = function(tbody,table){
 		$(tbody).on('click', 'span.btn', function () {

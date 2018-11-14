@@ -34,6 +34,11 @@ var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>
 
 $(document).ready( function () {
 		
+	$("#menu-toggle").click(function (e) {
+		e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+	
 	var obtenerBloque = function(descripcion) {
 		var posAux = descripcion.search("kg");
 		var subDes = descripcion.slice(posAux + 2, descripcion.length);

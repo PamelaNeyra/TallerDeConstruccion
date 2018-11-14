@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.LoteConverter;
 import com.pe.sercosta.scks.converter.implementation.PresentacionConverter;
-import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.LoteModel;
 import com.pe.sercosta.scks.models.PresentacionModel;
@@ -52,13 +52,12 @@ public class RegistrarLoteRestController {
 	@RequestMapping(path = "/RegistrarLote/registrarLote", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) LoteModel lote) {
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
-			lote.setIdPlanta(planta.getIdPlanta());
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			lote.setIdPlanta(usuario.getIdPlanta().getIdPlanta());
 			loteService.registrarLote(loteConverter.convertToEntity(lote));
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html lang="es"
-    xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <!-- Fragmento Head -->
 <head th:include="/Fragments/head :: headFragment('SCKS')"></head>
 <body>
 	<!-- Fragmento Navbar -->
-	<header th:include="/Fragments/navbar :: navbar('Registrar Lote')"></header>
-    <!-- Contenido Principal -->
-    <div class="container text-center">
- 		<h3>Contenido Principal por definir.</h3>
-    </div>
-    <!-- Fragmento Footer -->
-    <div th:include="/Fragments/head :: footer"></div>    
-    <!-- Scripts -->
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper"
+			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container-fluid text-center">
+				<h3>Contenido Principal por definir.</h3>
+			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
+		</div>
+	</div>
+	<!-- Scripts -->
 	<div th:include="/Fragments/head :: scripts"></div>
+	<script>
+		$("#menu-toggle").click(function (e) {
+			e.preventDefault();
+	        $("#wrapper").toggleClass("toggled");
+	    });
+	</script>
 </body>
 </html>

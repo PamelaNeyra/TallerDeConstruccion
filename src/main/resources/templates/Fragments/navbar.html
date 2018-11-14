@@ -6,85 +6,79 @@
 </head>
 <body>
 	<!-- Barra de Navegación -->
-	<header th:fragment="navbar(title)">
-		<nav class="navbar navbar-dark bg-dark fixed-top" id="mainNav">
-			<button class="navbar-toggler" type="button"
-				data-toggle="collapse" data-target="#navbarTarget"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<a class="navbar-brand" th:href="@{/Principal}">Sistema de
-				Control de Kardex Sercosta</a>
-			<div class="collapse navbar-collapse" id="navbarTarget">
-				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
-						<a	class="nav-link dropdown-toggle text-light" id="navbardrop"
-							data-toggle="dropdown">
-							<i class="fas fa-boxes"></i> <span>Lotes</span>
-						</a>
-						<div class="dropdown-menu bg-dark">
-							<a class="dropdown-item text-light" th:href="@{/RegistrarLote}"> <i
-								class="fa fa-fw fa-plus"></i> <span>Registrar Lote</span>
-							</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a	class="nav-link dropdown-toggle text-light" id="navbardrop"
-							data-toggle="dropdown">
-							<i class="fas fa-vials"></i> <span>Muestras</span> 
-						</a>
-						<div class="dropdown-menu bg-dark">
-							<a class="dropdown-item text-light" th:href="@{/RegistrarMuestra}"> 
-								<i class="fa fa-fw fa-plus"></i> 
-								<span>Registrar Muestra</span>
-							</a>
-							<a class="dropdown-item text-light" th:href="@{/RegistrarOt}"> 
-								<i class="fa fa-fw fa-tasks"></i>
-								<span class="nav-link-text">Registrar OT</span>
-							</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a	class="nav-link dropdown-toggle text-light" id="navbardrop"
-							data-toggle="dropdown">
-							<i class="fas fa-handshake"></i> <span>Ordenes de Venta</span>  
-						</a>
-						<div class="dropdown-menu bg-dark">
-							<a class="dropdown-item text-light" th:href="@{/RegistrarOrdenVenta}"> 
-								<i class="fa fa-fw fa-plus"></i> 
-								<span>Registrar Orden Venta</span>
-							</a>
-							<a class="dropdown-item text-light" th:href="@{/EmbarcarOrden}"> 
-								<i class="fa fa-fw fa-ship"></i>
-								<span class="nav-link-text">Embarcar Orden</span>
-							</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a	class="nav-link dropdown-toggle text-light" id="navbardrop"
-							data-toggle="dropdown">
-							<i class="fas fa-dolly"></i> <span>Ordenes de Retiro</span>  
-						</a>
-						<div class="dropdown-menu bg-dark">
-							<a class="dropdown-item text-light" th:href="@{/RetirarContenido}"> 
-								<i class="fa fa-fw fa-plus"></i> 
-								<span>Retirar Contenido</span>
-							</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<form class="text-light" th:action="@{/logout}" method="POST"> 
-							<button class="btn btn-dark" type="submit">
-							<i class="fa fa-fw fa-sign-out-alt"></i>Cerrar Sesión</button>
-						</form>
-					</li>
-				</ul>
+	<header th:fragment="navbar(nombre, planta)">
+		<nav class="navbar navbar-expand-lg bg-dark shadow fixed-top">
+			<div class="container-fluid">
+				<a href="#menu-toggle" class="btn btn-link btn-toggler"
+					id="menu-toggle"> <span class="fa fa-bars"></span>
+				</a> <span class="navbar-brand text-light">&nbsp; Sistema de
+					Control Kardex Sercosta</span>
+				<div class="collapse navbar-collapse">
+					<ul class="navbar-nav ml-auto">						
+						<li class="nav-item"><a th:href="@{/RegistrarLote}"
+							class="nav-link" title="Lotes"><i class="fas fa-boxes"></i></a></li>
+						<li class="nav-item"><a th:href="@{/RegistrarMuestra}"
+							class="nav-link" title="Muestras"><i class="fas fa-vials"></i></a></li>
+						<li class="nav-item"><a th:href="@{/RegistrarOrdenVenta}"
+							class="nav-link" title="Ordenes Venta"><i
+								class="fas fa-handshake"></i></a></li>
+						<li class="nav-item"><a th:href="@{/RetirarContenido}"
+							class="nav-link" title="Ordenes Retiro"><i
+								class="fas fa-dolly"></i></a></li>								
+						<li class="nav-item form-inline">
+							<i class="nav-link text-center fas fa-industry"></i>
+							<span class="text-white" th:text="${planta}"></span>
+						</li>		
+						<li class="nav-item form-inline">
+							<i class="nav-link text-center fas fa-user-tie"></i>
+							<span class="text-white" th:text="${nombre}"></span>
+						</li>		
+						<li class="nav-item">
+							<form class="text-light" th:action="@{/logout}" method="POST">
+								<button class="btn btn-dark" type="submit">
+									<i class="fa fa-fw fa-sign-out-alt"></i>Cerrar Sesión
+								</button>
+							</form>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</nav>
-		<hr />
-		<hr />
-		<hr />
+		<hr><hr><hr>
 	</header>
+	<!-- Sidebar -->
+	<div th:fragment="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<li class="text-white"><i class="fa fa-boxes"></i> Lotes</li>
+			<li><a th:href="@{/RegistrarLote}">&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="fa fa-box"></i>&nbsp; Registrar Lote
+			</a></li>
+			<li class="text-white"><i class="fa fa-vials"></i> Muestras</li>
+
+			<li><a th:href="@{/RegistrarMuestra}">&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="fa fa-flask"></i>&nbsp; Registrar Muestra
+			</a></li>
+			<li><a th:href="@{/RegistrarOt}">&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="fa fa-tasks"></i>&nbsp; Registrar OT
+			</a></li>
+
+			<li class="text-white"><i class="fa fa-handshake"></i> Ordenes
+				de Venta</li>
+
+			<li><a th:href="@{/RegistrarOrdenVenta}">&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="fa fa-hand-holding-usd"></i>&nbsp; Registrar Orden Venta
+			</a></li>
+			<li><a th:href="@{/EmbarcarOrden}">&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="fa fa-ship"></i>&nbsp; Embarcar Orden Venta
+			</a></li>
+			<li class="text-white"><i class="fa fa-dolly"></i> Ordenes de
+				Retiro</li>
+
+			<li><a th:href="@{/RetirarContenido}">&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="fa fa-box-open"></i>&nbsp; Retirar Contenido
+			</a></li>
+
+		</ul>
+	</div>
 </body>
 </html>

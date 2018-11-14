@@ -25,6 +25,11 @@ var lenguaje = {
 
 $(document).ready( function () {
 			
+	$("#menu-toggle").click(function (e) {
+		e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+	
 	var orden = {
 			idOrdenVenta: $('#codigo').val()
 	}

@@ -1,9 +1,9 @@
 package com.pe.sercosta.scks.services;
 
-import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Usuario;
 
 public interface IUsuarioService {
 
-	public abstract Planta obtenerPlantaUsuario (String username);
+	public abstract Usuario obtenerUsuario (String username, String password);
 	
 }

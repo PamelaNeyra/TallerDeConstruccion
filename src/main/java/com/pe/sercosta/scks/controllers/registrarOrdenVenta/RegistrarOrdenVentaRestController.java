@@ -17,7 +17,7 @@ import com.pe.sercosta.scks.converter.implementation.ClienteConverter;
 import com.pe.sercosta.scks.converter.implementation.OrdenVentaViewConverter;
 import com.pe.sercosta.scks.converter.implementation.PresentacionConverter;
 import com.pe.sercosta.scks.converter.implementation.PresentacionViewConverter;
-import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.ClienteModel;
 import com.pe.sercosta.scks.models.multiple.OrdenVentaMultiple;
@@ -88,13 +88,12 @@ public class RegistrarOrdenVentaRestController {
 	public List<PresentacionView> listarPresentacion() {
 		List<PresentacionView> listaPresentacion = new ArrayList<>();
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
-			listaPresentacion =  plantaPresentacionService.listarPresentacion(planta)
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			listaPresentacion =  plantaPresentacionService.listarPresentacion(usuario.getIdPlanta())
 								 .stream()
 								 .map(entity -> presentacionViewConverter.convertToModel(entity))
 								 .collect(Collectors.toList());				 
@@ -112,14 +111,13 @@ public class RegistrarOrdenVentaRestController {
 	@RequestMapping(path = "/RegistrarOrdenVenta/registrarOrdenVenta", method = RequestMethod.POST)
 	public void registrarOrdenVenta(@RequestBody(required = true) OrdenVentaMultiple ordenVentaMultiple) {
 		try {
-			Planta planta = usuarioService.obtenerPlantaUsuario(
-							((User) SecurityContextHolder.
-									getContext().
-										getAuthentication().
-											getPrincipal())
-							.getUsername());
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
 			OrdenVentaView ordenVenta = ordenVentaMultiple.getOrdenVenta();
-			ordenVenta.setIdPlanta(planta.getIdPlanta());
+			ordenVenta.setIdPlanta(usuario.getIdPlanta().getIdPlanta());
 			ordenVentaService.registrarOrdenVenta(ordenVentaConverter.convertToEntity(ordenVenta),
 													ordenVentaMultiple.getListaPresentacion().stream()
 													.map(p -> presentacionConverter.convertToEntity(p))

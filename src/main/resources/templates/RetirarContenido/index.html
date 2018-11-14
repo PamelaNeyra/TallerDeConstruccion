@@ -4,291 +4,308 @@
 <head th:include="/Fragments/head :: headFragment('Retirar Contenido')"></head>
 <body>
 	<!-- Fragmento Navbar -->
-	<header th:include="/Fragments/navbar :: navbar('Retirar Contenido')"></header>
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
 	<!-- Fragmento Carga -->
-    <div id="imagenCarga" style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
+	<div id="imagenCarga"
+		style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
 		<img th:src="@{/img/imagenCarga.gif}" />
 	</div>
-    <!-- Contenido Principal -->
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6">
-				<h1>
-					<strong>Retirar Contenido</strong>
-				</h1>
-			</div>
-			<div class="col-sm-2" style="margin: auto;">
-				<button type="button" class="btn btn-primary" id="terminarRegistro">Guardar
-					Cambios</button>
-			</div>
-		</div>
-		<hr>
-		<div class="row" style="margin-top: 20px;">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-header">
-						<h3>Información del retiro del contenido</h3>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper"
+			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-6">
+						<h1>
+							<strong>Retirar Contenido</strong>
+						</h1>
 					</div>
-					<div class="card-body">
-						<div class="container">
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-inline">
-										<div class="text-left control-label col-sm-2">Planta:</div>
-										<input type="text" class="form-control col-sm-2" id="planta"
-											name="planta" readonly>
-										<div class="text-left control-label col-sm-2"
-											style="text-align: left;">Fecha de retiro:</div>
-										<input type="date" class="form-control col-sm-2"
-											placeholder="dd/mm/aaaa" id="fch_retiro" name="fch_retiro">
-									</div>
-									<br>
-									<div class="form-inline">
-										<div class="text-left control-label col-sm-2">Motivo de
-											retiro:</div>
-										<input type="text" class="form-control col-sm-10" id="motivo"
-											name="motivo">
+					<div class="col-sm-4" style="margin: auto;">
+					</div>
+					<div class="col-sm-2" style="margin: auto;">
+						<button type="button" class="btn btn-primary"
+							id="terminarRegistro">Guardar Cambios</button>
+					</div>
+				</div>
+				<hr>
+				<div class="row" style="margin-top: 20px;">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-header">
+								<h3>Información del retiro del contenido</h3>
+							</div>
+							<div class="card-body">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-inline">
+												<div class="text-left control-label col-sm-2">Planta:</div>
+												<input type="text" class="form-control col-sm-2" id="planta"
+													name="planta" readonly>
+												<div class="text-left control-label col-sm-2"
+													style="text-align: left;">Fecha de retiro:</div>
+												<input type="date" class="form-control col-sm-2"
+													placeholder="dd/mm/aaaa" id="fch_retiro" name="fch_retiro">
+											</div>
+											<br>
+											<div class="form-inline">
+												<div class="text-left control-label col-sm-2">Motivo
+													de retiro:</div>
+												<input type="text" class="form-control col-sm-10"
+													id="motivo" name="motivo">
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<hr>
-		<div class="row" style="margin-top: 20px;">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-header">
-						<h3>Información de los contenidos</h3>
-					</div>
-					<div class="card-body">
-						<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" href="#tabla1"> <strong>Lotes</strong>
-							</a></li>
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabla2"> <strong>Presentaciones
-										Comprometidas</strong>
-							</a></li>
-						</ul>
-						<hr>
-						<div class="tab-content">
-							<div class="container tab-pane active" id="tabla1">
-								<div class="table-responsive-sm">
-									<table id="loteTabla"
-										class="table table-bordered tablasercosta"
-										style="width: 100%;">
-										<thead>
-											<tr>
-												<th>Código de lote</th>
-												<th>Fecha de producción</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<th>LOTE-1</th>
-												<th>2018-10-16</th>
-												<th><span class='btn btn-success' data-toggle='modal'
-													data-target='#modalAgregar'> Detalle</span></th>
-											</tr>
-											<tr>
-												<th>Lote - 2</th>
-												<th>2018-10-12</th>
-												<th><span class='btn btn-success' data-toggle='modal'
-													data-target='#modalAgregar'> Detalle</span></th>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+				<hr>
+				<div class="row" style="margin-top: 20px;">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-header">
+								<h3>Información de los contenidos</h3>
 							</div>
-							<div class="container tab-pane" id="tabla2">
-								<div class="table-responsive-sm">
-									<table id="presentacionesTabla"
-										class="table table-bordered tablasercosta"
-										style="width: 100%;">
-										<thead>
-											<tr>
-												<th>Código SAP</th>
-												<th>Descripción</th>
-												<th>Cantidad</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<th>PO110PT1001</th>
-												<th>Pota Filete S3P Bloque de 10 kg Pota Filete S3P de
-													20 kg</th>
-												<th>40</th>
-												<th><span class='btn btn-danger' data-toggle='modal'>
-														Quitar</span></th>
-											</tr>
-										</tbody>
-									</table>
+							<div class="card-body">
+								<ul class="nav nav-tabs" role="tablist">
+									<li class="nav-item"><a class="nav-link active"
+										data-toggle="tab" href="#tabla1"> <strong>Lotes</strong>
+									</a></li>
+									<li class="nav-item"><a class="nav-link" data-toggle="tab"
+										href="#tabla2"> <strong>Presentaciones
+												Comprometidas</strong>
+									</a></li>
+								</ul>
+								<hr>
+								<div class="tab-content">
+									<div class="container tab-pane active" id="tabla1">
+										<div class="table-responsive-sm">
+											<table id="loteTabla"
+												class="table table-bordered tablasercosta"
+												style="width: 100%;">
+												<thead>
+													<tr>
+														<th>Código de lote</th>
+														<th>Fecha de producción</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<th>LOTE-1</th>
+														<th>2018-10-16</th>
+														<th><span class='btn btn-success' data-toggle='modal'
+															data-target='#modalAgregar'> Detalle</span></th>
+													</tr>
+													<tr>
+														<th>Lote - 2</th>
+														<th>2018-10-12</th>
+														<th><span class='btn btn-success' data-toggle='modal'
+															data-target='#modalAgregar'> Detalle</span></th>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="container tab-pane" id="tabla2">
+										<div class="table-responsive-sm">
+											<table id="presentacionesTabla"
+												class="table table-bordered tablasercosta"
+												style="width: 100%;">
+												<thead>
+													<tr>
+														<th>Código SAP</th>
+														<th>Descripción</th>
+														<th>Cantidad</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<th>PO110PT1001</th>
+														<th>Pota Filete S3P Bloque de 10 kg Pota Filete S3P
+															de 20 kg</th>
+														<th>40</th>
+														<th><span class='btn btn-danger' data-toggle='modal'>
+																Quitar</span></th>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- Modal Agregar -->
-		<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog"
-			aria-labelledby="tituloModal" aria-hidden="true" style="left: 0%;">
-			<div class="modal-dialog modal-dialog-centered" role="document"
-				style="max-width: 1000px;">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="tituloModal">LOTE-1</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div id="cuerpoAgregar" class="modal-body">
-						<div class="tab-content">
-							<div class="container tab-pane active" id="tabla3">
-								<div class="table-responsive-sm">
-									<table id="loteContenidoTabla"
-										class="table table-bordered tablasercosta"
-										style="width: 100%;">
-										<thead>
-											<tr>
-												<th>Código SAP</th>
-												<th>Descripción</th>
-												<th>Fecha de producción</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<th>PO110PT1001</th>
-												<th>Pota Filete S3P Bloque de 10 kg Pota Filete S3P de
-													20 kg</th>
-												<th>2018-10-16</th>
-												<th><span class='btn btn-success' data-toggle='modal'
-													data-target='#modalCantidad'> <span
-														class='fa fa-plus'></span></span></th>
-											</tr>
-											<tr>
-												<th>PO110PT2001</th>
-												<th>Pota Filete S3P Bloque de 10 kg Pota Filete S3P de
-													30 kg</th>
-												<th>2018-10-16</th>
-												<th><span class='btn btn-success' data-toggle='modal'
-													data-target='#modalCantidad'> <span
-														class='fa fa-plus'></span></span></th>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+				<!-- Modal Agregar -->
+				<div class="modal fade" id="modalAgregar" tabindex="-1"
+					role="dialog" aria-labelledby="tituloModal" aria-hidden="true"
+					style="left: 0%;">
+					<div class="modal-dialog modal-dialog-centered" role="document"
+						style="max-width: 1000px;">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">LOTE-1</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
 							</div>
-						</div>
+							<div id="cuerpoAgregar" class="modal-body">
+								<div class="tab-content">
+									<div class="container tab-pane active" id="tabla3">
+										<div class="table-responsive-sm">
+											<table id="loteContenidoTabla"
+												class="table table-bordered tablasercosta"
+												style="width: 100%;">
+												<thead>
+													<tr>
+														<th>Código SAP</th>
+														<th>Descripción</th>
+														<th>Fecha de producción</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<th>PO110PT1001</th>
+														<th>Pota Filete S3P Bloque de 10 kg Pota Filete S3P
+															de 20 kg</th>
+														<th>2018-10-16</th>
+														<th><span class='btn btn-success' data-toggle='modal'
+															data-target='#modalCantidad'> <span
+																class='fa fa-plus'></span></span></th>
+													</tr>
+													<tr>
+														<th>PO110PT2001</th>
+														<th>Pota Filete S3P Bloque de 10 kg Pota Filete S3P
+															de 30 kg</th>
+														<th>2018-10-16</th>
+														<th><span class='btn btn-success' data-toggle='modal'
+															data-target='#modalCantidad'> <span
+																class='fa fa-plus'></span></span></th>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
 
 
-						<!-- <label>Cantidad a Ingresar:</label>
+								<!-- <label>Cantidad a Ingresar:</label>
 					<input type="number" min="0" step="0.5" class="form-control input-sm" id="cantidadAgregar" name="cantidadAgregar">
 					-->
 
-					</div>
-					<div class="modal-footer">
-						<!-- <button id="botonAgregar" type="button" class="btn btn-primary">Aceptar</button>-->
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Modal Cantidad -->
-		<div class="modal fade" id="modalCantidad" tabindex="-1" role="dialog"
-			aria-labelledby="tituloModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="tituloModal">Presentación:</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div id="cuerpoAgregar" class="modal-body">
-						<label>Cantidad a Ingresar:</label> <input type="number" min="0"
-							step="0.5" class="form-control input-sm" id="cantidadAgregar"
-							name="cantidadAgregar" value=0>
-					</div>
-					<div class="modal-footer">
-						<button id="botonAgregar" type="button" class="btn btn-primary"
-							data-dismiss="modal">Agregar</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+							</div>
+							<div class="modal-footer">
+								<!-- <button id="botonAgregar" type="button" class="btn btn-primary">Aceptar</button>-->
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- Modal Eliminar de lista de presentaciones comprometidas -->
-		<div class="modal fade" id="modalQuitar" tabindex="-1" role="dialog"
-			aria-labelledby="tituloModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="tituloModal">Presentación
-							comprometida:</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<label>¿Desea eliminar esta presentación de la lista de
-							comprometidos?</label>
-					</div>
-					<div class="modal-footer">
-						<button id="botonQuitar" type="button" class="btn btn-primary">Aceptar</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Modal Éxito -->
-		<div class="modal fade" id="modalExito" tabindex="-1" role="dialog"
-			aria-labelledby="tituloModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content alert alert-success">
-					<div class="modal-header">
-						<h5 class="modal-title" id="tituloModal">Éxito</h5>
-					</div>
-					<div class="modal-body">
-						<span>La Orden de Venta se ha registrado con éxito</span>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+				<!-- Modal Cantidad -->
+				<div class="modal fade" id="modalCantidad" tabindex="-1"
+					role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Presentación:</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div id="cuerpoAgregar" class="modal-body">
+								<label>Cantidad a Ingresar:</label> <input type="number" min="0"
+									step="0.5" class="form-control input-sm" id="cantidadAgregar"
+									name="cantidadAgregar" value=0>
+							</div>
+							<div class="modal-footer">
+								<button id="botonAgregar" type="button" class="btn btn-primary"
+									data-dismiss="modal">Agregar</button>
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- Modal Error -->
-		<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
-			aria-labelledby="tituloModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content alert alert-danger">
-					<div class="modal-header">
-						<h5 class="modal-title" id="tituloModal">Error</h5>
-					</div>
-					<div class="modal-body">
-						<span id="mensajeError"></span>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+				<!-- Modal Eliminar de lista de presentaciones comprometidas -->
+				<div class="modal fade" id="modalQuitar" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Presentación
+									comprometida:</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<label>¿Desea eliminar esta presentación de la lista de
+									comprometidos?</label>
+							</div>
+							<div class="modal-footer">
+								<button id="botonQuitar" type="button" class="btn btn-primary">Aceptar</button>
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
 					</div>
 				</div>
+				<!-- Modal Éxito -->
+				<div class="modal fade" id="modalExito" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content alert alert-success">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Éxito</h5>
+							</div>
+							<div class="modal-body">
+								<span>La Orden de Venta se ha registrado con éxito</span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Error -->
+				<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content alert alert-danger">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Error</h5>
+							</div>
+							<div class="modal-body">
+								<span id="mensajeError"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type="text" class="form-control col-sm-2" id="idCliente"
+					name="idCliente" th:value="${idCliente}"
+					style="visibility: hidden;">
 			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
 		</div>
-		<input type="text" class="form-control col-sm-2" id="idCliente"
-			name="idCliente" th:value="${idCliente}" style="visibility: hidden;">
 	</div>
-	<!-- Fragmento Footer -->
-	<div th:include="/Fragments/head :: footer"></div>
 	<!-- Scripts -->
 	<div th:include="/Fragments/head :: scripts"></div>
 	<script th:src="@{/js/retirarContenido.js}"></script>
