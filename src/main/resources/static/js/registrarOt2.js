@@ -35,6 +35,12 @@ $(document).ready( function () {
 				type: "POST",
 				contentType: "application/json",
 				url: "/RegistrarOt/listarLotesOt",
+				beforeSend: function() {
+					$('#imagenCarga').show();
+				},
+				complete: function() {
+					$('#imagenCarga').hide();
+				},
 				data: function(data) {
 					return JSON.stringify(muestra);
 				},
@@ -63,6 +69,12 @@ $(document).ready( function () {
 	        contentType: "application/json",
 	        url: "/RegistrarOt/obtenerMuestraOt",
 	        data: JSON.stringify(muestra),
+			beforeSend: function() {
+				$('#imagenCarga').show();
+			},
+			complete: function() {
+				$('#imagenCarga').hide();
+			},
 	        success: function (data) {	        	
 	            $('#fechaR').val(data.fechaCreacion);
 	            $('#laboratorio').val(data.idLaboratorio);
@@ -115,6 +127,12 @@ $(document).ready( function () {
 	        contentType: "application/json",
 	        url: "/RegistrarOt/actualizarMuestraOt",
 	        data: JSON.stringify(muestra),
+			beforeSend: function() {
+				$('#imagenCarga').show();
+			},
+			complete: function() {
+				$('#imagenCarga').hide();
+			},
 	        success: function (data) {	        	
 	            $('#modalExito').modal('show');
 	        },

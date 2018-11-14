@@ -45,6 +45,12 @@ $(document).ready( function () {
 			ajax: {
 				url: "/RegistrarOt/listarMuestraOt",
 				type: "GET",
+				beforeSend: function() {
+					$('#imagenCarga').show();
+				},
+				complete: function() {
+					$('#imagenCarga').hide();
+				},
 			    error: function(xhr, ajaxOptions, thrownError) {
 			    	var response = JSON.parse(xhr.responseText);	   
 		        	$('#mensajeError').text(response.message);
