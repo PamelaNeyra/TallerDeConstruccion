@@ -1,5 +1,6 @@
 package com.pe.sercosta.scks.services.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -79,6 +80,7 @@ public class MuestreoService implements IMuestreoService{
 	public List<Muestreo> listarMuestreos() {
 		try {
 			return muestreoRepository.listarMuestreos(sesion);
+			
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
