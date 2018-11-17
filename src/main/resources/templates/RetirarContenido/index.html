@@ -3,24 +3,21 @@
 <!-- Fragmento Head -->
 <head th:include="/Fragments/head :: headFragment('Retirar Contenido')"></head>
 <body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
 	<!-- Fragmento Navbar -->
 	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
-	<!-- Fragmento Carga -->
-	<div id="imagenCarga"
-		style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
-		<img th:src="@{/img/imagenCarga.gif}" />
-	</div>
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<div id="sidebar-wrapper"
 			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
 		<div class="page-content-wrapper">
 			<!-- Contenido Principal -->
-			<div class="container-fluid">
+			<div class="container">
 				<div class="row">
 					<div class="col-sm-6">
 						<h1>
-							<strong>Retirar Contenido</strong>
+							<i class="fa fa-box-open"></i><strong> Retirar Contenido</strong>
 						</h1>
 					</div>
 					<div class="col-sm-4" style="margin: auto;">
@@ -145,10 +142,8 @@
 				</div>
 				<!-- Modal Agregar -->
 				<div class="modal fade" id="modalAgregar" tabindex="-1"
-					role="dialog" aria-labelledby="tituloModal" aria-hidden="true"
-					style="left: 0%;">
-					<div class="modal-dialog modal-dialog-centered" role="document"
-						style="max-width: 1000px;">
+					role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="tituloModal">LOTE-1</h5>

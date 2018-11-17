@@ -31,6 +31,8 @@ var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>
 
 $(document).ready( function () {	
 
+	$('[data-toggle="tooltip"]').tooltip(); 	
+	
 	$("#menu-toggle").click(function (e) {
 		e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -90,7 +92,7 @@ $(document).ready( function () {
 				{data: "idPresentacion"},
 				{data: "cantidad"},
 				{defaultContent: "<span class='btn btn-danger'>" +
-					"Retirar <span class='fa fa-minus-circle'></span></span>"}
+					"Retirar <span class='fa fa-minus-circle'></span></span>", "sClass": "text-center"}
 			],
 			language: lenguaje
 		});

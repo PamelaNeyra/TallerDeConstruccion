@@ -14,20 +14,22 @@
 <link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet"
 	type="text/css">
 <!-- Estilos de Sercosta -->
-<link th:href="@{/style/tablasercosta.css}" rel="stylesheet"
-	type="text/css">
 <link th:href="@{/style/simple-sidebar.css}" rel="stylesheet"
 	type="text/css">
 <link th:href="@{/style/site.css}" rel="stylesheet" type="text/css">
 </head>
 
+<div th:fragment="carga">
+	<img th:src="@{/img/imagenCarga.gif}" class="gif"/>
+</div>
+
 <div th:fragment="scripts">
 	<!-- JQuery -->
 	<script th:src="@{/jquery/jquery.min.js}"></script>
 	<!-- Bootstrap -->
+	<script th:src="@{/bootstrap/js/popper.min.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/bootstrap/js/popper.min.js}"></script>
 	<!-- DataTable -->
 	<script th:src="@{/data-tables/datatables.min.js}"></script>
 </div>
@@ -43,7 +45,7 @@
 					href="https://trello.com/scrum524"> <i
 					class="fab fa-trello text-dark"> Trello</i></a> <a
 					href="https://gold-desert-1138.postman.co/workspaces/fa9f9b86-c2b8-4e05-8254-61e457e17dd8/collections"> <i
-					class="fas fa-male text-dark"> Postman</i></a>
+					class="fas fa-user-astronaut text-dark"> Postman</i></a>
 			</div>
 		</div>
 	</footer>

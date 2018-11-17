@@ -2,25 +2,22 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:include="/Fragments/head :: headFragment('Registrar OT')"></head>
 <body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
 	<!-- Fragmento Navbar -->
 	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
-	<!-- Fragmento Carga -->
-	<div id="imagenCarga"
-		style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
-		<img th:src="@{/img/imagenCarga.gif}" />
-	</div>
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<div id="sidebar-wrapper"
 			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
 		<div class="page-content-wrapper">
 			<!-- Contenido Principal -->
-			<div class="container-fluid">
+			<div class="container">
 				<!-- Título de la Vista-->
 				<div class="row">
 					<div class="col-sm-10">
 						<h1>
-							<strong>Escoger Muestra</strong>
+							<i class="fa fa-vials"></i><strong> Escoger Muestra</strong>
 						</h1>
 					</div>
 				</div>
@@ -38,24 +35,26 @@
 					</div>
 					<!-- Cuerpo de Card-->
 					<div class="card-body">
-						<!-- Tablas -->
-						<table id="muestrasTabla"
-							class="table table-hover table-condensed table-bordered"
-							style="width: 100%;">
-							<!-- Cabecera de Tabla -->
-							<thead>
-								<tr>
-									<th>Código de Muestra</th>
-									<th>OT</th>
-									<th>Fecha de Registro</th>
-									<th>Fecha de Muestreo</th>
-									<th>Laboratorio</th>
-									<th>Cantidad Total</th>
-									<th>Estado</th>
-									<th align="center"></th>
-								</tr>
-							</thead>
-						</table>
+						<div class="table-responsive-sm">
+							<!-- Tablas -->
+							<table id="muestrasTabla"
+								class="table table-hover table-condensed table-bordered tablasercosta"
+								style="width: 100%;">
+								<!-- Cabecera de Tabla -->
+								<thead>
+									<tr>
+										<th>Código de Muestra</th>
+										<th>OT</th>
+										<th>Fecha de Registro</th>
+										<th>Fecha de Muestreo</th>
+										<th>Laboratorio</th>
+										<th>Cantidad Total</th>
+										<th>Estado</th>
+										<th align="center"></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
 					</div>
 				</div>
 				<!-- Modal Elegir -->

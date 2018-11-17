@@ -3,25 +3,22 @@
 <!-- Fragmento Head -->
 <head th:include="/Fragments/head :: headFragment('Registrar Muestra')"></head>
 <body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
 	<!-- Fragmento Navbar -->
 	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
-	<!-- Fragmento Carga -->
-	<div id="imagenCarga"
-		style="display: none; position: fixed; top: 50%; left: 50%; z-index: 999;">
-		<img th:src="@{/img/imagenCarga.gif}" />
-	</div>
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<div id="sidebar-wrapper"
 			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
 		<div class="page-content-wrapper">
 			<!-- Contenido Principal -->
-			<div class="container-fluid">
+			<div class="container">
 				<!-- Título de la Vista-->
 				<div class="row">
 					<div class="col-sm-6">
 						<h1>
-							<strong>Registrar Muestra</strong>
+							<i class="fa fa-flask"></i><strong> Registrar Muestra</strong>
 						</h1>
 					</div>
 					<div class="col-sm-4" style="margin: auto;">

@@ -34,6 +34,8 @@ var alertaValidacion = $('<div class="alert alert-danger" id="validacion"></div>
 
 $(document).ready( function () {
 		
+	$('[data-toggle="tooltip"]').tooltip(); 
+	
 	$("#menu-toggle").click(function (e) {
 		e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -172,7 +174,7 @@ $(document).ready( function () {
 				{data: "comprometidoTotal"},
 				{data: "saldo"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
-						"Agregar <span class='fa fa-plus-circle'></span></span>"}
+						"Agregar <span class='fa fa-plus-circle'></span></span>", "sClass": "text-center"}
 			],
 			language: lenguaje
 		});

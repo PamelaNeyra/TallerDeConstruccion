@@ -3,6 +3,8 @@
 <!-- Fragmento Head -->
 <head th:include="/Fragments/head :: headFragment('SCKS')"></head>
 <body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
 	<!-- Fragmento Navbar -->
 	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
 	<!-- Wrapper -->
@@ -11,7 +13,7 @@
 			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
 		<div class="page-content-wrapper">
 			<!-- Contenido Principal -->
-			<div class="container-fluid text-center">
+			<div class="container text-center">
 				<h3>Contenido Principal por definir.</h3>
 			</div>
 			<!-- Fragmento Footer -->
