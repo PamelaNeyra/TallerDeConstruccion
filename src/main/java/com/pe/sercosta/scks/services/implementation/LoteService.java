@@ -98,6 +98,26 @@ public class LoteService implements ILoteService {
 		}
 	}
 	
+	@Override
+	public List<Lote> listarLotesPlanta(Lote lotes) {
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
+		try {
+			return loteRepository.listarLotes(sesion);
+			//tx.commit();
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar lote", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
 	private void validarRegistrarLote(Lote lote) throws Exception {
 		if(lote.getIdLote().isEmpty() || lote.getIdLote() == null)
 			throw new Exception("El idLote es requerido.");

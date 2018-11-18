@@ -36,6 +36,16 @@ public interface ILoteRepository {
 	 */
 	public abstract List<Lote> listarLotes(EntityManager sesion);
 	
+	
+	/**
+	 * Lista los lotes
+	 * en la base de datos.
+	 * @param sesion
+	 * @param lote
+	 * @return List<Lote>
+	 */
+	public abstract List<Lote> listarLotesPlanta(EntityManager sesion, Lote lotes);
+	
 	/**
 	 * Elimina un Lote
 	 * de la base de datos

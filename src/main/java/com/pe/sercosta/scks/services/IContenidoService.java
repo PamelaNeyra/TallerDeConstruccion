@@ -41,6 +41,13 @@ public interface IContenidoService {
 	
 	/**
 	 * Lógica de negocios para
+	 * -O4
+	 * :Lista los Contenidos por Lote
+	 */
+	public abstract List<Contenido> listarContenidosPorLote(Lote lote);
+	
+	/**
+	 * Lógica de negocios para
 	 * -O9 - Ver Packings
 	 * :Lista los contenidos por Asiganacion
 	 */
