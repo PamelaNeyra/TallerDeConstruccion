@@ -16,6 +16,7 @@ import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.InfoOrdenVentaModel;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
 
 @Repository("ordenVentaRepository")
@@ -135,6 +136,42 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 		
 	}
 
-
+	@Override
+	public List<InfoOrdenVentaModel> listarInfoOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta,
+			Cliente cliente) {
+		List<InfoOrdenVentaModel> listaInfoOrdenVenta = new ArrayList<InfoOrdenVentaModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_orden");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN);
+			myquery.setParameter(1, ordenVenta.getIdOrdenVenta())
+					.setParameter(2, cliente.getNombreCliente() )
+					.setParameter(3, ordenVenta.getFechaAsignacion())
+					.setParameter(4, ordenVenta.getFechaEmbarque());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				InfoOrdenVentaModel aux = new InfoOrdenVentaModel();
+				aux.setIdOrdenVenta((String) o[0]);
+				aux.setNombreCliente((String) o[1]);
+				aux.setNombreLaboratorio((String) o[2]);
+				aux.setFechaAsignacion((LocalDate) o[3]);
+				aux.setCertificado((String) o[4]);
+				aux.setNombrePlanta((String) o[5]);
+				aux.setPaisDestino((String) o[6]);
+				aux.setOt((String) o[7]);
+				aux.setFechaEmbarque((LocalDate) o[8]);
+				aux.setHoraEmbarque((LocalDate) o[9]);
+				aux.setAniosVencimiento((String) o[10]);
+				listaInfoOrdenVenta.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
+		}
+		return listaInfoOrdenVenta;
+	}
 
 }

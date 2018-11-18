@@ -16,6 +16,8 @@ import com.pe.sercosta.scks.entities.Laboratorio;
 import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.InfoLoteMuestreoModel;
+import com.pe.sercosta.scks.models.InfoMuestraModel;
 import com.pe.sercosta.scks.repositories.IMuestraRepository;
 
 @Repository("muestraRepository")
@@ -121,7 +123,75 @@ public class MuestraRepository implements IMuestraRepository {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al registrar el ot", ex.getMessage());
 		}
-		
+	}
+
+	@Override
+	public List<InfoMuestraModel> listarInfoMuestra(EntityManager sesion, Planta planta, Muestra muestra) {
+		List<InfoMuestraModel> listaInfoMuestraModel = new ArrayList<InfoMuestraModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_muestra");
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(5, Integer.class, ParameterMode.IN);
+			myquery.setParameter(1,  muestra.getIdMuestra())
+					.setParameter(2, muestra.getOt())
+					.setParameter(3, muestra.getFechaCreacion())
+					.setParameter(4, muestra.getFechaMuestreado())
+					.setParameter(5, planta.getIdPlanta());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				InfoMuestraModel aux = new InfoMuestraModel();
+				aux.setIdMuestra((int) o[0]);
+				aux.setOt((String) o[1]);
+				aux.setFechaCreacion((LocalDate) o[2]);
+				aux.setFechaMuestreado((LocalDate) o[3]);
+				aux.setNombreLaboratorio((String) o[4]);
+				aux.setCantidadTotal((double) o[5]);
+				aux.setEstaMuestreado((boolean) o[6]);
+				listaInfoMuestraModel.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las muestras", ex.getMessage());
+		}
+		return listaInfoMuestraModel;
+	}
+
+	@Override
+	public List<InfoLoteMuestreoModel> listarInfoLoteMuestreo(EntityManager sesion, Planta planta, Muestra muestra) {
+		List<InfoLoteMuestreoModel> listaInfoLoteMuestreo = new ArrayList<InfoLoteMuestreoModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_lote_muestreo");
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(5, Integer.class, ParameterMode.IN);
+			myquery.setParameter(1,  muestra.getIdMuestra())
+					.setParameter(2, muestra.getOt())
+					.setParameter(3, muestra.getFechaCreacion())
+					.setParameter(4, muestra.getFechaMuestreado())
+					.setParameter(5, planta.getIdPlanta());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				InfoLoteMuestreoModel aux = new InfoLoteMuestreoModel();
+				aux.setDescripcionProdTerm((String) o[0]);
+				aux.setDescripcion((String) o[1]);
+				aux.setBloque((double) o[2]);
+				aux.setFechaCaptura((LocalDate) o[3]);
+				aux.setFechaCreacion((LocalDate) o[4]);
+				aux.setCodigoTrazabilidad((String) o[5]);
+				listaInfoLoteMuestreo.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las muestras", ex.getMessage());
+		}
+		return listaInfoLoteMuestreo;
 	}
 
 }

@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 
 import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.models.InfoLoteMuestreoModel;
+import com.pe.sercosta.scks.models.InfoMuestraModel;
 
 public interface IMuestraRepository {
 
@@ -42,5 +44,15 @@ public interface IMuestraRepository {
 	 * @param muestra
 	 */
 	public abstract void actualizarMuestraOt(EntityManager sesion, Muestra muestra);
-
+	
+	/**
+	 * Lista las InfoMuestraModel
+	 * 
+	 */
+	public abstract List<InfoMuestraModel> listarInfoMuestra(EntityManager sesion, Planta planta, Muestra muestra);
+	
+	/**
+	 * Lista los InfoLoteMuestreoModel
+	 */
+	public abstract List<InfoLoteMuestreoModel> listarInfoLoteMuestreo(EntityManager sesion, Planta planta, Muestra muestra);
 }

@@ -1,9 +1,12 @@
 package com.pe.sercosta.scks.services;
 
 import java.util.List;
+
+import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
+import com.pe.sercosta.scks.models.InfoOrdenVentaModel;
 
 public interface IOrdenVentaService {
 	
@@ -47,5 +50,11 @@ public interface IOrdenVentaService {
 	 * @param ordenVenta
 	 */
 	public abstract void actualizarOrdenVenta(OrdenVenta ordenVenta);
-
+	
+	/**
+	 * Lógica de negocios para
+	 * -O9 - Ver Packings
+	 * :Listar InfoOrdenVentaModel
+	 */
+	public abstract List<InfoOrdenVentaModel> listarInforOrdenVenta(OrdenVenta ordenVenta, Cliente cliente);
 }

@@ -11,6 +11,8 @@ import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoModel;
+import com.pe.sercosta.scks.models.InfoAsignacionModel;
+import com.pe.sercosta.scks.models.OrdenVentaClienteModel;
 
 
 public interface IAsignacionService {
@@ -31,7 +33,7 @@ public interface IAsignacionService {
 	
 	/**
 	 * Lógica de negocio para
-	 * -O9 Ver packings
+	 * -O9 Ver packings, ignorar este no sirve
 	 * :Listar asignaciones
 	 */
 	public abstract List<Asignacion> listarAsignacion();
@@ -50,6 +52,17 @@ public interface IAsignacionService {
 	 */
 	public abstract List<AsignacionSaldoGrupoModel> listarAsignacionesSaldoGrupo(Laboratorio labo, Planta planta, Muestra muestra);
 
-
-
+	/**
+	 * Lógica de negocio para
+	 * -O9- Ver packings
+	 * :Listar OrdenVentaClienteModel
+	 */
+	public abstract List<OrdenVentaClienteModel> listarOrdenVentaCliente(Planta planta);
+	
+	/**
+	 * Lógica de negocios para
+	 * -O9- Ver packings
+	 * :Listar InfoAsignacionModel
+	 */
+	public abstract List<InfoAsignacionModel> listarInfoAsignacion(Planta planta, OrdenVenta ordenVenta);
 }
