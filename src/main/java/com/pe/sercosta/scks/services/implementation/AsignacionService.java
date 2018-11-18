@@ -20,6 +20,8 @@ import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoModel;
+import com.pe.sercosta.scks.models.InfoAsignacionModel;
+import com.pe.sercosta.scks.models.OrdenVentaClienteModel;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 import com.pe.sercosta.scks.services.IAsignacionService;
 
@@ -75,7 +77,8 @@ public class AsignacionService implements IAsignacionService {
 
 	@Override
 	public List<Asignacion> listarAsignacion() {
-		try {
+		return null;
+		/*try {
 			return asignacionRepository.listarAsignaciones(sesion);
 		}catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
@@ -86,7 +89,7 @@ public class AsignacionService implements IAsignacionService {
 			throw new SercostaException("Hubo un error al listar las Asignaciones", ex.getMessage());
 		} finally {
 			sesion.close();
-		}
+		}*/
 	}
 
 	@Override
@@ -117,6 +120,38 @@ public class AsignacionService implements IAsignacionService {
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar las Asignaciones Saldo Grupo Model", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
+	@Override
+	public List<OrdenVentaClienteModel> listarOrdenVentaCliente(Planta planta) {
+		try {
+			return asignacionRepository.listarOrdenVentaCliente(sesion, planta);
+		}catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las Orden Venta Cliente Model", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
+	@Override
+	public List<InfoAsignacionModel> listarInfoAsignacion(Planta planta, OrdenVenta ordenVenta) {
+		try {
+			return asignacionRepository.listarInfoAsignacion(sesion, planta, ordenVenta);
+		}catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las Orden Venta Cliente Model", ex.getMessage());
 		} finally {
 			sesion.close();
 		}

@@ -13,6 +13,8 @@ import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoModel;
+import com.pe.sercosta.scks.models.InfoAsignacionModel;
+import com.pe.sercosta.scks.models.OrdenVentaClienteModel;
 
 
 public interface IAsignacionRepository {
@@ -48,9 +50,10 @@ public interface IAsignacionRepository {
 	/**
 	 * Lista todas las asignaciones
 	 * de la base de datos
+	 * y lo guarda en un model
 	 * @param sesion
 	 */
-	public abstract List<Asignacion> listarAsignaciones(EntityManager sesion);
+	public abstract List<Asignacion> listarAsignaciones(EntityManager sesion, Planta planta);
 	
 	/**
 	 * Lista las asignaciones 
@@ -67,4 +70,16 @@ public interface IAsignacionRepository {
 	 */
 	public abstract List<AsignacionSaldoGrupoModel> listarAsignacionesSaldoGrupo(EntityManager sesion, Laboratorio laboratorio, Planta planta,
 															Muestra muestra );
+	
+	/**
+	 * Lista las ordenes de venta y clientes
+	 * de la base de datos. Luego los añade a 
+	 * OrdenVentaClienteModel
+	 */
+	public abstract List<OrdenVentaClienteModel> listarOrdenVentaCliente(EntityManager sesion, Planta planta);
+	
+	/**
+	 * Lista las info Asignacion Model
+	 */
+	public abstract List<InfoAsignacionModel> listarInfoAsignacion(EntityManager sesion, Planta planta, OrdenVenta orden);
 }

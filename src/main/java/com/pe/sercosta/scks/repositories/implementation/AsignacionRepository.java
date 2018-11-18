@@ -19,6 +19,8 @@ import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoModel;
+import com.pe.sercosta.scks.models.InfoAsignacionModel;
+import com.pe.sercosta.scks.models.OrdenVentaClienteModel;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 
 @Repository("asignacionRepository")
@@ -93,21 +95,16 @@ public class AsignacionRepository implements IAsignacionRepository{
 	}
 
 	@Override
-	public List<Asignacion> listarAsignaciones(EntityManager sesion) {
+	public List<Asignacion> listarAsignaciones(EntityManager sesion, Planta planta) {
 		List<Asignacion> listaAsignacion = new ArrayList<Asignacion>();
 		try {
-			//StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignacion");
-			//Falta determinar el procedure
-			/*myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
-			myquery.setParameter(1, asignacion.getOrdenVenta().getIdOrdenVenta())
-					.setParameter(2, asignacion.getContenido().getContenidoPK().getIdPresentacion())
-					.setParameter(3, asignacion.getContenido().getContenidoPK().getIdLote());
-			myquery.execute();*/
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignaciones");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, planta.getIdPlanta());
+			myquery.execute();
 		} catch(Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw new SercostaException("Hubo un error al registrar la asignación", ex.getMessage());
+			throw new SercostaException("Hubo un error listar las asignaciones", ex.getMessage());
 		}
 		return listaAsignacion;
 	}
@@ -169,6 +166,63 @@ public class AsignacionRepository implements IAsignacionRepository{
 			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
 		}
 		return listaAsignacionSaldoGrupo;
+	}
+
+	@Override
+	public List<OrdenVentaClienteModel> listarOrdenVentaCliente(EntityManager sesion, Planta planta) {
+		List<OrdenVentaClienteModel> listaOrdenVentaCliente = new ArrayList<OrdenVentaClienteModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignaciones");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, planta.getIdPlanta());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				OrdenVentaClienteModel aux = new OrdenVentaClienteModel();
+				aux.setId_ordenVenta((String) o[0]);
+				aux.setNombreCliente((String) o[1]);
+				aux.setFechaAsignacion((LocalDate) o[2]);
+				aux.setFechaEmbarque((LocalDate) o[3]);
+				aux.setCantidadTotal((double) o[4]);
+				aux.setEstaEmbarcado((boolean) o[5]);
+                listaOrdenVentaCliente.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
+		}
+		return listaOrdenVentaCliente;
+	}
+
+	@Override
+	public List<InfoAsignacionModel> listarInfoAsignacion(EntityManager sesion, Planta planta, OrdenVenta orden) {
+		List<InfoAsignacionModel> listaInfoAsignacion = new ArrayList<InfoAsignacionModel>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_asig");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN);
+			myquery.setParameter(1, planta.getIdPlanta())
+					.setParameter(2, orden.getIdOrdenVenta())
+					.setParameter(3, orden.getFechaAsignacion());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				InfoAsignacionModel aux = new InfoAsignacionModel();
+				aux.setId_presentacion((String) o[0]);
+				aux.setDescripcion((String) o[1]);
+				aux.setBloque((double) o[2]);
+				aux.setFechaAsignacion((LocalDate) o[3]);
+				aux.setCodigoTrazabilidad((String) o[4]);
+				aux.setNombrePlanta((String) o[5]);
+				aux.setOt((String) o[6]);
+				listaInfoAsignacion.add(aux);
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los Info Asignacion Model", ex.getMessage());
+		}
+		return listaInfoAsignacion;
 	}	
 	
 }
