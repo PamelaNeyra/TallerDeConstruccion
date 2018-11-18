@@ -124,6 +124,23 @@ public class ContenidoService implements IContenidoService{
 	}
 
 	@Override
+	public List<Contenido> listarContenidosPorLote(Lote lote) {
+		try {
+			 return contenidoRepository.listarContenidosPorLote(sesion, lote);		
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar Lotes por Presentacion", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@Override
 	public List<Contenido> listarContenidosPorAsignacion(Asignacion asignacion) {
 		try {
 			 return contenidoRepository.listarContenidosPorAsignacion(sesion, asignacion);		

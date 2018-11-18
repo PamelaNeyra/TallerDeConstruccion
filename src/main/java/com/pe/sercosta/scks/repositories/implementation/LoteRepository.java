@@ -89,7 +89,32 @@ public class LoteRepository implements ILoteRepository {
 		}
 		return listaLotes;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Lote> listarLotesPlanta(EntityManager sesion, Lote lotes) {
+		List<Lote> listaBD = new ArrayList<Lote>();
+		List<Lote> listaLotes = new ArrayList<Lote>();
+		Lote loteTemporal = new Lote();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_lotes");
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
+			myquery.setParameter(1, lotes.getIdPlanta());
+			listaBD = myquery.getResultList();
+			for (Lote lote : listaBD) {
+				loteTemporal.setIdLote(lote.getIdLote());
+				loteTemporal.setFechaProduccion(lote.getFechaProduccion());
+				loteTemporal.setFechaProduccion(lote.getFechaVencimiento());
+				loteTemporal.setCantidadTotal(lote.getCantidadTotal());
+				listaLotes.add(loteTemporal);
+			}
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());
+		}
+		return listaLotes;
+	}
+	
 	@Override
 	public void eliminarLote(EntityManager sesion, Lote lote) {
 		// TODO Auto-generated method stub
