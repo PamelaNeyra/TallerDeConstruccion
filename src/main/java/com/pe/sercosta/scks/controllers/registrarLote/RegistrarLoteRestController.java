@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import com.pe.sercosta.scks.services.IPresentacionService;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
 @RestController
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ENTER')")
 public class RegistrarLoteRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarLoteRestController.class);
@@ -49,7 +51,7 @@ public class RegistrarLoteRestController {
 	@Qualifier("presentacionService")
 	private IPresentacionService presentacionService;
 
-	@RequestMapping(path = "/RegistrarLote/registrarLote", method = RequestMethod.POST)
+	@RequestMapping(path = "RegistrarLote/registrarLote", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) LoteModel lote) {
 		try {
 			User user = (User) SecurityContextHolder.
@@ -69,7 +71,7 @@ public class RegistrarLoteRestController {
 		}
 	}
 
-	@RequestMapping(path = "/RegistrarLote/listarPresentacion", method = RequestMethod.GET)
+	@RequestMapping(path = "RegistrarLote/listarPresentacion", method = RequestMethod.GET)
 	public List<PresentacionModel> listarPresentacion() {
 		List<PresentacionModel> listaPresentacion = new ArrayList<>();
 		try {

@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ import com.pe.sercosta.scks.services.IPlantaPresentacionService;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
 @RestController
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ASSIGN')")
 public class RegistrarOrdenVentaRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarOrdenVentaRestController.class);
@@ -66,7 +68,7 @@ public class RegistrarOrdenVentaRestController {
 	@Qualifier("plantaPresentacionService")
 	private IPlantaPresentacionService plantaPresentacionService;
 
-	@RequestMapping(path = "/RegistrarOrdenVenta/listarClientes", method = RequestMethod.GET)
+	@RequestMapping(path = "RegistrarOrdenVenta/listarClientes", method = RequestMethod.GET)
 	public List<ClienteModel> listarClientes() {
 		List<ClienteModel> listaClientes = new ArrayList<>();
 		try {
@@ -84,7 +86,7 @@ public class RegistrarOrdenVentaRestController {
 		return listaClientes;
 	}
 	
-	@RequestMapping(path = "/RegistrarOrdenVenta/listarPresentacion", method = RequestMethod.GET)
+	@RequestMapping(path = "RegistrarOrdenVenta/listarPresentacion", method = RequestMethod.GET)
 	public List<PresentacionView> listarPresentacion() {
 		List<PresentacionView> listaPresentacion = new ArrayList<>();
 		try {
@@ -108,7 +110,7 @@ public class RegistrarOrdenVentaRestController {
 		return listaPresentacion;
 	}
 	
-	@RequestMapping(path = "/RegistrarOrdenVenta/registrarOrdenVenta", method = RequestMethod.POST)
+	@RequestMapping(path = "RegistrarOrdenVenta/registrarOrdenVenta", method = RequestMethod.POST)
 	public void registrarOrdenVenta(@RequestBody(required = true) OrdenVentaMultiple ordenVentaMultiple) {
 		try {
 			User user = (User) SecurityContextHolder.

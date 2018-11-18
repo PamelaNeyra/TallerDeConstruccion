@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.controllers.registrarMuestra;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
-@Controller()
-@RequestMapping("/RegistrarMuestra")
+@Controller
+@RequestMapping("RegistrarMuestra")
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ENTER')")
 public class RegistrarMuestraController {
 
 	@Autowired
@@ -28,7 +30,7 @@ public class RegistrarMuestraController {
 					getAuthentication().
 						getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/RegistrarMuestra/index");
+		mav.setViewName("RegistrarMuestra/index");
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
 		return mav;

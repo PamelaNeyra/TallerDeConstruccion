@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import com.pe.sercosta.scks.services.IUsuarioService;
 import com.pe.sercosta.scks.services.ILoteService;
 
 @RestController
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ASSET')")
 public class RegistrarOtRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarOtRestController.class);
@@ -55,7 +57,7 @@ public class RegistrarOtRestController {
 	@Qualifier("loteService")
 	private ILoteService loteService;
 		
-	@RequestMapping(path = "/RegistrarOt/listarMuestraOt", method = RequestMethod.GET)
+	@RequestMapping(path = "RegistrarOt/listarMuestraOt", method = RequestMethod.GET)
 	public List<OtModel> listarMuestraOt() {
 		List<OtModel> listaMuestraOt = new ArrayList<>();
 		try {
@@ -79,7 +81,7 @@ public class RegistrarOtRestController {
 		return listaMuestraOt;
 	}
 	
-	@RequestMapping(path = "/RegistrarOt/obtenerMuestraOt", method = RequestMethod.POST)
+	@RequestMapping(path = "RegistrarOt/obtenerMuestraOt", method = RequestMethod.POST)
 	public OtModel obtenerMuestraOt(@RequestBody(required = true) OtModel muestra) {
 		try {
 			return otConverter.convertToModel(
@@ -94,7 +96,7 @@ public class RegistrarOtRestController {
 		}
 	}
 	
-	@RequestMapping(path = "/RegistrarOt/listarLotesOt", method = RequestMethod.POST)
+	@RequestMapping(path = "RegistrarOt/listarLotesOt", method = RequestMethod.POST)
 	public List<LoteOtModel> listarLotesOt(@RequestBody(required = false) OtModel muestra) {
 		List<LoteOtModel> listarLotesOt = new ArrayList<>();
 		try {
@@ -111,7 +113,7 @@ public class RegistrarOtRestController {
 	}
 	
 	
-	@RequestMapping(path = "/RegistrarOt/actualizarMuestraOt", method = RequestMethod.POST)
+	@RequestMapping(path = "RegistrarOt/actualizarMuestraOt", method = RequestMethod.POST)
 	public void actualizarOrden(@RequestBody(required = true) Muestra muestra) {
 		try {
 			otService.actualizarMuestraOt(muestra);

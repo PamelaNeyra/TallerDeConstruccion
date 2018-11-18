@@ -1,51 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:include="/fragments/head :: head('SCKS - Inicio de Sesión')"></head>
+<head th:include="/Fragments/head :: head('SCKS - Inicio de Sesión')"></head>
 <body class="bg-light">
 	<!-- Contenido Principal -->
 	<div class="container">
-		<div class="card card-login mx-auto mt-5">
-			<div class="card-header text-center">
-				<i class="fa fa-unlock-alt"></i> <span>Sistema de Control de
-					Kardex Sercosta - Login</span>
+		<div class="row mt-3">
+			<div class="mx-auto"> 		
+				<img class="logo" th:src="@{/img/logo.png}" />
 			</div>
-			<div class="card-body">
-				<div th:if="${error != null}"
-					class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-					&nbsp;Usuario y/o contraseña incorrecta
+		</div>
+		<div class="row">
+			<div class="card card-login mx-auto">
+				<div class="card-header text-center">
+					<i class="fa fa-unlock-alt"></i> <span>Sistema de Control de
+						Kardex Sercosta - Login</span>
 				</div>
-				<div th:if="${logout != null}"
-					class="alert alert-info alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<i class="fa fa-info-circle" aria-hidden="true"></i> 
-					&nbsp;Sesión Finalizada
+				<div class="card-body">
+					<div th:if="${error != null}"
+						class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+						&nbsp;Usuario y/o contraseña incorrecta
+					</div>
+					<div th:if="${logout != null}"
+						class="alert alert-info alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<i class="fa fa-info-circle" aria-hidden="true"></i> 
+						&nbsp;Sesión Finalizada
+					</div>
+					<form th:action="@{/logincheck}" method="POST">
+						<!-- input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /-->
+						<div class="form-group">
+							<label for="username"> <i class="fa fa-user-tie"></i> <span>Usuario</span>
+							</label> <input class="form-control" id="username" type="text"
+								name="username"	placeholder="Ingrese su usuario">
+						</div>
+						<div class="form-group">
+							<label for="password"> <i class="fa fa-key"></i> <span>Contraseña</span>
+							</label> <input class="form-control" id="password" type="password"
+								name="password" placeholder="Constraseña">
+						</div>
+						<button type="submit" id="enviar" class="btn btn-primary btn-block">
+							<i class="fa fa-sign-in-alt" aria-hidden="true"></i> &nbsp;Iniciar
+							Sesión
+						</button>
+					</form>
 				</div>
-				<form th:action="@{/logincheck}" method="POST">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<div class="form-group">
-						<label for="username"> <i class="fa fa-user-tie"></i> <span>Usuario</span>
-						</label> <input class="form-control" id="username" type="text"
-							name="username"	placeholder="Ingrese su usuario">
-					</div>
-					<div class="form-group">
-						<label for="password"> <i class="fa fa-key"></i> <span>Contraseña</span>
-						</label> <input class="form-control" id="password" type="password"
-							name="password" placeholder="Constraseña">
-					</div>
-					<button type="submit" id="enviar" class="btn btn-primary btn-block">
-						<i class="fa fa-sign-in-alt" aria-hidden="true"></i> &nbsp;Iniciar
-						Sesión
-					</button>
-				</form>
 			</div>
 		</div>
 	</div>

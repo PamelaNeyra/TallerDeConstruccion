@@ -10,8 +10,13 @@
 	type="text/css">
 <!-- Bootstrap core CSS -->
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/bootstrap/css/bootstrap-datepicker.min.css}" rel="stylesheet">
 <!-- DataTable -->
-<link th:href="@{/data-tables/datatables.min.css}" rel="stylesheet"
+<link th:href="@{/data-tables/avanzado/css/dataTables.bootstrap.min.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/data-tables/botones/css/buttons.bootstrap4.min.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/data-tables/responsive/css/responsive.bootstrap4.min.css}" rel="stylesheet"
 	type="text/css">
 <!-- Estilos de Sercosta -->
 <link th:href="@{/style/simple-sidebar.css}" rel="stylesheet"
@@ -30,8 +35,22 @@
 	<script th:src="@{/bootstrap/js/popper.min.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-datepicker.min.js}"></script>	
 	<!-- DataTable -->
 	<script th:src="@{/data-tables/datatables.min.js}"></script>
+	<script th:src="@{/data-tables/avanzado/js/dataTables.bootstrap4.js}"></script>
+	<script th:src="@{/data-tables/botones/js/dataTables.buttons.min.js}"></script>	
+	<script th:src="@{/data-tables/botones/js/buttons.html5.min.js}"></script>
+	<script th:src="@{/data-tables/botones/js/buttons.bootstrap4.min.js}"></script>	
+	<script th:src="@{/data-tables/responsive/js/dataTables.responsive.min.js}"></script>
+	<script th:src="@{/data-tables/responsive/js/responsive.bootstrap4.min.js}"></script>
+	<!-- JSZip -->
+	<script th:src="@{/jszip/jszip.min.js}"></script>
+	<!-- PdfMake -->
+	<script th:src="@{/pdfmake/pdfmake.min.js}"></script>	
+	<script th:src="@{/pdfmake/vfs_fonts.js}"></script>	
+	<!-- Scripts Sercosta -->
+	<script th:src="@{/js/principal.js}"></script>
 </div>
 
 <div th:fragment="footer">
@@ -39,11 +58,11 @@
 		class="page-footer text-center text-md-left pt-4 orange darken-3">
 		<div class="footer-copyright pt-0 pb-3 text-center">
 			<div class="container-fluid">
-				© 2018 Taller de Construcción de Sistemas - Grupo 2 <a
+				© 2018 Taller de Construcción de Sistemas - Grupo 2 &nbsp;<a
 					href="https://github.com/PamelaNeyra/TallerDeConstruccion"> <i
-					class="fab fa-github text-dark"> Github</i></a> <a
+					class="fab fa-github text-dark"> Github</i></a> &nbsp; <a
 					href="https://trello.com/scrum524"> <i
-					class="fab fa-trello text-dark"> Trello</i></a> <a
+					class="fab fa-trello text-dark"> Trello</i></a> &nbsp; <a
 					href="https://gold-desert-1138.postman.co/workspaces/fa9f9b86-c2b8-4e05-8254-61e457e17dd8/collections"> <i
 					class="fas fa-user-astronaut text-dark"> Postman</i></a>
 			</div>

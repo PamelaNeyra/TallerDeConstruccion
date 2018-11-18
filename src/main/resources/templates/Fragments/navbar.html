@@ -10,28 +10,32 @@
 		<nav class="navbar navbar-expand-lg bg-dark shadow fixed-top">
 			<div class="container-fluid">
 				<a href="#menu-toggle" class="btn btn-link btn-toggler"
-					id="menu-toggle"> <span class="fa fa-bars" data-toggle="tooltip" title="Menú"></span>
-				</a> <span class="navbar-brand text-light">&nbsp; SCKS</span>					
+					id="menu-toggle"> <span class="fa fa-bars"
+					data-toggle="tooltip" title="Menú"></span>
+				</a> <a th:href="@{/Principal}" title="Principal" data-toggle="tooltip"><span
+					class="navbar-brand text-light">&nbsp; SCKS</span> </a>
 				<div class="collapse navbar-collapse">
-					<ul class="navbar-nav ml-auto">						
-						<li class="nav-item"><a th:href="@{/RegistrarLote}"
-							class="nav-link" title="Lotes" data-toggle="tooltip"><i class="fas fa-boxes"></i></a></li>
-						<li class="nav-item"><a th:href="@{/RegistrarMuestra}"
-							class="nav-link" title="Muestras" data-toggle="tooltip"><i class="fas fa-vials"></i></a></li>
-						<li class="nav-item"><a th:href="@{/RegistrarOrdenVenta}"
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item" sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RegistrarLote}"
+							class="nav-link" title="Lotes" data-toggle="tooltip"><i
+								class="fas fa-boxes"></i></a></li>
+						<li class="nav-item" sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RegistrarMuestra}"
+							class="nav-link" title="Muestras" data-toggle="tooltip"><i
+								class="fas fa-vials"></i></a></li>
+						<li class="nav-item"  sec:authorize="hasAnyAuthority('DEV','ADMIN','ASSIGN')"><a th:href="@{/RegistrarOrdenVenta}"
 							class="nav-link" title="Ordenes Venta" data-toggle="tooltip"><i
 								class="fas fa-handshake"></i></a></li>
-						<li class="nav-item"><a th:href="@{/RetirarContenido}"
+						<li class="nav-item" sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RetirarContenido}"
 							class="nav-link" title="Ordenes Retiro" data-toggle="tooltip"><i
-								class="fas fa-dolly"></i></a></li>								
-						<li class="nav-item form-inline">
-							<i class="nav-link text-center fas fa-industry" data-toggle="tooltip" title="Planta"></i>
-							<span class="text-white" th:text="${planta}"></span>
-						</li>		
-						<li class="nav-item form-inline">
-							<i class="nav-link text-center fas fa-user-tie" data-toggle="tooltip" title="Nombre de Usuario"></i>
-							<span class="text-white" th:text="${nombre}"></span>
-						</li>		
+								class="fas fa-dolly"></i></a></li>
+						<li class="nav-item form-inline"><i
+							class="nav-link text-center fas fa-industry"
+							data-toggle="tooltip" title="Planta"></i> <span
+							class="text-white" th:text="${planta}"></span></li>
+						<li class="nav-item form-inline"><i
+							class="nav-link text-center fas fa-user-tie"
+							data-toggle="tooltip" title="Nombre de Usuario"></i> <span
+							class="text-white" th:text="${nombre}"></span></li>
 						<li class="nav-item">
 							<form class="text-light" th:action="@{/logout}" method="POST">
 								<button class="btn btn-dark" type="submit">
@@ -43,92 +47,66 @@
 				</div>
 			</div>
 		</nav>
-		<hr><hr><hr>
+		<hr>
+		<hr>
+		<hr>
 	</header>
 	<!-- Sidebar -->
 	<div th:fragment="sidebar-wrapper">
 		<ul class="sidebar-nav">
-			<li>
-				<a class="d-flex align-items-center justify-content-between" data-toggle="collapse" href="#menuLote" role="button" aria-controls="menuLote">
-					<span class="text-white">
-						<i class="fa fa-boxes"></i> 
-						Lotes	
-					</span>
-					<span class="mx-4">
-						<i class="fas fa-angle-right"></i>
-					</span>	
-				</a>
-			</li>
-			<div id="menuLote">
-				<li>
-					<a th:href="@{/RegistrarLote}">&nbsp;&nbsp;&nbsp;&nbsp;
+			<li><a class="d-flex align-items-center justify-content-between"
+				data-toggle="collapse" href="#menuLote" role="button"
+				aria-controls="menuLote"> <span class="text-white"> <i
+						class="fa fa-boxes"></i> Lotes
+				</span> <span class="mx-4"> <i class="fas fa-angle-right"></i>
+				</span>
+			</a></li>
+			<div id="menuLote" class="collapse">
+				<li sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RegistrarLote}">&nbsp;&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-box"></i>&nbsp; Registrar Lote
-					</a>
-				</li>
+				</a></li>
 			</div>
-			<li>
-				<a class="d-flex align-items-center justify-content-between" data-toggle="collapse" href="#menuMuestra" role="button" aria-controls="menuMuestra">
-					<span class="text-white">
-						<i class="fa fa-vials"></i> 
-						Muestras	
-					</span>
-					<span class="mx-4">
-						<i class="fas fa-angle-right"></i>
-					</span>	
-				</a>
-			</li>
-			<div id="menuMuestra">
-				<li>
-					<a th:href="@{/RegistrarMuestra}">&nbsp;&nbsp;&nbsp;&nbsp;
+			<li><a class="d-flex align-items-center justify-content-between"
+				data-toggle="collapse" href="#menuMuestra" role="button"
+				aria-controls="menuMuestra"> <span class="text-white"> <i
+						class="fa fa-vials"></i> Muestras
+				</span> <span class="mx-4"> <i class="fas fa-angle-right"></i>
+				</span>
+			</a></li>
+			<div id="menuMuestra" class="collapse">
+				<li sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RegistrarMuestra}">&nbsp;&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-flask"></i>&nbsp; Registrar Muestra
-					</a>
-				</li>
-				<li>
-					<a th:href="@{/RegistrarOt}">&nbsp;&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-tasks"></i>&nbsp; Registrar OT
-					</a>
-				</li>
+				</a></li>
+				<li sec:authorize="hasAnyAuthority('DEV','ADMIN','ASSET')"><a th:href="@{/RegistrarOt}">&nbsp;&nbsp;&nbsp;&nbsp; <i
+						class="fa fa-tasks"></i>&nbsp; Registrar OT
+				</a></li>
 			</div>
-			<li>
-				<a class="d-flex align-items-center justify-content-between" data-toggle="collapse" href="#menuOrdenVenta" role="button" aria-controls="menuOrdenVenta">
-					<span class="text-white">
-						<i class="fa fa-handshake"></i>
-						Ventas
-					</span>
-					<span class="mx-4">
-						<i class="fas fa-angle-right"></i>
-					</span>	
-				</a>
-			</li>
-			<div id="menuOrdenVenta">
-				<li>
-					<a th:href="@{/RegistrarOrdenVenta}">&nbsp;&nbsp;&nbsp;&nbsp;
+			<li><a class="d-flex align-items-center justify-content-between"
+				data-toggle="collapse" href="#menuOrdenVenta" role="button"
+				aria-controls="menuOrdenVenta"> <span class="text-white">
+						<i class="fa fa-handshake"></i> Ventas
+				</span> <span class="mx-4"> <i class="fas fa-angle-right"></i>
+				</span>
+			</a></li>
+			<div id="menuOrdenVenta" class="collapse">
+				<li sec:authorize="hasAnyAuthority('DEV','ADMIN','ASSIGN')"><a th:href="@{/RegistrarOrdenVenta}">&nbsp;&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-hand-holding-usd"></i>&nbsp; Registrar Orden Venta
-					</a>
-				</li>
-				<li>
-					<a th:href="@{/EmbarcarOrden}">&nbsp;&nbsp;&nbsp;&nbsp;
+				</a></li>
+				<li sec:authorize="hasAnyAuthority('DEV','ADMIN','ASSIGN')"><a th:href="@{/EmbarcarOrden}">&nbsp;&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-ship"></i>&nbsp; Embarcar Orden Venta
-					</a>
-				</li>
+				</a></li>
 			</div>
-			<li>
-				<a class="d-flex align-items-center justify-content-between" data-toggle="collapse" href="#menuOrdenRetiro" role="button" aria-controls="menuOrdenRetiro">
-					<span class="text-white">
-						<i class="fa fa-dolly"></i> 
-						Retiros
-					</span>
-					<span class="mx-4">
-						<i class="fas fa-angle-right"></i>
-					</span>	
-				</a>
-			</li>
-			<div id="menuOrdenRetiro">
-				<li>
-					<a th:href="@{/RetirarContenido}">&nbsp;&nbsp;&nbsp;&nbsp;
+			<li><a class="d-flex align-items-center justify-content-between"
+				data-toggle="collapse" href="#menuOrdenRetiro" role="button"
+				aria-controls="menuOrdenRetiro"> <span class="text-white">
+						<i class="fa fa-dolly"></i> Retiros
+				</span> <span class="mx-4"> <i class="fas fa-angle-right"></i>
+				</span>
+			</a></li>
+			<div id="menuOrdenRetiro" class="collapse">
+				<li sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RetirarContenido}">&nbsp;&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-box-open"></i>&nbsp; Retirar Contenido
-					</a>
-				</li>
+				</a></li>
 			</div>
 		</ul>
 	</div>

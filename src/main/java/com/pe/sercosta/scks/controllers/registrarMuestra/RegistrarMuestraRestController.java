@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.pe.sercosta.scks.services.IProductoTerminadoService;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
 @RestController
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ENTER')")
 public class RegistrarMuestraRestController {
 
 	private static final Log LOG = LogFactory.getLog(RegistrarMuestraRestController.class);
@@ -50,7 +52,7 @@ public class RegistrarMuestraRestController {
 	@Qualifier("productoTerminadoService")
 	private IProductoTerminadoService productoTerminadoService;
 
-	@RequestMapping(path = "/RegistrarMuestra/registrarMuestra", method = RequestMethod.POST)
+	@RequestMapping(path = "RegistrarMuestra/registrarMuestra", method = RequestMethod.POST)
 	public void registrarLote(@RequestBody(required = true) MuestraMultiple muestraMultiple) {
 		try {
 			User user = (User) SecurityContextHolder.
@@ -76,7 +78,7 @@ public class RegistrarMuestraRestController {
 		}
 	}
 
-	@RequestMapping(path = "/RegistrarMuestra/listarProductoTerminado", method = RequestMethod.GET)
+	@RequestMapping(path = "RegistrarMuestra/listarProductoTerminado", method = RequestMethod.GET)
 	public List<ProductoTerminadoModel> listarProducto() {
 		List<ProductoTerminadoModel> listaProducto = new ArrayList<>();
 		try {

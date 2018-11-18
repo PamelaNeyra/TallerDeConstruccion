@@ -20,13 +20,13 @@ public class LoginController {
 			@RequestParam(name = "logout", required = false) String logout) {
 		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
-		return "/Login/index";
+		return "Login/index";
 	}
 	
-	@GetMapping({"/loginsuccess", "/"})
+	@GetMapping({"/loginsuccess", "/", "/logincheck", ""})
 	public String loginCheck() {
 		LOG.info("LOGIN: Validar Credenciales");
-		return "redirect:/Principal";
+		return "redirect:Principal";
 	} 
 	
 }
