@@ -6,6 +6,7 @@ import java.util.List;
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.models.LoteOtModel;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 
 public interface ILoteService {
@@ -38,10 +39,10 @@ public interface ILoteService {
 	 * Lista los lotes
 	 * en la base de datos.
 	 * @param sesion
-	 * @param lote
+	 * @param planta
 	 * @return List<Lote>
 	 */
-	public abstract List<Lote> listarLotesPlanta(Lote lotes);
+	public abstract List<Lote> listarLotesPlanta(Planta planta);
 	
 	/**
 	 * Lógica de negocios para

@@ -67,7 +67,7 @@ $(document).ready( function () {
 				{data: "cantidadTotal"},
 				{data: "estado"},
 				{defaultContent: "<span class='btn btn-success' data-toggle='modal'>" +
-										"Registrar <span class='fa fa-plus-circle'></span></span>", "sClass": "text-center"}
+										"Elegir <span class='fa fa-check'></span></span>", "sClass": "text-center"}
 			],
 			language: lenguaje
 		});

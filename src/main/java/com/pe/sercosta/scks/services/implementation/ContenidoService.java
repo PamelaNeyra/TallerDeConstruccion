@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
@@ -21,6 +23,8 @@ public class ContenidoService implements IContenidoService{
 	private static final Log LOG = LogFactory.getLog(LoteService.class);
 	private static final String CAPA = "[Service : Contenido] -> ";
 	
+	@Autowired
+	@Qualifier("contenidoRepository")
 	private IContenidoRepository contenidoRepository;
 	
 	@PersistenceContext
@@ -134,7 +138,7 @@ public class ContenidoService implements IContenidoService{
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			//tx.rollback();
-			throw new SercostaException("Hubo un error al listar Lotes por Presentacion", ex.getMessage());
+			throw new SercostaException("Hubo un error al listar Contenidos por Lote", ex.getMessage());
 		} finally {
 			sesion.close();
 		}

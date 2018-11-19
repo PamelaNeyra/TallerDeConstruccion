@@ -44,7 +44,7 @@ $(document).ready( function () {
 				alertaValidacion.remove();
 				$('#cantidadAgregar').val("");
 				bloque = obtenerBloque(data.descripcion);
-				$('#tituloModal').text(data.idPresentacion);		
+				$('#modalAgregar #tituloModal').text(data.idPresentacion);		
 			}	
 		});
 	}
@@ -136,7 +136,7 @@ $(document).ready( function () {
 	$('#guardarLote').on("click", function() {
 		var esValido = validarRegistrarLote();
 		if(esValido) {
-			$('#tituloModal').text($('#codigo').val());
+			$('#modalConfirmar #tituloModal').text($('#codigo').val());
 			$('#modalConfirmar').modal('show');
 		}
 	});
@@ -172,7 +172,7 @@ $(document).ready( function () {
 			sAjaxDataProp: "",
 			order: [[ 0, "asc" ]],
 			responsive: true,
-			lengthMenu: [5, 10, 15, 20],
+			lengthMenu: tamañoMenu,
 			dom: domTabla,
 			buttons: [
 				{

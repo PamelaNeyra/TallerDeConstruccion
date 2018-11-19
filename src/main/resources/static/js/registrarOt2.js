@@ -98,6 +98,7 @@ $(document).ready( function () {
 	$('#registrarOt').on("click", function() {
 		var valido = validarOt();
 		if(valido) {
+			$('#modalConfirmar #tituloModal').text($('#ot').val());
 			$('#modalConfirmar').modal('show');
 		}
 	});

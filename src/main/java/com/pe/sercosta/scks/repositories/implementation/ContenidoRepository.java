@@ -205,6 +205,7 @@ public class ContenidoRepository implements IContenidoRepository {
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {
 				Contenido aux = new Contenido();
+				aux.setLote(lote);
 				aux.setPresentacion(new Presentacion((String) o[0]));
 				aux.setCantidad((Double) o[1]);
 				aux.setComprometido((Double) o[2]);

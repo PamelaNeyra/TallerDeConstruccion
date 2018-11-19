@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
@@ -99,11 +100,11 @@ public class LoteService implements ILoteService {
 	}
 	
 	@Override
-	public List<Lote> listarLotesPlanta(Lote lotes) {
+	public List<Lote> listarLotesPlanta(Planta planta) {
 		//EntityTransaction tx = sesion.getTransaction();
 		//tx.begin();
 		try {
-			return loteRepository.listarLotes(sesion);
+			return loteRepository.listarLotesPlanta(sesion, planta);
 			//tx.commit();
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

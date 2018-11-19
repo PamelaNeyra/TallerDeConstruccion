@@ -16,24 +16,22 @@ import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.IRetiroRepository;
 import com.pe.sercosta.scks.services.IRetiroService;
 
-@Service("loteService")
+@Service("retiroService")
 public class RetiroService implements IRetiroService {
 
-	private static final Log LOG = LogFactory.getLog(LoteService.class);
-	private static final String CAPA = "[Service : Lote] -> ";
+	private static final Log LOG = LogFactory.getLog(RetiroService.class);
+	private static final String CAPA = "[Service : Retiro] -> ";
 	
 	@PersistenceContext
     private EntityManager sesion;
 	
 	@Autowired
-	@Qualifier("loteRepository")
-	private IRetiroRepository RetiroRepository;
+	@Qualifier("retiroRepository")
+	private IRetiroRepository retiroRepository;
 	
 	@Autowired
 	@Qualifier("contenidoRepository")
 	private IContenidoRepository contenidoRepository;
-
-
 
 	@Override
 	public void registrarRetiro(Retiro retiro) {
@@ -41,7 +39,7 @@ public class RetiroService implements IRetiroService {
 		//tx.begin();
 		try {
 			//validarRegistrarLote(lote);
-			RetiroRepository.registrarRetiro(sesion, retiro);
+			retiroRepository.registrarRetiro(sesion, retiro);
 			
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

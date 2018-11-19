@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,10 @@ import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.LoteOtModel;
@@ -92,25 +95,25 @@ public class LoteRepository implements ILoteRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Lote> listarLotesPlanta(EntityManager sesion, Lote lotes) {
-		List<Lote> listaBD = new ArrayList<Lote>();
+	public List<Lote> listarLotesPlanta(EntityManager sesion, Planta planta) {
 		List<Lote> listaLotes = new ArrayList<Lote>();
-		Lote loteTemporal = new Lote();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_lotes");
 			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
-			myquery.setParameter(1, lotes.getIdPlanta());
-			listaBD = myquery.getResultList();
-			for (Lote lote : listaBD) {
-				loteTemporal.setIdLote(lote.getIdLote());
-				loteTemporal.setFechaProduccion(lote.getFechaProduccion());
-				loteTemporal.setFechaProduccion(lote.getFechaVencimiento());
-				loteTemporal.setCantidadTotal(lote.getCantidadTotal());
-				listaLotes.add(loteTemporal);
-			}
+			myquery.setParameter(1, planta.getIdPlanta());
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Lote aux = new Lote();
+				aux.setIdLote((String) o[0]);
+				aux.setFechaProduccion(((Date) o[1]).toLocalDate());
+				aux.setFechaVencimiento(((Date) o[2]).toLocalDate());
+				aux.setCantidadTotal((Double) o[3]);
+				aux.setComprometidoTotal((Double) o[4]);
+				listaLotes.add(aux);
+			});	
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
-			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los lotes", ex.getMessage());
 		}
 		return listaLotes;
 	}

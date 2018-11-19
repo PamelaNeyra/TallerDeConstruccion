@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmento Head -->
+<head th:include="/Fragments/head :: headFragment('Packing Orden Venta')"></head>
+<body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper"
+			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container">
+				<!-- Título de la Vista-->
+				<div class="row">
+					<div class="col-sm-9">
+						<h1>
+							<i class="fa fa-star"></i><strong> Packing de Orden de Venta</strong>
+						</h1>
+					</div>
+					<!--div class="col-sm-3 p-3 d-flex justify-content-end">
+						<button type="button" class="btn btn-primary" id="embarcarOrden"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+					</div-->
+				</div>
+				<hr>
+				<!-- Información de la Orden -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Lote -->
+						<div class="card">
+							<!-- Título de Card -->
+							<div class="card-header">
+								<h3>Información de la Orden</h3>
+							</div>
+							<!-- Cuerpo de Card -->
+							<div class="card-body">
+								<!-- Fila del Cuerpo-->
+								<div class="col-sm-15 form-inline justify-content-center">
+									<!-- Código de Orden-->
+									<label for="codigo" class="col-sm-2">Ejemplo</label> <input
+										type="text" class="form-control col-sm-2"
+										id="codigo" disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<!-- Información del Contenido -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Contenido -->
+						<div class="card">
+							<!-- Título de Card -->
+							<h3 class="card-header">Información de la Asignación</h3>
+							<!-- Cuerpo de Card-->
+							<div class="card-body">
+								<!-- Tablas -->
+								<div class="tab-content">
+									<!-- Tabla de Presentacion -->
+									<div id="tabla" class="tab-pane active">
+										<div class="table-responsive-sm">
+											<table id="asignacionesTabla"
+												class="table table-hover table-condensed table-bordered"
+												style="width: 100%;">
+												<!-- Cabecera de Tabla -->
+												<thead>
+													<tr>
+														<th>Ejemplo</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Error -->
+				<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content alert alert-danger">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Error</h5>
+							</div>
+							<div class="modal-body">
+								<span id="mensajeError"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
+		</div>
+	</div>
+	<!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
+	<script th:src="@{/js/packingOrden.js}"></script>
+</body>
+</html>

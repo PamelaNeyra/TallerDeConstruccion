@@ -11,32 +11,26 @@ import com.pe.sercosta.scks.entities.Retiro;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IRetiroRepository;
 
-@Repository("ordenVentaRepository")
+@Repository("retiroRepository")
 public class RetiroRepository implements IRetiroRepository{
 
-	private static final Log LOG = LogFactory.getLog(OrdenVentaRepository.class);
-	private static final String CAPA = "[Repository : OrdenVenta] -> ";
-	
-	
+	private static final Log LOG = LogFactory.getLog(RetiroRepository.class);
+	private static final String CAPA = "[Repository : Retiro] -> ";
+		
 	@Override
 	public void registrarRetiro(EntityManager sesion, Retiro retiro) {
 		try {
-			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_orden_retiro");
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_registrar_retiro");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
 					.registerStoredProcedureParameter(4, Double.class, ParameterMode.IN);
-				//.registerStoredProcedureParameter(7, String.class, ParameterMode.IN);
 			myquery.setParameter(1, retiro.getRetiroPK().getIdLote())
 					.setParameter(2, retiro.getRetiroPK().getIdPresentacion())
-					.setParameter(3, retiro.getOrdenRetiro().getIdOrdenRetiro())
 					.setParameter(4, retiro.getCantidad());
-	
-			//	.setParameter(7, ordenVenta.getPaisDestino()); 
 			myquery.execute();	
 		} catch (Exception ex) {
-			LOG.error(CAPA + ex.getMessage());
-			throw new SercostaException("Hubo un error al registrar el retiro", ex.getMessage());
+			LOG.error(CAPA + ex);
+			throw new SercostaException("Hubo un error al registrar el retiro", ex.toString());
 		}
 		
 	}
