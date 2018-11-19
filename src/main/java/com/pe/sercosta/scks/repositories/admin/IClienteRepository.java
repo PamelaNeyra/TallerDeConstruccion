@@ -10,7 +10,5 @@ import com.pe.sercosta.scks.entities.Cliente;
 public interface IClienteRepository extends JpaRepository<Cliente, Serializable>{
 
 	public abstract List<Cliente> findAll();
-	
-	public abstract void saveCliente(Cliente cliente);
-	
+		
 }
