@@ -192,6 +192,30 @@ public class ContenidoRepository implements IContenidoRepository {
 		return listaContenidos;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contenido> listarContenidosPorLote(EntityManager sesion, Lote lote) {
+		List<Contenido> listaContenidos = new ArrayList<Contenido>();
+		try {
+			//Falta hacer el procedure 
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_contenidos_lote");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, lote.getIdLote());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				Contenido aux = new Contenido();
+				aux.setLote(lote);
+				aux.setPresentacion(new Presentacion((String) o[0]));
+				aux.setCantidad((Double) o[1]);
+				aux.setComprometido((Double) o[2]);
+				listaContenidos.add(aux);
+			});			
+		} catch(Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los contenidos", ex.getMessage());			
+		}
+		return listaContenidos;
+	}
 
 }

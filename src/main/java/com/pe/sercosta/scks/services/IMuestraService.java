@@ -2,7 +2,9 @@ package com.pe.sercosta.scks.services;
 
 import java.util.List;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
+import com.pe.sercosta.scks.models.InfoMuestraModel;
 
 public interface IMuestraService {
 
@@ -21,5 +23,10 @@ public interface IMuestraService {
 	 */
 	public abstract List<Muestra> listarMuestras();
 	
-	
+	/**
+	 * Lógica de negocios para
+	 * -O9 - Ver Packings
+	 * :lista todas las InfoMuestra
+	 */
+	public abstract List<InfoMuestraModel> listarInfoMuestra(Planta planta, Muestra muestra);
 }

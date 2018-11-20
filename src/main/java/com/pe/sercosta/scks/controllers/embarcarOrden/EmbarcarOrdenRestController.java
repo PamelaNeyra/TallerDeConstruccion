@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.pe.sercosta.scks.services.IUsuarioService;
 import com.pe.sercosta.scks.services.IAsignacionService;
 
 @RestController
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ASSIGN')")
 public class EmbarcarOrdenRestController {
 
 	private static final Log LOG = LogFactory.getLog(EmbarcarOrdenRestController.class);
@@ -54,7 +56,7 @@ public class EmbarcarOrdenRestController {
 	@Qualifier("asignacionService")
 	private IAsignacionService asignacionService;
 	
-	@RequestMapping(path = "/EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
+	@RequestMapping(path = "EmbarcarOrden/listarOrdenVenta", method = RequestMethod.GET)
 	public List<OrdenVentaModel> listarOrdenVenta() {
 		List<OrdenVentaModel> listaOrdenVenta = new ArrayList<>();
 		try {
@@ -78,7 +80,7 @@ public class EmbarcarOrdenRestController {
 		return listaOrdenVenta;
 	}
 	
-	@RequestMapping(path = "/EmbarcarOrden/embarcarOrden", method = RequestMethod.POST)
+	@RequestMapping(path = "EmbarcarOrden/embarcarOrden", method = RequestMethod.POST)
 	public void actualizarOrden(@RequestBody(required = true) OrdenVentaModel orden) {
 		try {
 			ordenVentaService.actualizarOrdenVenta(ordenVentaConverter.convertToEntity(orden));
@@ -92,7 +94,7 @@ public class EmbarcarOrdenRestController {
 		}
 	}
 	
-	@RequestMapping(path = "/EmbarcarOrden/obtenerOrdenVenta", method = RequestMethod.POST)
+	@RequestMapping(path = "EmbarcarOrden/obtenerOrdenVenta", method = RequestMethod.POST)
 	public OrdenVentaModel obtenerOrdenVenta(@RequestBody(required = true) OrdenVentaModel orden) {
 		try {
 			return ordenVentaConverter.convertToModel(
@@ -107,7 +109,7 @@ public class EmbarcarOrdenRestController {
 		}
 	}
 
-	@RequestMapping(path = "/EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
+	@RequestMapping(path = "EmbarcarOrden/listarAsignacion", method = RequestMethod.POST)
 	public List<AsignacionModel> listarAsignacion(@RequestBody(required = false) OrdenVentaModel orden) {
 		List<AsignacionModel> listaAsignacion = new ArrayList<>();
 		try {

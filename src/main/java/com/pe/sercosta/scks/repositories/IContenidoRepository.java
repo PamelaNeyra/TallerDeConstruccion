@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
@@ -69,4 +70,12 @@ public interface IContenidoRepository {
 	 * filtro de Muestreo
 	 */
 	public abstract List<Contenido> listarContenidosPorMuestreo(EntityManager sesion, Muestreo muestreo);
+	
+	/**
+	 * Lista los contenidos con
+	 * filtro de Lote (id_lote)
+	 */
+	public abstract List<Contenido> listarContenidosPorLote(EntityManager sesion, Lote lote);
+	
 }
+

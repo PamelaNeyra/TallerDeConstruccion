@@ -13,20 +13,27 @@
 			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
 		<div class="page-content-wrapper">
 			<!-- Contenido Principal -->
-			<div class="container text-center">
-				<h3>Contenido Principal por definir.</h3>
-			</div>
+			<div class="container">
+				<div class="row d-flex justify-content-center text-center">					
+					<h1><i class="fa fa-user-tie"></i>&nbsp;Bienvenido <span th:text="${nombre}"></span></h1>
+				</div>
+				<div class="row d-flex justify-content-center text-center">	
+					<h5><i class="fa fa-address-card"></i>&nbsp;<span id="roles" sec:authentication="principal.authorities"></span></h5>
+				</div>
+				<hr>
+				<div class="row d-flex justify-content-center">
+					<img class="logo" th:src="@{/img/Logo.png}" style="max-width:800px;"/>
+				</div>
+				<hr>
+				<div class="row d-flex justify-content-center text-center">					
+					<h3><i class="fa fa-desktop"></i>&nbsp;Sistema de Control Kardex Sercosta</h3>
+				</div>
+			</div>			
 			<!-- Fragmento Footer -->
 			<div th:include="/Fragments/head :: footer"></div>
 		</div>
 	</div>
 	<!-- Scripts -->
 	<div th:include="/Fragments/head :: scripts"></div>
-	<script>
-		$("#menu-toggle").click(function (e) {
-			e.preventDefault();
-	        $("#wrapper").toggleClass("toggled");
-	    });
-	</script>
 </body>
 </html>

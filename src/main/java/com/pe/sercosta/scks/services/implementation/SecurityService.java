@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.Rol;
 import com.pe.sercosta.scks.entities.Usuario;
-import com.pe.sercosta.scks.repositories.IUsuarioRepository;
+import com.pe.sercosta.scks.repositories.admin.IUsuarioRepository;
 
 @Service("securityService")
 public class SecurityService implements UserDetailsService {

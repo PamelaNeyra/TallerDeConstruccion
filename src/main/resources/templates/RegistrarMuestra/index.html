@@ -21,12 +21,11 @@
 							<i class="fa fa-flask"></i><strong> Registrar Muestra</strong>
 						</h1>
 					</div>
-					<div class="col-sm-4" style="margin: auto;">
-						<span id="cantidadTotal">Cantidad Total: 0</span>
+					<div class="col-sm-3 p-3 text-center">
+						<h5><span id="cantidadTotal">Cantidad Total: 0</span></h5>
 					</div>
-					<div class="col-sm-2" style="margin: auto;">
-						<button type="button" class="btn btn-primary" id="botonGuardar">Guardar
-							Cambios</button>
+					<div class="col-sm-3 p-3 d-flex justify-content-end">
+						<button type="button" class="btn btn-primary" id="botonGuardar"><i class="fa fa-save"></i>&nbsp;Guardar</button>
 					</div>
 				</div>
 				<hr>
@@ -41,14 +40,14 @@
 							<!-- Cuerpo de Card -->
 							<div class="card-body ">
 								<!-- Fila del Cuerpo-->
-								<div class="col-sm-12 form-inline justify-content-center">
+								<div class="row form-inline justify-content-center">
 									<!-- Fecha -->
 									<label for="fecha" class="col-sm-2">Fecha</label> <input
-										type="date" class="form-control col-sm-2"
+										type="date" class="form-control col-sm-3"
 										placeholder="dd/mm/aaaa" id="fecha">
 									<!-- Laboratorio -->
 									<label for="laboratorio" class="col-sm-2">Laboratorio</label> <input
-										type="text" class="form-control col-sm-2"
+										type="text" class="form-control col-sm-3"
 										placeholder="Ingrese Laboratorio" id="laboratorio">
 								</div>
 							</div>
@@ -85,7 +84,7 @@
 									<div id="tabla1" class="tab-pane active">
 										<div class="table-responsive-sm">
 											<table id="productoTerminado"
-												class="table table-hover table-condensed table-bordered tablasercosta"
+												class="table table-hover table-condensed table-bordered "
 												style="width: 100%;">
 												<!-- Cabecera de Tabla -->
 												<thead>
@@ -103,7 +102,7 @@
 									<div id="tabla2" class="tab-pane">
 										<div class="table-responsive-sm">
 											<table id="productoSeleccionadoTabla"
-												class="table table-hover table-condensed table-bordered tablasercosta"
+												class="table table-hover table-condensed table-bordered "
 												style="width: 100%;">
 												<!-- Cabecera de Tabla -->
 												<thead>
@@ -164,8 +163,8 @@
 													</form>
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-success"
-														data-dismiss="modal" id="botonAceptar">Aceptar</button>
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal" id="botonAceptar">Cerrar</button>
 												</div>
 											</div>
 										</div>

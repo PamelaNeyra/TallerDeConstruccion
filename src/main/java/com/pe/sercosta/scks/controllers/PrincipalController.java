@@ -13,8 +13,8 @@ import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
 @Controller()
-@RequestMapping("/Principal")
-@PreAuthorize("permitAll()")
+@RequestMapping("Principal")
+@PreAuthorize("isAuthenticated()")
 public class PrincipalController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class PrincipalController {
 					getAuthentication().
 						getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/Principal/index");
+		mav.setViewName("Principal/index");
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
 		return mav;

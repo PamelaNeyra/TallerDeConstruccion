@@ -14,6 +14,7 @@ public class ContenidoConverter extends IAbstractConverter<ContenidoModel, Conte
 	@Override
 	public ContenidoModel convertToModel(Contenido entity) {
 		ContenidoModel model = MAPPER.map(entity, ContenidoModel.class);
+		model.setSaldo(entity.getCantidad() - entity.getComprometido());
 		return model;
 	}
 

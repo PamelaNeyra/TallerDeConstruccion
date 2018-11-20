@@ -2,8 +2,11 @@ package com.pe.sercosta.scks.repositories;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+
+import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.models.InfoOrdenVentaModel;
 
 public interface IOrdenVentaRepository {
 	
@@ -50,5 +53,10 @@ public interface IOrdenVentaRepository {
 	 * @param ordenVenta
 	 */
 	public abstract void registrarOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta);
+	
+	/**
+	 * Lista los InfoOrdenVentaModel
+	 */
+	public abstract List<InfoOrdenVentaModel> listarInfoOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta, Cliente cliente);
 
 }

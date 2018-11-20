@@ -2,8 +2,9 @@ package com.pe.sercosta.scks.repositories;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
+import com.pe.sercosta.scks.models.ProductoAsignacionModel;
 
 
 public interface IPresentacionRepository {
@@ -50,6 +51,11 @@ public interface IPresentacionRepository {
 	 */
 	public abstract void eliminarPresentacion(EntityManager sesion, Presentacion presentacion);
 	
+	/**
+	 * Lista el detalle de Presentación
+	 * Asignación
+	 * 
+	 */
+	public abstract List<ProductoAsignacionModel> listarDetalleProductoAsignacion(EntityManager sesion, Planta planta);
 
-	
 }

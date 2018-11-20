@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.MuestreoPK;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.InfoMuestraModel;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.IMuestraRepository;
 import com.pe.sercosta.scks.repositories.IMuestreoRepository;
@@ -116,6 +118,22 @@ public class MuestraService implements IMuestraService{
 			sesion.close();
 		}
 		return null;
+	}
+
+	@Override
+	public List<InfoMuestraModel> listarInfoMuestra(Planta planta, Muestra muestra) {
+		try {
+			return muestraRepository.listarInfoMuestra(sesion, planta, muestra);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los Info Muestra Model", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
 	}
 
 }

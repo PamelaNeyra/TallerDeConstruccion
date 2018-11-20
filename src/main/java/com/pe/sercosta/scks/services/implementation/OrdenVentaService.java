@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.pe.sercosta.scks.entities.Asignacion;
 import com.pe.sercosta.scks.entities.AsignacionPK;
+import com.pe.sercosta.scks.entities.Cliente;
 import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.InfoOrdenVentaModel;
 import com.pe.sercosta.scks.repositories.IAsignacionRepository;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.IOrdenVentaRepository;
@@ -164,6 +166,22 @@ public class OrdenVentaService implements IOrdenVentaService {
 			throw new Exception("La Hora de Embarque es requerido.");
 		if (ordenVenta.getPaisDestino() == null)
 			throw new Exception("El País de Destino es requerido.");
+	}
+
+	@Override
+	public List<InfoOrdenVentaModel> listarInforOrdenVenta(OrdenVenta ordenVenta, Cliente cliente) {
+		try {
+			return ordenVentaRepository.listarInfoOrdenVenta(sesion, ordenVenta, cliente);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los Info Orden Venta Model", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
 	}
 
 }

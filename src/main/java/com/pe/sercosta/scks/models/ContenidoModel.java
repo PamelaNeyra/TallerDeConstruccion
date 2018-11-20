@@ -5,6 +5,8 @@ public class ContenidoModel {
 	private String idLote;
 	private String idPresentacion;
 	private double cantidad;
+	private double comprometido;
+	private double saldo;
 	
 	public ContenidoModel() {
 		
@@ -32,6 +34,22 @@ public class ContenidoModel {
 
 	public void setIdPresentacion(String idPresentacion) {
 		this.idPresentacion = idPresentacion;
+	}
+
+	public double getComprometido() {
+		return comprometido;
+	}
+
+	public void setComprometido(double comprometido) {
+		this.comprometido = comprometido;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 		
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestra;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
@@ -84,6 +85,26 @@ public class LoteService implements ILoteService {
 		//tx.begin();
 		try {
 			return loteRepository.listarLotes(sesion);
+			//tx.commit();
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar lote", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	@Override
+	public List<Lote> listarLotesPlanta(Planta planta) {
+		//EntityTransaction tx = sesion.getTransaction();
+		//tx.begin();
+		try {
+			return loteRepository.listarLotesPlanta(sesion, planta);
 			//tx.commit();
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

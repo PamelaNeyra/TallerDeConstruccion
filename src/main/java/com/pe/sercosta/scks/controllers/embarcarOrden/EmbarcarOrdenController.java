@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.controllers.embarcarOrden;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
-@Controller()
-@RequestMapping("/EmbarcarOrden")
+@Controller
+@RequestMapping("EmbarcarOrden")
+@PreAuthorize("hasAnyAuthority('DEV','ADMIN','ASSIGN')")
 public class EmbarcarOrdenController {
 
 	@Autowired
@@ -29,13 +31,13 @@ public class EmbarcarOrdenController {
 					getAuthentication().
 						getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/EmbarcarOrden/index");
+		mav.setViewName("EmbarcarOrden/index");
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
 		return mav;
 	}
 	
-	@RequestMapping(path = "/{idOrden}", method = RequestMethod.GET)
+	@RequestMapping(path = "{idOrden}", method = RequestMethod.GET)
 	public ModelAndView index2(@PathVariable("idOrden") String idOrden) {		
 		ModelAndView mav = new ModelAndView();
 		User user = (User) SecurityContextHolder.
@@ -43,7 +45,7 @@ public class EmbarcarOrdenController {
 				getAuthentication().
 					getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/EmbarcarOrden/index2");
+		mav.setViewName("EmbarcarOrden/index2");
 		mav.addObject("idOrden", idOrden);
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
