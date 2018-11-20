@@ -28,6 +28,7 @@ public interface IMuestreoRepository {
 	 * Lista los Saldos 
 	 * por OT
 	 */
-	public abstract List<SaldoOtModel> listarSaldoOt(EntityManager sesion, Planta planta);
+	
+	public abstract List<Muestreo> listarSaldoOt(EntityManager sesion, Planta planta);
 	
 }

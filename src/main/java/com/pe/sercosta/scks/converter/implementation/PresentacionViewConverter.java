@@ -15,7 +15,7 @@ public class PresentacionViewConverter extends IAbstractConverter<PresentacionVi
 	public PresentacionView convertToModel(PlantaPresentacion entity) {
 		PresentacionView model = MAPPER.map(entity, PresentacionView.class);
 		model.setDescripcion(entity.getPresentacion().getDescripcion()); 
-		model.setSaldo(entity.getComprometidoTotal()-entity.getCantidadTotal());
+		model.setSaldo(entity.getCantidadTotal()-entity.getComprometidoTotal());
 		return model;
 	}
 

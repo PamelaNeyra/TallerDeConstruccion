@@ -35,8 +35,8 @@ public class PlantaPresentacionRepository implements IPlantaPresentacionReposito
 				Presentacion pre = new Presentacion();
 				pre.setIdPresentacion((String) o[0]);
 				pre.setDescripcion((String) o[1]);
-				aux.setComprometidoTotal((Double) o[2]);
-				aux.setCantidadTotal((Double) o[3]);
+				aux.setCantidadTotal((Double) o[2]);
+				aux.setComprometidoTotal((Double) o[3]);
 				aux.setPresentacion(pre);
 				listaPresentacion.add(aux);
 			});

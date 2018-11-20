@@ -8,27 +8,43 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Muestreo;
+import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.ILoteRepository;
+import com.pe.sercosta.scks.repositories.IMuestraRepository;
 import com.pe.sercosta.scks.repositories.IMuestreoRepository;
 import com.pe.sercosta.scks.services.IMuestreoService;
 
 @Service("muestreoService")
 public class MuestreoService implements IMuestreoService{
 	
-	private static final Log LOG = LogFactory.getLog(LoteService.class);
-	private static final String CAPA = "[Service : Contenido] -> ";
+	private static final Log LOG = LogFactory.getLog(MuestreoService.class);
+	private static final String CAPA = "[Service : Muestreo] -> ";
 
-	private IMuestreoRepository muestreoRepository;
-	private ILoteRepository loteRepository;
-	
+
+
 	@PersistenceContext
     private EntityManager sesion;
+	
+	@Autowired
+	@Qualifier("muestraRepository")
+	private IMuestraRepository muestraRepository;
+	
+	@Autowired
+	@Qualifier("muestreoRepository")
+	private IMuestreoRepository muestreoRepository;
+	
+	@Autowired
+	@Qualifier("loteRepository")
+	private ILoteRepository loteRepository;
 	
 	@Override
 	public void registrarMuestreo(Muestreo muestreo) {
@@ -81,6 +97,24 @@ public class MuestreoService implements IMuestreoService{
 		try {
 			return muestreoRepository.listarMuestreos(sesion);
 			
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar los Muestreos", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+	
+	
+	@Override
+	public List<Muestreo> listarMuestreoOt(Planta planta) {
+		try {
+			return muestreoRepository.listarSaldoOt(sesion, planta);	
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());

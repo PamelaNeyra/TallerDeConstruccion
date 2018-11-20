@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class SaldoOtModel {
 
 	private String ot;
-	private LocalDate fecha_muestreado;
-	private String nombre_laboratorio;
+	private LocalDate fechaMuestreado;
+	private String nombreLaboratorio;
 	private double cantidad;
 	
 	
@@ -19,17 +19,21 @@ public class SaldoOtModel {
 	public void setOt(String ot) {
 		this.ot = ot;
 	}
-	public LocalDate getFecha_muestreado() {
-		return fecha_muestreado;
+
+	public LocalDate getFechaMuestreado() {
+		return fechaMuestreado;
 	}
-	public void setFecha_muestreado(LocalDate fecha_muestreado) {
-		this.fecha_muestreado = fecha_muestreado;
+	public void setFechaMuestreado(LocalDate fechaMuestreado) {
+		this.fechaMuestreado = fechaMuestreado;
 	}
-	public String getNombre_laboratorio() {
-		return nombre_laboratorio;
+	public String getNombreLaboratorio() {
+		return nombreLaboratorio;
 	}
-	public void setNombre_laboratorio(String nombre_laboratorio) {
-		this.nombre_laboratorio = nombre_laboratorio;
+	public void setNombreLaboratorio(String nombreLaboratorio) {
+		this.nombreLaboratorio = nombreLaboratorio;
+	}
+	public void setCantidad(double cantidad) {
+		this.cantidad = cantidad;
 	}
 	public double getCantidad() {
 		return cantidad;

@@ -3,10 +3,13 @@ package com.pe.sercosta.scks.repositories.implementation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
+
+
 import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IPresentacionRepository;
@@ -37,6 +40,8 @@ public class PresentacionRepository implements IPresentacionRepository {
 		}
 		return listaPresentacion;
 	}
+	
+
 
 	@SuppressWarnings("unchecked")
 	@Override

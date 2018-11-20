@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,14 @@ import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.Cliente;
+import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.Laboratorio;
+import com.pe.sercosta.scks.entities.Lote;
 import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.OrdenVenta;
 import com.pe.sercosta.scks.entities.Planta;
+import com.pe.sercosta.scks.entities.Presentacion;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.AsignacionModel;
 import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
@@ -170,5 +175,49 @@ public class AsignacionRepository implements IAsignacionRepository{
 		}
 		return listaAsignacionSaldoGrupo;
 	}	
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Asignacion> listarAsignacionPorPresentacion(EntityManager sesion, Presentacion presentacion) {
+		List<Asignacion> listaAsignacionPorPresentacion = new ArrayList<Asignacion>();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignaciones_por_presentacion");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, presentacion.getIdPresentacion());		
+			myquery.execute();
+
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				
+				Asignacion aux = new Asignacion();
+	            OrdenVenta ov=new OrdenVenta();
+	            Cliente c=new Cliente();
+	            ov.setIdOrdenVenta((String) o[0]);
+	            if(!o[2].getClass().getName().equals("String")) 
+	               ov.setFechaAsignacion(((Date) o[2]).toLocalDate());
+	            c.setNombreCliente((String) o[4]);
+	            ov.setIdCliente(c);
+				aux.setOrdenVenta(ov);
+				
+				Contenido co=new Contenido();
+			    Lote l=new Lote();
+			    l.setIdLote((String) o[1]);
+			    co.setLote(l);
+			    co.setCodigoTrazabilidad((String) o[5]);		    
+			    aux.setContenido(co);
+			    aux.setCantidad((Double) o[3]);
+				listaAsignacionPorPresentacion.add(aux);
+			});
+		}catch(Exception ex){
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los lotes por Presentacion", ex.getMessage());
+		}
+		return listaAsignacionPorPresentacion;
+	}
+	
+	
+	
 	
 }

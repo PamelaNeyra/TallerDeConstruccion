@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmento Head -->
+<head th:include="/Fragments/head :: headFragment('Ver Saldo OT')"></head>
+<body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper"
+			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container">
+				<!-- Título de la Vista-->
+				<div class="row">
+					<div class="col-sm-10">
+						<h1>
+							<i class="fa fa-tasks"></i><strong>Detalle Saldo por OT</strong>
+						</h1>
+					</div>
+					<div class="col-sm-2" style="margin: auto;">
+						<button type="button" class="btn btn-primary" id="anterior"> <span class="fas fa-arrow-circle-left"></span> Volver</button>
+					</div>
+				</div>
+				<hr>
+				<!-- Información -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Muestreo-->
+						<div class="card">
+							<!-- Título de Card -->
+							<div class="card-header">
+								<h3>Información </h3>
+							</div>
+							<!-- Cuerpo de Card -->
+							<div class="card-body">
+								<!-- Fila del Cuerpo-->
+								<div class="col-sm-15 form-inline justify-content-center">
+								
+									<!-- OT-->
+									<label for="codigo" class="col-sm-2">OT</label>
+									<input type="text" class="form-control col-sm-2"
+										th:value="${ot}" id="codigo" disabled>
+										
+									<!-- Fecha de Muestreo -->
+									<label for="fechaR" class="col-sm-2">Fecha de Muestreo</label>
+									<input type="date" class="form-control col-sm-2" 
+									     th:value="${fechaMuestreado}" id="fechaR" disabled>
+									     
+									<!-- Cantidad -->
+									<label for="estado" class="col-sm-2">Cantidad Muestreada</label> <input
+										type="text" class="form-control col-sm-2" 
+										th:value="${cantidad}" id="cantidad" disabled>	
+									
+									
+									<!-- Laboratorio -->
+									<label for="laboratorio" class="col-sm-2">Laboratorio</label> <input
+										type="text" class="form-control col-sm-2" 
+										th:value="${nombreLaboratorio}" id="laboratorio" disabled>
+							
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<!-- Información de Lotes -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Contenido -->
+						<div class="card">
+							<!-- Título de Card -->
+							<h3 class="card-header">Lotes</h3>
+							<!-- Cuerpo de Card-->
+							<div class="card-body">
+								<!-- Tablas -->
+								<div class="tab-content">
+									<!-- Tabla de Lotes -->
+									<div id="tabla1" class="tab-pane active">
+										<div class="table-responsive-sm">
+											<table id="lotesTabla"
+												class="table table-hover table-condensed table-bordered"
+												style="width: 100%;">
+												<!-- Cabecera de Tabla -->
+												<thead>
+													<tr>
+														<th>Asignaciones</th>
+														<th>Filete</th>
+														<th>Tentaculo Bailarina</th>
+														<th>Reproductor</th>
+														<th>Aleta Corte Cruz</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+				<!-- Modal Error -->
+				<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content alert alert-danger">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Error</h5>
+							</div>
+							<div class="modal-body">
+								<span id="mensajeError"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Confirmación -->
+				<div class="modal fade" id="modalConfirmar" tabindex="-1"
+					role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">OT</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<label>¿Desea ir a la pantalla anterior?</label>
+							</div>
+							<div class="modal-footer">
+								<button id="botonConfirmar" type="button"
+									class="btn btn-primary">Aceptar</button>
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
+		</div>
+	</div>
+	<!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
+	<script th:src="@{/js/verOtSaldo2.js}"></script>
+</body>
+</html>

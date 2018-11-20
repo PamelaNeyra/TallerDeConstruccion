@@ -56,10 +56,8 @@ public class AsignacionService implements IAsignacionService {
 	@Override
 	public List<Asignacion> listarAsignacionPorPresentacion(Presentacion presentacion) {
 		try {
-			//return asignacionRepository.listarAsignacionPorPresentacion(sesion, presentacion);7
-			//La línea de abajo esta para eliminar una vez implementado la capa de datos y el procedure
-			List<Asignacion> listaAsignacion = new ArrayList<Asignacion>();
-			return  listaAsignacion;
+			
+			return  asignacionRepository.listarAsignacionPorPresentacion(sesion, presentacion);
 
 		}catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

@@ -2,7 +2,9 @@ package com.pe.sercosta.scks.repositories;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+
 import com.pe.sercosta.scks.entities.Presentacion;
+
 
 public interface IPresentacionRepository {
 
@@ -47,5 +49,7 @@ public interface IPresentacionRepository {
 	 * @param presentacion
 	 */
 	public abstract void eliminarPresentacion(EntityManager sesion, Presentacion presentacion);
+	
+
 	
 }

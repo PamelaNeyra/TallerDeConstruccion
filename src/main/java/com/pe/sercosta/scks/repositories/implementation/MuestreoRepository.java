@@ -1,5 +1,6 @@
 package com.pe.sercosta.scks.repositories.implementation;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,11 @@ import javax.persistence.StoredProcedureQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
+
+import com.pe.sercosta.scks.entities.Asignacion;
+import com.pe.sercosta.scks.entities.Contenido;
+import com.pe.sercosta.scks.entities.Laboratorio;
+import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Muestreo;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.exceptions.SercostaException;
@@ -58,30 +64,53 @@ public class MuestreoRepository implements IMuestreoRepository {
 		return listaMuestreo;
 	}
 
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<SaldoOtModel> listarSaldoOt(EntityManager sesion, Planta planta) {
-		List<SaldoOtModel> listaSaldoOt = new ArrayList<SaldoOtModel>();
+	public List<Muestreo> listarSaldoOt(EntityManager sesion, Planta planta) {
+		List<Muestreo> listaOt = new ArrayList<Muestreo>();
 		try {
+		
 			StoredProcedureQuery myquery= sesion.createStoredProcedureQuery("sp_saldos_por_ot");
-			
-			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
 			myquery.setParameter(1,planta.getIdPlanta());
 			myquery.execute();
-			
-			@SuppressWarnings("unchecked")
+
 			List<Object []> lista = myquery.getResultList();
 			lista.forEach(o ->{
-				SaldoOtModel saldoOtModel = new SaldoOtModel();
-				saldoOtModel.setOt((String) o[0]);
-				saldoOtModel.setFecha_muestreado((LocalDate) o[1]);
-				saldoOtModel.setNombre_laboratorio((String) o[2]);
-				saldoOtModel.setCantidad((double) o[3]);
+			   Muestreo aux = new Muestreo();
+			   
+			   Muestra m=new Muestra();
+			   
+			   
+			   if(o[0] != null) {
+			
+		             m.setOt((String) o[0]); 
+			   }     
+		             
+		       if(o[1] != null) {
+		
+		           m.setFechaMuestreado(((Date) o[1]).toLocalDate());
+		       }
+		       
+			   Laboratorio lab = new Laboratorio();
+			   
+			   lab.setNombreLaboratorio((String)o[2]);
+	           m.setIdLaboratorio(lab);
+
+				
+			   aux.setMuestra(m);
+		
+			   aux.setCantidad((Double) o[3]);
+			   
+               listaOt.add(aux);
+    
 			});
 		} catch(Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al lista Saldos por OT", ex.getMessage());
 		}
-		return listaSaldoOt;
+		return listaOt;
 	}
 
 }

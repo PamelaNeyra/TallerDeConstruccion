@@ -15,7 +15,6 @@ import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
-import com.pe.sercosta.scks.models.AsignacionSaldoGrupoModel;
 import com.pe.sercosta.scks.models.ProductoTerminadoSaldoModel;
 import com.pe.sercosta.scks.repositories.IProductoTerminadoRepository;
 

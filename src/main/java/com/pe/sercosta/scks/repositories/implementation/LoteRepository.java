@@ -2,6 +2,7 @@ package com.pe.sercosta.scks.repositories.implementation;
 
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,13 +128,15 @@ public class LoteRepository implements ILoteRepository {
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_lotes_por_presentacion");
 			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
-			myquery.setParameter(1, presentacion.getIdPresentacion());
+			myquery.setParameter(1, presentacion.getIdPresentacion());		
 			myquery.execute();
+
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {
 				Lote aux = new Lote();
 				aux.setIdLote((String) o[0]);
-				aux.setFechaProduccion((LocalDate) o[1]);
+				if(!o[1].getClass().getName().equals("String")) 
+				     aux.setFechaProduccion(((Date) o[1]).toLocalDate());
 				aux.setCantidadTotal((double) o[2]);
 				aux.setComprometidoTotal((double) o[3]);
 				listaLotePorPresentacion.add(aux);
