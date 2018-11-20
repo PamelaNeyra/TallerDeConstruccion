@@ -68,6 +68,6 @@ public interface ILoteRepository {
 	 * @param presentacion
 	 * @return List<Lote>
 	 */
-	public abstract List<Lote> listarLotePorPresentacion(EntityManager sesion, Presentacion presentacion);
+	public abstract List<Lote> listarLotePorPresentacion(EntityManager sesion, Presentacion presentacion, Planta planta);
 	
 }

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:include="/Fragments/head :: headFragment('Ver Ordenes de Venta')"></head>
+<body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper"
+			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container">
+				<!-- Título de la Vista-->
+				<div class="row">
+					<div class="col-sm-10">
+						<h1>
+							<i class="fa fa-wallet"></i><strong> Ver Ordenes de Venta</strong>
+						</h1>
+					</div>
+				</div>
+				<hr>
+				<div class="card">
+					<!-- Header de Card Ordenes Venta-->
+					<div class="card-header">
+						<div class="row">
+							<div class="col-sm-10">
+								<h2>
+									<strong>Ordenes</strong>
+								</h2>
+							</div>
+						</div>
+					</div>
+					<!-- Cuerpo de Card-->
+					<div class="card-body">
+						<div class="table-responsive-sm">
+							<!-- Tablas -->
+							<table id="ordenTabla"
+								class="table table-hover table-condensed table-bordered"
+								style="width: 100%;">
+								<!-- Cabecera de Tabla -->
+								<thead>
+									<tr>
+										<th>Código de Orden</th>
+										<th>Nombre de Cliente</th>
+										<th>Fecha de Asignación</th>
+										<th align="center"></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>				
+				<!-- Modal Contenido -->
+				<div class="modal fade" id="modalAsignacion" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-lg"
+						role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">ORDEN VENTA:</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div id="cuerpoAsignacion" class="modal-body">
+								<div class="tab-content">
+									<div class="container tab-pane active" id="tabla3">
+										<div class="table-responsive-sm">
+											<table id="asignacionTabla" class="table table-bordered "
+												style="width: 100%;">
+												<thead>
+													<tr>
+														<th>Código SAP</th>
+														<th>Código de Lote</th>
+														<th>Cantidad</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Error -->
+				<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content alert alert-danger">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Error</h5>
+							</div>
+							<div class="modal-body">
+								<span id="mensajeError"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
+		</div>
+	</div>
+	<!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
+	<script th:src="@{/js/verOrdenVenta.js}"></script>
+</body>
+</html>

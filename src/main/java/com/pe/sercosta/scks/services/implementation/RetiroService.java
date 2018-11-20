@@ -1,6 +1,8 @@
 package com.pe.sercosta.scks.services.implementation;
 
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 //import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.pe.sercosta.scks.entities.OrdenRetiro;
 import com.pe.sercosta.scks.entities.Retiro;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
@@ -48,7 +51,24 @@ public class RetiroService implements IRetiroService {
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			//tx.rollback();
-			throw new SercostaException("Hubo un error al registrar el lote", ex.getMessage());
+			throw new SercostaException("Hubo un error al registrar el retiro", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
+	@Override
+	public List<Retiro> listarRetiroOrdenRetiro(OrdenRetiro orden) {
+		try {
+			return retiroRepository.listarRetiroOrdenRetiro(sesion, orden);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			//tx.rollback();
+			throw new SercostaException("Hubo un error al listar los retiros", ex.getMessage());
 		} finally {
 			sesion.close();
 		}

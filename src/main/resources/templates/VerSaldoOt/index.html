@@ -96,6 +96,14 @@
 					</div>
 				</div>
 			</div>
+			<!-- Form -->
+			<form th:action = "@{VerSaldoOt/Muestra}" th:object="${saldo}" method="POST" style="visibility: hidden;">
+				<input type="hidden" id="ot" name="ot" th:field="*{ot}">
+				<input type="date" id="fechaMuestreado" name="fechaMuestreado" th:field="*{fechaMuestreado}">
+				<input type="hidden" id="nombreLaboratorio" name="nombreLaboratorio" th:field="*{nombreLaboratorio}">
+				<input type="number" id="cantidad" name="cantidad" th:field="*{cantidad}">
+				<input type="submit" value="Submit" id="submit"/>
+			</form>
 			<!-- Fragmento Footer -->
 			<div th:include="/Fragments/head :: footer"></div>
 		</div>

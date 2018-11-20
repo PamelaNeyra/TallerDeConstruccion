@@ -160,31 +160,32 @@ public class MuestraRepository implements IMuestraRepository {
 		return listaInfoMuestraModel;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InfoLoteMuestreoModel> listarInfoLoteMuestreo(EntityManager sesion, Planta planta, Muestra muestra) {
 		List<InfoLoteMuestreoModel> listaInfoLoteMuestreo = new ArrayList<InfoLoteMuestreoModel>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_lote_muestreo");
 			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(5, Integer.class, ParameterMode.IN);
+					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
 			myquery.setParameter(1,  muestra.getIdMuestra())
-					.setParameter(2, muestra.getOt())
-					.setParameter(3, muestra.getFechaCreacion())
-					.setParameter(4, muestra.getFechaMuestreado())
-					.setParameter(5, planta.getIdPlanta());
+					.setParameter(2, planta.getIdPlanta());
 			myquery.execute();
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {
 				InfoLoteMuestreoModel aux = new InfoLoteMuestreoModel();
 				aux.setDescripcionProdTerm((String) o[0]);
 				aux.setDescripcion((String) o[1]);
-				aux.setBloque((double) o[2]);
-				aux.setFechaCaptura((LocalDate) o[3]);
-				aux.setFechaCreacion((LocalDate) o[4]);
-				aux.setCodigoTrazabilidad((String) o[5]);
+				aux.setNroBultos((double) o[2]);
+				aux.setNroBlocks((double) o[3]);
+				aux.setCantidad((double) o[4]);
+				if(o[5] != null)
+					aux.setFechaCaptura(((Date) o[5]).toLocalDate());
+				if(o[6] != null)
+					aux.setFechaProduccion(((Date) o[6]).toLocalDate());
+				if(o[7] != null)
+					aux.setFechaVencimiento(((Date) o[7]).toLocalDate());
+				aux.setCodigoTrazabilidad((String) o[8]);
 				listaInfoLoteMuestreo.add(aux);
 			});
 		} catch (Exception ex) {

@@ -100,7 +100,12 @@ public class VerSaldoPresentacionRestController {
 	public List<LoteSaldoView> listarLotesPresentacion(@RequestBody(required = false) Presentacion pre) {
 		List<LoteSaldoView> listaLotes = new ArrayList<>();
 		try {
-			listaLotes =  loteService.listarLotePorPresentacion(pre)
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			listaLotes =  loteService.listarLotePorPresentacion(pre, usuario.getIdPlanta())
 					 .stream()
 					 .map(entity -> loteSaldoViewConverter.convertToModel(entity))
 					 .collect(Collectors.toList());				 
@@ -119,7 +124,12 @@ public class VerSaldoPresentacionRestController {
 	public List<AsignacionSaldoPresentacionModel> listarAsignacionPresentacion(@RequestBody(required = false) Presentacion pre) {
 		List<AsignacionSaldoPresentacionModel> listaPresentacion = new ArrayList<>();
 		try {
-			listaPresentacion = asignacionService.listarAsignacionPorPresentacion(pre)
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			listaPresentacion = asignacionService.listarAsignacionPorPresentacion(pre, usuario.getIdPlanta())
 					 .stream()
 					 .map(entity -> asigancionConverter.convertToModel(entity))
 					 .collect(Collectors.toList());				 

@@ -150,12 +150,14 @@ public class LoteRepository implements ILoteRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Lote> listarLotePorPresentacion(EntityManager sesion, Presentacion presentacion) {
+	public List<Lote> listarLotePorPresentacion(EntityManager sesion, Presentacion presentacion, Planta planta) {
 		List<Lote> listaLotePorPresentacion = new ArrayList<Lote>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_lotes_por_presentacion");
-			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
-			myquery.setParameter(1, presentacion.getIdPresentacion());		
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+			myquery.setParameter(1, presentacion.getIdPresentacion())
+					.setParameter(2, planta.getIdPlanta());
 			myquery.execute();
 
 			List<Object[]> lista = myquery.getResultList();

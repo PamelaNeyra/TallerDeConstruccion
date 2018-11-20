@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.pe.sercosta.scks.converter.implementation.OrdenVentaConverter;
 import com.pe.sercosta.scks.converter.implementation.AsignacionConverter;
-import com.pe.sercosta.scks.converter.implementation.PlantaConverter;
 import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.OrdenVentaModel;
@@ -35,10 +34,6 @@ public class EmbarcarOrdenRestController {
 	@Autowired
 	@Qualifier("usuarioService")
 	private IUsuarioService usuarioService;
-	
-	@Autowired
-	@Qualifier("plantaConverter")
-	private PlantaConverter plantaConverter;
 	
 	@Autowired
 	@Qualifier("ordenVentaConverter")

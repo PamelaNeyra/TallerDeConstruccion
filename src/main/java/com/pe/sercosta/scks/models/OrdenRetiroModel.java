@@ -12,6 +12,7 @@ public class OrdenRetiroModel {
 	private LocalDate fechaRetiro;
 	private Integer idPlanta;
 	private Integer idMotivo;
+	private String descripcion;
 	private List<RetiroModel> retiroList;
 	
 	public OrdenRetiroModel() {
@@ -56,6 +57,14 @@ public class OrdenRetiroModel {
 
 	public void setIdMotivo(Integer idMotivo) {
 		this.idMotivo = idMotivo;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}	
 
 }

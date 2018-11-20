@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmento Head -->
+<head th:include="/Fragments/head :: headFragment('Packing de Asignaciones')"></head>
+<body>
+	<!-- Fragmento Carga -->
+	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
+	<!-- Fragmento Navbar -->
+	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper"
+			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+		<div class="page-content-wrapper">
+			<!-- Contenido Principal -->
+			<div class="container">
+				<!-- Título de la Vista-->
+				<div class="row">
+					<div class="col-sm-12">
+						<h1>
+							<i class="fa fa-dolly-flatbed"></i><strong> Packing de Orden de Venta</strong>
+						</h1>
+					</div>
+				</div>
+				<hr>
+				<!-- Información de la Orden -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Lote -->
+						<div class="card">
+							<!-- Título de Card -->
+							<div class="card-header">
+								<h3>Información de la Orden</h3>
+							</div>
+							<!-- Cuerpo de Card -->
+							<div class="card-body">
+								<!-- Fila del Cuerpo-->
+								<div class="col-sm-12 form-inline justify-content-center">
+									<!-- Código de Orden-->
+									<label for="codigo" class="col-sm-2">Código Orden</label> <input
+										type="text" class="form-control col-sm-2"
+										id="codigo" th:value="${idOrden}" disabled>
+									<!-- Tipo de Certificado-->
+									<label for="certificado" class="col-sm-2">Tipo de
+										Certificado</label> <input type="text" class="form-control col-sm-2"
+										id="certificado" disabled>
+									<!-- Fecha de Embarco -->
+									<label for="fechaE" class="col-sm-2">Fecha de Embarco</label> <input
+										type="date" class="form-control col-sm-2"
+										placeholder="dd/mm/aaaa" id="fechaE" disabled>
+									<!-- Cliente -->
+									<label for="cliente" class="col-sm-2">Cliente</label> <input
+										type="text" class="form-control col-sm-2" id="cliente"
+										disabled>
+									<!-- Planta Productora-->
+									<label for="planta" class="col-sm-2">Planta Productora</label>
+									<input type="text" class="form-control col-sm-2" id="planta"
+										disabled>
+									<!-- Hora de Embarco -->
+									<label for="hora" class="col-sm-2">Hora de Embarco</label> <input
+										type="time" class="form-control col-sm-2"
+										placeholder="hh:mm a.m" id="hora" disabled>
+									<!-- Fecha de Asignacion -->
+									<label for="fechaA" class="col-sm-2">Fecha de
+										Asignacion</label> <input type="date" class="form-control col-sm-2"
+										id="fechaA" disabled>
+									<!-- Destino -->
+									<label for="destino" class="col-sm-2">Destino</label> <input
+										type="text" class="form-control col-sm-2"
+										id="destino" disabled>
+									<!-- Lugar de Embarco -->
+									<label for="planta" class="col-sm-2">Lugar de Embarco</label> <input
+										type="text" class="form-control col-sm-2" id="lugar" disabled>
+									<!-- Laboratorio -->
+									<label for="labo" class="col-sm-2">Laboratorio</label> <input
+										type="text" class="form-control col-sm-2" id="labo" disabled>
+									<!-- OT -->
+									<label for="ot" class="col-sm-2">OT</label> <input
+										type="text" class="form-control col-sm-2" id="ot" disabled>
+									<!-- Vencimiento -->
+									<label for="vence" class="col-sm-2">Fecha de Vencimiento</label> <input
+										type="text" class="form-control col-sm-2" id="vence" disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<!-- Información de la Asignacion -->
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Card de Asignacion -->
+						<div class="card">
+							<!-- Título de Card -->
+							<h3 class="card-header">Información de la Asignación</h3>
+							<!-- Cuerpo de Card-->
+							<div class="card-body">
+								<!-- Tablas -->
+								<div class="tab-content">
+									<!-- Tabla de Asignacion -->
+									<div id="tabla" class="tab-pane active">
+										<div class="table-responsive-sm">
+											<table id="asignacionesTabla"
+												class="table table-hover table-condensed table-bordered"
+												style="width: 100%;">
+												<!-- Cabecera de Tabla -->
+												<thead>
+													<tr>
+														<th>Código SAP</th>
+														<th>Nombre de Producto</th>
+														<th>N° Bultos</th>
+														<th>Peso (Kg)</th>
+														<th>Fecha de Producción</th>
+														<th>Fecha de Vencimiento</th>
+														<th>Código de Trazabilidad</th>
+														<th>Planta Productora</th>
+														<th>OT</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Error -->
+				<div class="modal fade" id="modalError" tabindex="-1" role="dialog"
+					aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content alert alert-danger">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Error</h5>
+							</div>
+							<div class="modal-body">
+								<span id="mensajeError"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fragmento Footer -->
+			<div th:include="/Fragments/head :: footer"></div>
+		</div>
+	</div>
+	<!-- Scripts -->
+	<div th:include="/Fragments/head :: scripts"></div>
+	<script th:src="@{/js/packingOrden2.js}"></script>
+</body>
+</html>

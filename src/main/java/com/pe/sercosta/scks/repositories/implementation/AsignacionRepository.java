@@ -199,28 +199,31 @@ public class AsignacionRepository implements IAsignacionRepository{
 		return listaOrdenVentaCliente;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InfoAsignacionModel> listarInfoAsignacion(EntityManager sesion, Planta planta, OrdenVenta orden) {
 		List<InfoAsignacionModel> listaInfoAsignacion = new ArrayList<InfoAsignacionModel>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_asig");
-			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN);
+			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
 			myquery.setParameter(1, planta.getIdPlanta())
-					.setParameter(2, orden.getIdOrdenVenta())
-					.setParameter(3, orden.getFechaAsignacion());
+					.setParameter(2, orden.getIdOrdenVenta());
 			myquery.execute();
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {
 				InfoAsignacionModel aux = new InfoAsignacionModel();
-				aux.setId_presentacion((String) o[0]);
+				aux.setIdPresentacion((String) o[0]);
 				aux.setDescripcion((String) o[1]);
-				aux.setBloque((double) o[2]);
-				aux.setFechaAsignacion((LocalDate) o[3]);
-				aux.setCodigoTrazabilidad((String) o[4]);
-				aux.setNombrePlanta((String) o[5]);
-				aux.setOt((String) o[6]);
+				aux.setNroBultos((Double) o[2]);
+				aux.setCantidad((Double) o[3]);
+				if(o[4] != null)
+					aux.setFechaProduccion(((Date) o[4]).toLocalDate());
+				if(o[5] != null)
+					aux.setFechaVencimiento(((Date) o[5]).toLocalDate());
+				aux.setCodigoTrazabilidad((String) o[6]);
+				aux.setNombrePlanta((String) o[7]);
+				aux.setOt((String) o[8]);
 				listaInfoAsignacion.add(aux);
 			});
 		} catch (Exception ex) {
@@ -234,12 +237,14 @@ public class AsignacionRepository implements IAsignacionRepository{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Asignacion> listarAsignacionPorPresentacion(EntityManager sesion, Presentacion presentacion) {
+	public List<Asignacion> listarAsignacionPorPresentacion(EntityManager sesion, Presentacion presentacion, Planta planta) {
 		List<Asignacion> listaAsignacionPorPresentacion = new ArrayList<Asignacion>();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_listar_asignaciones_por_presentacion");
-			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
-			myquery.setParameter(1, presentacion.getIdPresentacion());		
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+			myquery.setParameter(1, presentacion.getIdPresentacion())
+					.setParameter(2, planta.getIdPlanta());
 			myquery.execute();
 
 			List<Object[]> lista = myquery.getResultList();

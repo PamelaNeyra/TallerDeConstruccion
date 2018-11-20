@@ -16,16 +16,16 @@
 					class="navbar-brand text-light">&nbsp; SCKS</span> </a>
 				<div class="collapse navbar-collapse">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item" sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RegistrarLote}"
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a th:href="@{/Ver/Lote}"
 							class="nav-link" title="Lotes" data-toggle="tooltip"><i
 								class="fas fa-boxes"></i></a></li>
-						<li class="nav-item" sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RegistrarMuestra}"
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a th:href="@{/Ver/Muestra}"
 							class="nav-link" title="Muestras" data-toggle="tooltip"><i
 								class="fas fa-vials"></i></a></li>
-						<li class="nav-item"  sec:authorize="hasAnyAuthority('DEV','ADMIN','ASSIGN')"><a th:href="@{/RegistrarOrdenVenta}"
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a th:href="@{/Ver/OrdenVenta}"
 							class="nav-link" title="Ordenes Venta" data-toggle="tooltip"><i
 								class="fas fa-handshake"></i></a></li>
-						<li class="nav-item" sec:authorize="hasAnyAuthority('DEV','ADMIN','ENTER')"><a th:href="@{/RetirarContenido}"
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a th:href="@{/Ver/OrdenRetiro}"
 							class="nav-link" title="Ordenes Retiro" data-toggle="tooltip"><i
 								class="fas fa-dolly"></i></a></li>
 						<li class="nav-item form-inline"><i
@@ -69,7 +69,7 @@
 						<i class="fa fa-address-book"></i>&nbsp; Clientes
 				</a></li>
 				<li><a th:href="@{/Administrar/Usuario}">&nbsp;&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-address-users"></i>&nbsp; Usuarios
+						<i class="fa fa-users"></i>&nbsp; Usuarios
 				</a></li>
 			</div>
 			<li><a class="d-flex align-items-center justify-content-between"
@@ -141,31 +141,31 @@
 			<li  sec:authorize="isAuthenticated()"><a class="d-flex align-items-center justify-content-between"
 				data-toggle="collapse" href="#menuSaldo" role="button"
 				aria-controls="menuSaldo"> <span class="text-white"> <i
-						class="fa fa-toolbox"></i> Saldos
+						class="fa fa-book-open"></i> Saldos
 				</span> <span class="mx-4"> <i class="fas fa-angle-right"></i>
 				</span>
 			</a></li>
 			<div id="menuSaldo" class="collapse">
-				<li><a th:href="@{/Saldo/Presentacion}">&nbsp;&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-fish"></i>&nbsp; Presentaciones
+				<li><a th:href="@{/VerSaldoPresentacion}">&nbsp;&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-chart-area"></i>&nbsp; Presentaciones
 				</a></li>
-				<li><a th:href="@{/Saldo/OT}">&nbsp;&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-address-book"></i>&nbsp; OT
+				<li><a th:href="@{/VerSaldoOt}">&nbsp;&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-chart-bar"></i>&nbsp; OT
 				</a></li>
 			</div>
 			<li  sec:authorize="isAuthenticated()"><a class="d-flex align-items-center justify-content-between"
 				data-toggle="collapse" href="#menuPacking" role="button"
 				aria-controls="menuPacking"> <span class="text-white"> <i
-						class="fa fa-toolbox"></i> Packings
+						class="fa fa-clipboard-list"></i> Packings
 				</span> <span class="mx-4"> <i class="fas fa-angle-right"></i>
 				</span>
 			</a></li>
 			<div id="menuPacking" class="collapse">
-				<li><a th:href="@{/Packing/OrdenVenta}">&nbsp;&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-fish"></i>&nbsp; Orden de Venta
+				<li><a th:href="@{/Packing/Asignacion}">&nbsp;&nbsp;&nbsp;&nbsp;
+						<i class="fa fa-dolly-flatbed"></i>&nbsp; Asignacion
 				</a></li>
 				<li><a th:href="@{/Packing/Muestra}">&nbsp;&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-address-book"></i>&nbsp; Muestra
+						<i class="fa fa-fill-drip"></i>&nbsp; Muestra
 				</a></li>
 			</div>
 		</ul>

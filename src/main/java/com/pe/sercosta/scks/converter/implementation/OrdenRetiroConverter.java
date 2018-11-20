@@ -5,7 +5,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import com.pe.sercosta.scks.converter.IAbstractConverter;
-import com.pe.sercosta.scks.entities.Contenido;
 import com.pe.sercosta.scks.entities.OrdenRetiro;
 import com.pe.sercosta.scks.entities.Retiro;
 import com.pe.sercosta.scks.models.OrdenRetiroModel;
@@ -17,20 +16,26 @@ public class OrdenRetiroConverter extends IAbstractConverter<OrdenRetiroModel, O
 	
 	@Override
 	public OrdenRetiroModel convertToModel(OrdenRetiro entity) {
-		OrdenRetiroModel model = MAPPER.map(entity, OrdenRetiroModel.class);
+		OrdenRetiroModel model = new OrdenRetiroModel();
+		model.setDescripcion(entity.getIdMotivo().getDescripcion());
+		model.setFechaRetiro(entity.getFechaRetiro());
+		model.setIdOrdenRetiro(entity.getIdOrdenRetiro());
 		return model;
 	}
 
 	@Override
 	public OrdenRetiro convertToEntity(OrdenRetiroModel model) {
-		OrdenRetiro entity = MAPPER.map(model, OrdenRetiro.class);		
+		OrdenRetiro entity = MAPPER.map(model, OrdenRetiro.class);	
 		List<Retiro> listaRetiro = new ArrayList<>();
-		model.getRetiroList().forEach(retiro -> {
-			Retiro retiroEntity = new Retiro(retiro.getIdLote(), retiro.getIdPresentacion(), 0);
-			retiroEntity.setCantidad(retiro.getCantidad());
-			listaRetiro.add(retiroEntity);
-		});
-		entity.setRetiroList(listaRetiro);
+		if(model.getRetiroList() != null)
+		{
+			model.getRetiroList().forEach(retiro -> {
+				Retiro retiroEntity = new Retiro(retiro.getIdLote(), retiro.getIdPresentacion(), 0);
+				retiroEntity.setCantidad(retiro.getCantidad());
+				listaRetiro.add(retiroEntity);
+			});
+			entity.setRetiroList(listaRetiro);
+		}
 		return entity;
 	}
 

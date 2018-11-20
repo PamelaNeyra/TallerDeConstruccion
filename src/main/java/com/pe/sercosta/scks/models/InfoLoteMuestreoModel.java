@@ -3,14 +3,18 @@ package com.pe.sercosta.scks.models;
 import java.time.LocalDate;
 
 public class InfoLoteMuestreoModel {
+	
 	private String descripcionProdTerm;
 	private String descripcion;
-	private double bloque;
+	private double nroBultos;
+	private double nroBlocks;
+	private double cantidad;
 	private LocalDate fechaCaptura;
-	private LocalDate fechaCreacion;
+	private LocalDate fechaProduccion;
+	private LocalDate fechaVencimiento;
 	private String codigoTrazabilidad;
 	
-	public void InfoLoteMuestreoModel() {
+	public InfoLoteMuestreoModel() {
 		
 	}
 
@@ -30,12 +34,28 @@ public class InfoLoteMuestreoModel {
 		this.descripcion = descripcion;
 	}
 
-	public double getBloque() {
-		return bloque;
+	public double getNroBultos() {
+		return nroBultos;
 	}
 
-	public void setBloque(double bloque) {
-		this.bloque = bloque;
+	public void setNroBultos(double nroBultos) {
+		this.nroBultos = nroBultos;
+	}
+
+	public double getNroBlocks() {
+		return nroBlocks;
+	}
+
+	public void setNroBlocks(double nroBlocks) {
+		this.nroBlocks = nroBlocks;
+	}
+
+	public double getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(double cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	public LocalDate getFechaCaptura() {
@@ -46,12 +66,20 @@ public class InfoLoteMuestreoModel {
 		this.fechaCaptura = fechaCaptura;
 	}
 
-	public LocalDate getFechaCreacion() {
-		return fechaCreacion;
+	public LocalDate getFechaProduccion() {
+		return fechaProduccion;
 	}
 
-	public void setFechaCreacion(LocalDate fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
+	public void setFechaProduccion(LocalDate fechaProduccion) {
+		this.fechaProduccion = fechaProduccion;
+	}
+
+	public LocalDate getFechaVencimiento() {
+		return fechaVencimiento;
+	}
+
+	public void setFechaVencimiento(LocalDate fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
 	}
 
 	public String getCodigoTrazabilidad() {
@@ -61,8 +89,5 @@ public class InfoLoteMuestreoModel {
 	public void setCodigoTrazabilidad(String codigoTrazabilidad) {
 		this.codigoTrazabilidad = codigoTrazabilidad;
 	}
-	
-	
-
 	
 }

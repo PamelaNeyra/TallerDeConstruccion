@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<!-- Fragmento Head -->
-<head th:include="/Fragments/head :: headFragment('Packing Muestra')"></head>
+<head th:include="/Fragments/head :: headFragment('Packing de Muestra')"></head>
 <body>
 	<!-- Fragmento Carga -->
 	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
@@ -16,66 +15,67 @@
 			<div class="container">
 				<!-- Título de la Vista-->
 				<div class="row">
-					<div class="col-sm-9">
+					<div class="col-sm-12">
 						<h1>
-							<i class="fa fa-star"></i><strong> Packing de Muestra</strong>
+							<i class="fa fa-vials"></i><strong> Escoger Muestra</strong>
 						</h1>
 					</div>
-					<!--div class="col-sm-3 p-3 d-flex justify-content-end">
-						<button type="button" class="btn btn-primary" id="embarcarOrden"><i class="fa fa-save"></i>&nbsp;Guardar</button>
-					</div-->
 				</div>
 				<hr>
-				<!-- Información de la Orden -->
-				<div class="row">
-					<div class="col-sm-12">
-						<!-- Card de Lote -->
-						<div class="card">
-							<!-- Título de Card -->
-							<div class="card-header">
-								<h3>Información de la Muestra</h3>
-							</div>
-							<!-- Cuerpo de Card -->
-							<div class="card-body">
-								<!-- Fila del Cuerpo-->
-								<div class="col-sm-15 form-inline justify-content-center">
-									<!-- Código de Orden-->
-									<label for="codigo" class="col-sm-2">Ejemplo</label> <input
-										type="text" class="form-control col-sm-2"
-										id="codigo" disabled>
-								</div>
+				<div class="card">
+					<!-- Header de Card Ordenes-->
+					<div class="card-header">
+						<div class="row">
+							<div class="col-sm-10">
+								<h2>
+									<strong>Muestras</strong>
+								</h2>
 							</div>
 						</div>
 					</div>
+					<!-- Cuerpo de Card-->
+					<div class="card-body">
+						<div class="table-responsive-sm">
+							<!-- Tablas -->
+							<table id="muestrasTabla"
+								class="table table-hover table-condensed table-bordered "
+								style="width: 100%;">
+								<!-- Cabecera de Tabla -->
+								<thead>
+									<tr>
+										<th>Código de Muestra</th>
+										<th>OT</th>
+										<th>Fecha de Registro</th>
+										<th>Fecha de Muestreo</th>
+										<th>Laboratorio</th>
+										<th>Cantidad Total</th>
+										<th>Estado</th>
+										<th align="center"></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
 				</div>
-				<hr>
-				<!-- Información del Contenido -->
-				<div class="row">
-					<div class="col-sm-12">
-						<!-- Card de Contenido -->
-						<div class="card">
-							<!-- Título de Card -->
-							<h3 class="card-header">Información del Muestreo</h3>
-							<!-- Cuerpo de Card-->
-							<div class="card-body">
-								<!-- Tablas -->
-								<div class="tab-content">
-									<!-- Tabla de Presentacion -->
-									<div id="tabla" class="tab-pane active">
-										<div class="table-responsive-sm">
-											<table id="asignacionesTabla"
-												class="table table-hover table-condensed table-bordered"
-												style="width: 100%;">
-												<!-- Cabecera de Tabla -->
-												<thead>
-													<tr>
-														<th>Ejemplo</th>
-													</tr>
-												</thead>
-											</table>
-										</div>
-									</div>
-								</div>
+				<!-- Modal Elegir -->
+				<div class="modal fade" id="modalConfirmar" tabindex="-1"
+					role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="tituloModal">Muestra:</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<label>¿Desea elegir esta muestra?</label>
+							</div>
+							<div class="modal-footer">
+								<button id="botonAceptar" type="button" class="btn btn-primary">Aceptar</button>
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
 							</div>
 						</div>
 					</div>
@@ -107,4 +107,4 @@
 	<div th:include="/Fragments/head :: scripts"></div>
 	<script th:src="@{/js/packingMuestra.js}"></script>
 </body>
-</html>
+</html>>

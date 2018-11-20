@@ -15,6 +15,7 @@ import com.pe.sercosta.scks.entities.MuestreoPK;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
 import com.pe.sercosta.scks.exceptions.SercostaException;
+import com.pe.sercosta.scks.models.InfoLoteMuestreoModel;
 import com.pe.sercosta.scks.models.InfoMuestraModel;
 import com.pe.sercosta.scks.repositories.IContenidoRepository;
 import com.pe.sercosta.scks.repositories.IMuestraRepository;
@@ -131,6 +132,22 @@ public class MuestraService implements IMuestraService{
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar los Info Muestra Model", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
+	@Override
+	public List<InfoLoteMuestreoModel> listarInfoLoteMuestreo(Planta planta, Muestra muestra) {
+		try {
+			return muestraRepository.listarInfoLoteMuestreo(sesion, planta, muestra);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al listar los Muestreos", ex.getMessage());
 		} finally {
 			sesion.close();
 		}

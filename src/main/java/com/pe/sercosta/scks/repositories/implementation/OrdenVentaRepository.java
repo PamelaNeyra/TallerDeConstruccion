@@ -163,8 +163,8 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 				aux.setPaisDestino((String) o[6]);
 				aux.setOt((String) o[7]);
 				aux.setFechaEmbarque((LocalDate) o[8]);
-				aux.setHoraEmbarque((LocalDate) o[9]);
-				aux.setAniosVencimiento((String) o[10]);
+				aux.setHoraEmbarque((LocalTime) o[9]);
+				aux.setAniosVencimiento((Integer) o[10]);
 				listaInfoOrdenVenta.add(aux);
 			});
 		} catch (Exception ex) {
@@ -172,6 +172,38 @@ public class OrdenVentaRepository implements IOrdenVentaRepository{
 			throw new SercostaException("Hubo un error al listar las ordenes de venta", ex.getMessage());
 		}
 		return listaInfoOrdenVenta;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public InfoOrdenVentaModel obtenerOrdenVentaPacking(EntityManager sesion, OrdenVenta ordenVenta) {
+		InfoOrdenVentaModel aux = new InfoOrdenVentaModel();
+		try {
+			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_orden_venta");
+			myquery.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+			myquery.setParameter(1, ordenVenta.getIdOrdenVenta());
+			myquery.execute();
+			List<Object[]> lista = myquery.getResultList();
+			lista.forEach(o -> {
+				aux.setNombreCliente((String) o[0]);
+				if(o[1] != null)
+					aux.setFechaAsignacion(((Date) o[1]).toLocalDate());
+				aux.setNombreLaboratorio((String) o[2]);
+				aux.setCertificado((String) o[3]);
+				aux.setNombrePlanta((String) o[4]);
+				aux.setPaisDestino((String) o[5]);
+				if(o[6] != null)
+					aux.setFechaAsignacion(((Date) o[6]).toLocalDate());
+				if(o[7] != null)
+					aux.setHoraEmbarque((LocalTime) o[7]);
+				aux.setAniosVencimiento((Integer) o[8]);
+				aux.setOt("1234");
+			});
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al obtener las ordene de venta", ex.getMessage());
+		}
+		return aux;
 	}
 
 }

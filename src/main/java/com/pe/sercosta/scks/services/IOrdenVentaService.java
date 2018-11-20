@@ -57,4 +57,11 @@ public interface IOrdenVentaService {
 	 * :Listar InfoOrdenVentaModel
 	 */
 	public abstract List<InfoOrdenVentaModel> listarInforOrdenVenta(OrdenVenta ordenVenta, Cliente cliente);
+	
+	/**
+	 * 
+	 * @param ordenVenta
+	 * @return
+	 */
+	public abstract InfoOrdenVentaModel obtenerOrdenVentaPacking(OrdenVenta ordenVenta);
 }

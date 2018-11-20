@@ -78,7 +78,7 @@ public interface IAsignacionRepository {
 	 * y agrupa
 	 */
 	
-	public abstract List<Asignacion> listarAsignacionPorPresentacion(EntityManager sesion, Presentacion presentacion);
+	public abstract List<Asignacion> listarAsignacionPorPresentacion(EntityManager sesion, Presentacion presentacion, Planta planta);
 
 	/**
 	 * Lista las ordenes de venta y clientes

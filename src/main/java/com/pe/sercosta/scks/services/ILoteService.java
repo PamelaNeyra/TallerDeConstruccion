@@ -57,5 +57,5 @@ public interface ILoteService {
 	 * -O8 - Listar lote por presentacion
 	 * @param presentacion
 	 */
-	public abstract List<Lote> listarLotePorPresentacion(Presentacion presentacion);
+	public abstract List<Lote> listarLotePorPresentacion(Presentacion presentacion, Planta planta);
 }

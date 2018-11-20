@@ -29,7 +29,7 @@ public interface IAsignacionService {
 	 * -08 - Listar Asignacion por Presentación
 	 * :Listar asignaciones
 	 */
-	public abstract List<Asignacion> listarAsignacionPorPresentacion(Presentacion presentacion);
+	public abstract List<Asignacion> listarAsignacionPorPresentacion(Presentacion presentacion, Planta planta);
 	
 	/**
 	 * Lógica de negocio para

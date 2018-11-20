@@ -56,10 +56,10 @@ public class AsignacionService implements IAsignacionService {
 
 	//Falta hacer la capa de datos y procedure
 	@Override
-	public List<Asignacion> listarAsignacionPorPresentacion(Presentacion presentacion) {
+	public List<Asignacion> listarAsignacionPorPresentacion(Presentacion presentacion, Planta planta) {
 		try {
 			
-			return  asignacionRepository.listarAsignacionPorPresentacion(sesion, presentacion);
+			return  asignacionRepository.listarAsignacionPorPresentacion(sesion, presentacion, planta);
 
 		}catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());

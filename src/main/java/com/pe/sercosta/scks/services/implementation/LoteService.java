@@ -149,9 +149,9 @@ public class LoteService implements ILoteService {
 	}
 
 	@Override
-	public List<Lote> listarLotePorPresentacion(Presentacion presentacion) {
+	public List<Lote> listarLotePorPresentacion(Presentacion presentacion, Planta planta) {
 		try {
-			return loteRepository.listarLotePorPresentacion(sesion, presentacion);
+			return loteRepository.listarLotePorPresentacion(sesion, presentacion, planta);
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());

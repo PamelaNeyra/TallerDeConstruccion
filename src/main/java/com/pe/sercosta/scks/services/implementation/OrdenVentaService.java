@@ -184,4 +184,20 @@ public class OrdenVentaService implements IOrdenVentaService {
 		}
 	}
 
+	@Override
+	public InfoOrdenVentaModel obtenerOrdenVentaPacking(OrdenVenta ordenVenta) {
+		try {
+			return ordenVentaRepository.obtenerOrdenVentaPacking(sesion, ordenVenta);
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw new SercostaException("Hubo un error al obtener la Info Orden Venta Model", ex.getMessage());
+		} finally {
+			sesion.close();
+		}
+	}
+
 }

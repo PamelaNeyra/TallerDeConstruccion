@@ -2,9 +2,12 @@ package com.pe.sercosta.scks.models;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class SaldoOtModel {
 
 	private String ot;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaMuestreado;
 	private String nombreLaboratorio;
 	private double cantidad;

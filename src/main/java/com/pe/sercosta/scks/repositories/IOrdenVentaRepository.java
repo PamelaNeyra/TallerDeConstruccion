@@ -59,4 +59,11 @@ public interface IOrdenVentaRepository {
 	 */
 	public abstract List<InfoOrdenVentaModel> listarInfoOrdenVenta(EntityManager sesion, OrdenVenta ordenVenta, Cliente cliente);
 
+	/**
+	 * Obtiene info de Orden Venta
+	 * @param sesion
+	 * @param ordenVenta
+	 * @return
+	 */
+	public abstract InfoOrdenVentaModel obtenerOrdenVentaPacking(EntityManager sesion, OrdenVenta ordenVenta);
 }

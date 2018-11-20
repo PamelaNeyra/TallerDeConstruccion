@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.services.IUsuarioService;
 
-@Controller()
-@RequestMapping("/VerSaldoPresentacion")
+@Controller
+@RequestMapping("VerSaldoPresentacion")
 public class VerSaldoPresentacionController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class VerSaldoPresentacionController {
 		return mav;
 	}
 	
-	@RequestMapping(path = "/{idPresentacion}", method = RequestMethod.GET)
+	@RequestMapping(path = "Contenido/{idPresentacion}", method = RequestMethod.GET)
 	public ModelAndView index2(@PathVariable("idPresentacion") String idPresentacion) {		
 		ModelAndView mav = new ModelAndView();
 		User user = (User) SecurityContextHolder.
@@ -51,7 +51,7 @@ public class VerSaldoPresentacionController {
 	}
 	
 	
-	@RequestMapping(path = "index3/{idPresentacion}", method = RequestMethod.GET)
+	@RequestMapping(path = "Asignacion/{idPresentacion}", method = RequestMethod.GET)
 	public ModelAndView index3(@PathVariable("idPresentacion") String idPresentacion) {		
 		ModelAndView mav = new ModelAndView();
 		User user = (User) SecurityContextHolder.

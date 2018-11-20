@@ -1,8 +1,10 @@
 package com.pe.sercosta.scks.models;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class InfoOrdenVentaModel {
+	
 	private String idOrdenVenta;
 	private String nombreCliente;
 	private String nombreLaboratorio;
@@ -12,10 +14,10 @@ public class InfoOrdenVentaModel {
 	private String paisDestino;
 	private String ot;
 	private LocalDate fechaEmbarque;
-	private LocalDate horaEmbarque;
-	private String aniosVencimiento;
+	private LocalTime horaEmbarque;
+	private Integer aniosVencimiento;
 	
-	public void InfoOrdenVenta() {
+	public InfoOrdenVentaModel() {
 		
 	}
 
@@ -91,22 +93,20 @@ public class InfoOrdenVentaModel {
 		this.fechaEmbarque = fechaEmbarque;
 	}
 
-	public LocalDate getHoraEmbarque() {
+	public LocalTime getHoraEmbarque() {
 		return horaEmbarque;
 	}
 
-	public void setHoraEmbarque(LocalDate horaEmbarque) {
+	public void setHoraEmbarque(LocalTime horaEmbarque) {
 		this.horaEmbarque = horaEmbarque;
 	}
 
-	public String getAniosVencimiento() {
+	public Integer getAniosVencimiento() {
 		return aniosVencimiento;
 	}
 
-	public void setAniosVencimiento(String aniosVencimiento) {
+	public void setAniosVencimiento(Integer aniosVencimiento) {
 		this.aniosVencimiento = aniosVencimiento;
 	}
-	
-	
 	
 }

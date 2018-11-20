@@ -4,6 +4,7 @@ import java.util.List;
 import com.pe.sercosta.scks.entities.Muestra;
 import com.pe.sercosta.scks.entities.Planta;
 import com.pe.sercosta.scks.entities.ProductoTerminado;
+import com.pe.sercosta.scks.models.InfoLoteMuestreoModel;
 import com.pe.sercosta.scks.models.InfoMuestraModel;
 
 public interface IMuestraService {
@@ -29,4 +30,12 @@ public interface IMuestraService {
 	 * :lista todas las InfoMuestra
 	 */
 	public abstract List<InfoMuestraModel> listarInfoMuestra(Planta planta, Muestra muestra);
+	
+	/**
+	 * 
+	 * @param planta
+	 * @param muestra
+	 * @return
+	 */
+	public abstract List<InfoLoteMuestreoModel> listarInfoLoteMuestreo(Planta planta, Muestra muestra);
 }
