@@ -14,19 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.pe.sercosta.scks.converter.implementation.MuestraConverter;
 import com.pe.sercosta.scks.converter.implementation.OtConverter;
 import com.pe.sercosta.scks.entities.Usuario;
 import com.pe.sercosta.scks.exceptions.SercostaException;
 import com.pe.sercosta.scks.models.InfoLoteMuestreoModel;
+import com.pe.sercosta.scks.models.InfoMuestraModel;
 import com.pe.sercosta.scks.models.MuestraModel;
 import com.pe.sercosta.scks.models.OtModel;
 import com.pe.sercosta.scks.services.IMuestraService;
 import com.pe.sercosta.scks.services.IOtService;
 import com.pe.sercosta.scks.services.IUsuarioService;
-import com.pe.sercosta.scks.services.implementation.MuestraService;
-
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class PackingMuestraRestController {
@@ -98,6 +96,25 @@ public class PackingMuestraRestController {
 			throw ex;
 		}
 		return listaMuestreo;
+	}
+	
+	@RequestMapping(path = "Packing/Muestra/obtenerMuestra", method = RequestMethod.POST)
+	public InfoMuestraModel obtenerMuestra(@RequestBody(required = true) MuestraModel muestra) {
+		try {
+			User user = (User) SecurityContextHolder.
+					getContext().
+					getAuthentication().
+						getPrincipal();
+			Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
+			return muestraService.obtenerInfoMuestra(usuario.getIdPlanta(), muestraConverter.convertToEntity(muestra));
+		} catch (SercostaException sx) {
+			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
+			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
+			throw sx;
+		} catch (Exception ex) {
+			LOG.error(CAPA + ex.getMessage());
+			throw ex;
+		}	
 	}
 	
 }

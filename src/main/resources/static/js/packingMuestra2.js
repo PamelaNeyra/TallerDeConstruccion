@@ -4,7 +4,36 @@ $(document).ready( function() {
 			idMuestra: $('#codigo').val()
 	}	
 	
-	$('#muestreosTabla').DataTable({
+	function obtenerDatos(muestra) {
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/Packing/Muestra/obtenerMuestra",
+	        data: JSON.stringify(muestra),
+			beforeSend: function() {
+				$('#imagenCarga').show();
+			},
+			complete: function() {
+				$('#imagenCarga').hide();
+			},
+	        success: function (data) {	        	
+	            $('#laboratorio').val(data.nombreLaboratorio);
+	            $('#ot').val(data.ot);
+	            $('#fechaM').val(data.fechaMuestreado);
+	            $('#fechaR').val(data.fechaCreacion);
+	            $('#cantidad').val(data.cantidadTotal);
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	        	var response = JSON.parse(xhr.responseText);	   
+	        	$('#mensajeError').text(response.message);
+	        	$('#modalError').modal('show');
+	        }
+	    });
+	}
+	
+	obtenerDatos(muestra);
+	
+	$('#muestreoTabla').DataTable({
 		ajax: {
 			type: "POST",
 			contentType: "application/json",
@@ -49,6 +78,17 @@ $(document).ready( function() {
 				}
 			}
 	    ],
+	    columns: [
+			{data: "descripcionProdTerm"},
+			{data: "descripcion"},
+			{data: "nroBultos"},
+			{data: "nroBlocks"},
+			{data: "cantidad"},
+			{data: "fechaCaptura"},
+			{data: "fechaProduccion"},
+			{data: "fechaVencimiento"},
+			{data: "codigoTrazabilidad"}
+		],
 		language: lenguaje
 	});
 	

@@ -49,7 +49,7 @@ public interface IMuestraRepository {
 	 * Lista las InfoMuestraModel
 	 * 
 	 */
-	public abstract List<InfoMuestraModel> listarInfoMuestra(EntityManager sesion, Planta planta, Muestra muestra);
+	public abstract InfoMuestraModel obtenerInfoMuestra(EntityManager sesion, Planta planta, Muestra muestra);
 	
 	/**
 	 * Lista los InfoLoteMuestreoModel

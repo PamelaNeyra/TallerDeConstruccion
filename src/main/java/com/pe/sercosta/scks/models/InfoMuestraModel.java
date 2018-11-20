@@ -3,6 +3,7 @@ package com.pe.sercosta.scks.models;
 import java.time.LocalDate;
 
 public class InfoMuestraModel {
+	
 	private int idMuestra;
 	private String ot;
 	private LocalDate fechaCreacion;
@@ -11,7 +12,7 @@ public class InfoMuestraModel {
 	private double cantidadTotal;
 	private boolean estaMuestreado;
 	
-	public void InfoMuestraModel() {
+	public InfoMuestraModel() {
 		
 	}
 
@@ -70,7 +71,5 @@ public class InfoMuestraModel {
 	public void setEstaMuestreado(boolean estaMuestreado) {
 		this.estaMuestreado = estaMuestreado;
 	}
-	
-	
 	
 }

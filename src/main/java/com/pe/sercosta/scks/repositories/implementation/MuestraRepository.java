@@ -125,39 +125,34 @@ public class MuestraRepository implements IMuestraRepository {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<InfoMuestraModel> listarInfoMuestra(EntityManager sesion, Planta planta, Muestra muestra) {
-		List<InfoMuestraModel> listaInfoMuestraModel = new ArrayList<InfoMuestraModel>();
+	public InfoMuestraModel obtenerInfoMuestra(EntityManager sesion, Planta planta, Muestra muestra) {
+		InfoMuestraModel aux = new InfoMuestraModel();
 		try {
 			StoredProcedureQuery myquery = sesion.createStoredProcedureQuery("sp_info_muestra");
 			myquery.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(3, LocalDate.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(4, LocalDate.class, ParameterMode.IN)
-					.registerStoredProcedureParameter(5, Integer.class, ParameterMode.IN);
+					.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
 			myquery.setParameter(1,  muestra.getIdMuestra())
-					.setParameter(2, muestra.getOt())
-					.setParameter(3, muestra.getFechaCreacion())
-					.setParameter(4, muestra.getFechaMuestreado())
-					.setParameter(5, planta.getIdPlanta());
+					.setParameter(2, planta.getIdPlanta());
 			myquery.execute();
 			List<Object[]> lista = myquery.getResultList();
 			lista.forEach(o -> {
-				InfoMuestraModel aux = new InfoMuestraModel();
 				aux.setIdMuestra((int) o[0]);
 				aux.setOt((String) o[1]);
-				aux.setFechaCreacion((LocalDate) o[2]);
-				aux.setFechaMuestreado((LocalDate) o[3]);
+				if(o[2] != null)
+					aux.setFechaCreacion(((Date) o[2]).toLocalDate());
+				if(o[3] != null)
+					aux.setFechaMuestreado(((Date) o[3]).toLocalDate());
 				aux.setNombreLaboratorio((String) o[4]);
 				aux.setCantidadTotal((double) o[5]);
 				aux.setEstaMuestreado((boolean) o[6]);
-				listaInfoMuestraModel.add(aux);
 			});
 		} catch (Exception ex) {
 			LOG.error(CAPA + ex.getMessage());
 			throw new SercostaException("Hubo un error al listar las muestras", ex.getMessage());
 		}
-		return listaInfoMuestraModel;
+		return aux;
 	}
 
 	@SuppressWarnings("unchecked")

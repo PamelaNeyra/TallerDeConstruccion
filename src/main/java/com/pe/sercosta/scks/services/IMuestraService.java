@@ -29,7 +29,7 @@ public interface IMuestraService {
 	 * -O9 - Ver Packings
 	 * :lista todas las InfoMuestra
 	 */
-	public abstract List<InfoMuestraModel> listarInfoMuestra(Planta planta, Muestra muestra);
+	public abstract InfoMuestraModel obtenerInfoMuestra(Planta planta, Muestra muestra);
 	
 	/**
 	 * 

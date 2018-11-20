@@ -122,9 +122,9 @@ public class MuestraService implements IMuestraService{
 	}
 
 	@Override
-	public List<InfoMuestraModel> listarInfoMuestra(Planta planta, Muestra muestra) {
+	public InfoMuestraModel obtenerInfoMuestra(Planta planta, Muestra muestra) {
 		try {
-			return muestraRepository.listarInfoMuestra(sesion, planta, muestra);
+			return muestraRepository.obtenerInfoMuestra(sesion, planta, muestra);
 		} catch (SercostaException sx) {
 			LOG.error(CAPA + "Usuario: " + sx.getMensajeUsuario());
 			LOG.error(CAPA + "Aplicación: " + sx.getMensajeAplicacion());
