@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <!-- Fragmento Head -->
-<head th:include="/Fragments/head :: headFragment('Ver Saldo OT')"></head>
+<head th:include="Fragments/head :: headFragment('Ver Saldo OT')"></head>
 <body>
 	<!-- Fragmento Carga -->
-	<div th:include="/Fragments/head :: carga" id="imagenCarga" class="carga"></div>
+	<div th:include="Fragments/head :: carga" id="imagenCarga" class="carga"></div>
 	<!-- Fragmento Navbar -->
-	<header th:include="/Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
+	<header th:include="Fragments/navbar :: navbar(${nombre}, ${planta})"></header>
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<div id="sidebar-wrapper"
-			th:include="/Fragments/navbar :: sidebar-wrapper"></div>
+			th:include="Fragments/navbar :: sidebar-wrapper"></div>
 		<div class="page-content-wrapper">
 			<!-- Contenido Principal -->
 			<div class="container">
@@ -147,11 +147,11 @@
 				</div>
 			</div>
 			<!-- Fragmento Footer -->
-			<div th:include="/Fragments/head :: footer"></div>
+			<div th:include="Fragments/head :: footer"></div>
 		</div>
 	</div>
 	<!-- Scripts -->
-	<div th:include="/Fragments/head :: scripts"></div>
+	<div th:include="Fragments/head :: scripts"></div>
 	<script th:src="@{/js/verOtSaldo2.js}"></script>
 </body>
 </html>
