@@ -29,7 +29,7 @@ public class VerSaldoOtController {
 					getAuthentication().
 						getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/VerSaldoOt/index");
+		mav.setViewName("VerSaldoOt/index");
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
 		mav.addObject("saldo", new SaldoOtModel());
