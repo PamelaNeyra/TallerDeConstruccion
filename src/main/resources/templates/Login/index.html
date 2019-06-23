@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:include="/Fragments/head :: head('SCKS - Inicio de Sesión')"></head>
+<head th:include="Fragments/head :: head('SCKS - Inicio de Sesión')"></head>
 <body class="bg-light">
 	<!-- Contenido Principal -->
 	<div class="container">
@@ -57,8 +57,8 @@
 		</div>
 	</div>
 	<!-- Fragmento Footer -->
-	<div th:include="/Fragments/head :: footer"></div>
+	<div th:include="Fragments/head :: footer"></div>
 	<!-- Scripts -->
-	<div th:include="/Fragments/head :: scripts"></div>
+	<div th:include="Fragments/head :: scripts"></div>
 </body>
 </html>
