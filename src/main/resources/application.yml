@@ -1,4 +1,6 @@
 spring:
+  server:
+    port: ${PORT:8080}
   datasource:
     url: jdbc:mysql://142.93.90.202:3306/sercosta?verifyServerCertificate=false&useSSL=false&requireSSL=false
     username: admin
