@@ -1,6 +1,6 @@
-spring.datasource.url=${jdbc:mysql://142.93.90.202:3306/sercosta?verifyServerCertificate=false&useSSL=false&requireSSL=false}
-spring.datasource.username=${admin}
-spring.datasource.password=${Sercosta201Z}
+spring.datasource.url=${"jdbc:mysql://142.93.90.202:3306/sercosta?verifyServerCertificate=false&useSSL=false&requireSSL=false"}
+spring.datasource.username=${"admin"}
+spring.datasource.password=${"Sercosta201Z"}
 spring.jpa.show-sql=false
 spring.jpa.generate-ddl=true
 spring.jpa.hibernate.ddl-auto=create
