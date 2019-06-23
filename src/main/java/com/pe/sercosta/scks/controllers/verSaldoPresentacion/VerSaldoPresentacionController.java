@@ -43,7 +43,7 @@ public class VerSaldoPresentacionController {
 				getAuthentication().
 					getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/VerSaldoPresentacion/index2");
+		mav.setViewName("VerSaldoPresentacion/index2");
 		mav.addObject("idPresentacion", idPresentacion);
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
@@ -59,7 +59,7 @@ public class VerSaldoPresentacionController {
 				getAuthentication().
 					getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/VerSaldoPresentacion/index3");
+		mav.setViewName("VerSaldoPresentacion/index3");
 		mav.addObject("idPresentacion", idPresentacion);
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
