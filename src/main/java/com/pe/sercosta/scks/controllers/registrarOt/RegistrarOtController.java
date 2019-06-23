@@ -31,7 +31,7 @@ public class RegistrarOtController {
 					getAuthentication().
 						getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/RegistrarOt/index");
+		mav.setViewName("RegistrarOt/index");
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
 		return mav;
