@@ -20,7 +20,7 @@ public class LoginController {
 			@RequestParam(name = "logout", required = false) String logout) {
 		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
-		return "/Login/index";
+		return "Login/index";
 	}
 	
 	@GetMapping({"/loginsuccess", "/", "/logincheck", ""})
