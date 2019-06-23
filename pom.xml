@@ -5,7 +5,7 @@
 	<groupId>com.pe.sercosta</groupId>
 	<artifactId>scks</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>scks</name>
 	<description>Sistema de Control Kardex Sercosta</description>
 	<parent>
