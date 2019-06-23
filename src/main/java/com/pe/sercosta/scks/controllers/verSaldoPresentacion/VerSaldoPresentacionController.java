@@ -29,7 +29,7 @@ public class VerSaldoPresentacionController {
 					getAuthentication().
 						getPrincipal();
 		Usuario usuario = usuarioService.obtenerUsuario(user.getUsername(), user.getPassword());
-		mav.setViewName("/VerSaldoPresentacion/index");
+		mav.setViewName("VerSaldoPresentacion/index");
 		mav.addObject("planta", usuario.getIdPlanta().getNombrePlanta());
 		mav.addObject("nombre", usuario.getNombreUsuario());
 		return mav;
